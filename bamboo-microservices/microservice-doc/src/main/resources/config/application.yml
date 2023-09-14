@@ -10,7 +10,7 @@ spring:
 server:
   port: 11001
   servlet:
-    context-path: /service-document
+    context-path: /ms-document
 
 # 日志组件配置
 logging:
