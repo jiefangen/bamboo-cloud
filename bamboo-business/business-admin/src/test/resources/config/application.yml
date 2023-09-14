@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: admin
+  profiles:
+    active: junit
+server:
+  port: 10101
+  servlet:
+      context-path: /biz-admin
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+
+logging:
+  level:
+    org.panda.business.admin: debug

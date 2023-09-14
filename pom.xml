@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.panda</groupId>
+    <artifactId>bamboo</artifactId>
+    <version>1.0.RELEASE</version>
+    <packaging>pom</packaging>
+    <organization>
+        <name>bamboo</name>
+        <url>https://github.com/jiefangen/bamboo</url>
+    </organization>
+    <name>${artifactId}</name>
+    <description>企业级微服务架构解决方案</description>
+    <modules>
+        <!-- 技术框架基础支持层（垂直支持）-->
+        <module>bamboo-technology</module>
+        <!-- 微服务治理框架支撑层（水平支撑）-->
+        <module>bamboo-support</module>
+        <!-- 微服务架构服务提供层（垂直支持）-->
+        <module>bamboo-microservices</module>
+        <!-- 具体业务架构应用层（业务承接）-->
+        <module>bamboo-business</module>
+    </modules>
+
+    <properties>
+        <bamboo.version>1.0.RELEASE</bamboo.version>
+
+        <!-- 旧版备用稳定spring套件，最低JDK8版本 -->
+        <spring-cloud1.version>Hoxton.SR12</spring-cloud1.version>
+        <spring-boot1.version>2.3.12.RELEASE</spring-boot1.version>
+        <spring1.version>5.2.15.RELEASE</spring1.version>
+
+        <!-- 新版稳定spring套件，最低JDK11版本 -->
+        <spring-cloud.version>2021.0.5</spring-cloud.version>
+        <spring-boot.version>2.6.13</spring-boot.version>
+        <spring.version>5.3.23</spring.version>
+
+        <oracle-jdk.version>11</oracle-jdk.version>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.0</version>
+                <configuration>
+                    <release>${oracle-jdk.version}</release>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
