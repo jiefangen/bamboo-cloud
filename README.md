@@ -1,4 +1,4 @@
-<h1 style="text-align: center">Bamboo基于SpringCloud的微服务架构</h1>
+<h1 style="text-align: center">BambooCloud基于SpringCloud的微服务架构</h1>
 
 ## 一、框架项目简介
 #### 致力于提供高性能，高可用，高并发的服务器设计方案。构建企业级微服务生态系统。
