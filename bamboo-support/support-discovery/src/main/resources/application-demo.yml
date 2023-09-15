@@ -3,3 +3,4 @@ spring:
     nacos:
       discovery:
         server-addr: centos-support.orb.local:8848
+        namespace: c1a9236a-89c7-469e-95d0-c9458e35c82f

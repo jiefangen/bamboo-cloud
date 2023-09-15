@@ -27,7 +27,7 @@ public class HomeController {
     private String port;
 
     private String getApplicationDesc() {
-        return "The " + StringUtil.firstToUpperCase(name) + " Microservice";
+        return StringUtil.firstToUpperCase(name) + " Microservice";
     }
 
     @GetMapping

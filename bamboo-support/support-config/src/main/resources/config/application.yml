@@ -1,6 +1,6 @@
 spring:
   application:
-    name: config-center
+    name: config
   profiles:
     active: local
 server:
