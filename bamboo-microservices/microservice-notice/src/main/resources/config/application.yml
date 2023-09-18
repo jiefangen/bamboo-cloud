@@ -1,6 +1,6 @@
 spring:
   application:
-    name: notice
+    name: ms-notice
   profiles:
     active: local
   messages:

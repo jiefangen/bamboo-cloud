@@ -1,6 +1,6 @@
 spring:
   application:
-    name: payment
+    name: ms-payment
   profiles:
     active: local
   messages:

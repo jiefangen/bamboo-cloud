@@ -1,12 +1,12 @@
 spring:
   application:
-    name: payment
+    name: ms-payment
   profiles:
     active: junit
 server:
   port: 11103
   servlet:
-    context-path: /service-payment
+    context-path: /ms-payment
     encoding:
       charset: UTF-8
       force: true

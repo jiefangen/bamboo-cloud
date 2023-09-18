@@ -2,5 +2,9 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: centos-support.orb.local:8848
-        namespace: c1a9236a-89c7-469e-95d0-c9458e35c82f
+        server-addr: bamboo-cloud-spt01.orb.local:8848
+        # 常用场景之一是不同环境的注册的区分隔离，例如开发测试环境和生产环境的资源（如配置、服务）隔离等。
+        namespace: 42720e2e-bf10-4421-ac0e-690ec5f9c297
+        group: SPT_GROUP
+        # 取值范围1到100，数值越大，权重越大
+        weight: 1

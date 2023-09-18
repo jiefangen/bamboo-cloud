@@ -1,6 +1,6 @@
 spring:
   application:
-    name: document
+    name: ms-document
   profiles:
     active: local
   servlet:

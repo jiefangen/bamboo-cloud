@@ -1,4 +1,4 @@
-package org.panda.ms.payment.config;
+package org.panda.support.config.common;
 
 import org.panda.tech.core.web.mvc.servlet.filter.RequestLogFilter;
 import org.panda.tech.core.web.mvc.support.WebMvcConfigurerSupport;
@@ -17,7 +17,7 @@ public class WebMvcConfig extends WebMvcConfigurerSupport {
      */
     @Bean
     public RequestLogFilter requestLogFilter() {
-        return new RequestLogFilter("/ms-payment/**");
+        return new RequestLogFilter("/spt-config/**");
     }
 
 }

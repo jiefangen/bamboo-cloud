@@ -1,7 +1,13 @@
 spring:
   application:
-    name: config
+    name: spt-config
   profiles:
     active: local
 server:
   port: 12001
+  servlet:
+    context-path: /spt-config
+
+logging:
+  level:
+    org.panda.support.config: debug
