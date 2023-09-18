@@ -1,0 +1,12 @@
+spring:
+  cloud:
+    nacos:
+      config:
+        server-addr: bamboo-cloud-spt01.orb.local:8848
+        namespace: 42720e2e-bf10-4421-ac0e-690ec5f9c297
+        group: SPT_GROUP
+        file-extension: yml
+  config:
+    import:
+      - optional:nacos:${spring.application.name}-${spring.profiles.active}.yml?refreshEnabled=false
+      - optional:nacos:common-config.properties?refreshEnabled=true
