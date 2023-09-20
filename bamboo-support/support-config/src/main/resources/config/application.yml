@@ -2,7 +2,7 @@ spring:
   application:
     name: spt-config
   profiles:
-    active: demo
+    active: dev
 server:
   port: 12001
   servlet:

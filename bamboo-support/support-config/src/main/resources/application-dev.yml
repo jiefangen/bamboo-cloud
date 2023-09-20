@@ -8,5 +8,5 @@ spring:
         file-extension: yml
   config:
     import:
-      - optional:nacos:${spring.application.name}-${spring.profiles.active}.yml?refreshEnabled=false
+      - optional:nacos:${spring.application.name}-${spring.profiles.active}.yml?refreshEnabled=true
       - optional:nacos:common-config.properties
