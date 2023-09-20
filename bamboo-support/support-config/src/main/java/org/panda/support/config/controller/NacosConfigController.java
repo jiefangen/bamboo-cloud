@@ -14,11 +14,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Nacos配置中心
+ * Nacos配置管理中心
  *
  * @author fangen
  **/
-@Api(tags = "Nacos配置中心")
+@Api(tags = "微服务配置中心")
 @RestController
 @RequestMapping(value = "/config")
 public class NacosConfigController {
@@ -26,12 +26,12 @@ public class NacosConfigController {
     @Autowired
     private CommonConfigProperties configProperties;
 
-    @GetMapping("/realtimeGet")
-    public RestfulResult realtimeGet() {
+    @GetMapping("/getCommonConfig")
+    public RestfulResult getCommonConfig() {
         Environment environment = ApplicationContextBean.applicationContext.getEnvironment();
         Map<String, Object> resultMap = new HashMap<>();
-        resultMap.put("environment", environment.getProperty("nacos.common.config.useLocalCache"));
-        resultMap.put("configProperties", configProperties.getUseLocalCache());
+        resultMap.put("useLocalCache", environment.getProperty("nacos.common.config.useLocalCache"));
+        resultMap.put("configProperties", configProperties.toString());
         return RestfulResult.success(resultMap);
     }
 }

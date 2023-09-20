@@ -26,8 +26,7 @@
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
         </dependency>
-
-        <!-- springboot >= 2.4.0 默认不会启动bootstrap容器 -->
+        <!-- springboot >= 2.4.0，使用bootstrap方式引入配置时，需要添加该依赖 -->
 <!--        <dependency>-->
 <!--            <groupId>org.springframework.cloud</groupId>-->
 <!--            <artifactId>spring-cloud-starter-bootstrap</artifactId>-->

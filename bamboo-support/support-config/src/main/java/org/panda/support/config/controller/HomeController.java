@@ -1,5 +1,7 @@
 package org.panda.support.config.controller;
 
+import io.swagger.annotations.Api;
+import org.panda.bamboo.common.util.lang.StringUtil;
 import org.panda.tech.core.web.restful.RestfulResult;
 import org.panda.tech.core.web.util.NetUtil;
 import org.panda.tech.core.web.util.WebHttpUtil;
@@ -13,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
+@Api(tags = "微服务启动语")
 @Controller
 @RequestMapping(value = "/home")
 public class HomeController {
@@ -24,9 +27,19 @@ public class HomeController {
     @Value("${server.port}")
     private String port;
 
+    private String getApplicationDesc() {
+        return StringUtil.firstToUpperCase(name) + " Microservice";
+    }
+
     @GetMapping
     @ResponseBody
-    public RestfulResult<Map<String, Object>> home(HttpServletRequest request) {
+    public RestfulResult<String> home() {
+        return RestfulResult.success(getApplicationDesc());
+    }
+
+    @GetMapping(value = "/index")
+    @ResponseBody
+    public RestfulResult<Map<String, Object>> index(HttpServletRequest request) {
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("serviceName", name);
         resultMap.put("env", env);

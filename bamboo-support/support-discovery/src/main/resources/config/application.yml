@@ -2,6 +2,8 @@ spring:
   application:
     name: spt-discovery
   profiles:
-    active: local
+    active: dev
 server:
   port: 12002
+  servlet:
+    context-path: /spt-discovery

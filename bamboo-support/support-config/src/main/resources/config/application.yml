@@ -2,8 +2,12 @@ spring:
   application:
     name: spt-config
   profiles:
-    active: dev
+    active: demo
 server:
   port: 12001
   servlet:
     context-path: /spt-config
+
+logging:
+  level:
+    org.panda.support.config: debug

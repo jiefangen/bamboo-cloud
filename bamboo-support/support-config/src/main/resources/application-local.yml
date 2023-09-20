@@ -4,6 +4,3 @@ spring:
       config:
         import-check:
           enabled: false
-logging:
-  level:
-    org.panda.support.config: debug

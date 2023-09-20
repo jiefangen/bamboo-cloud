@@ -10,6 +10,6 @@ spring:
         namespace: 9c6ca821-85b7-4b4f-8d95-6be72ef1505b
         group: SPT_GROUP
         file-extension: yml
-#  config:
-#    import:
-#      - optional:nacos:${spring.application.name}-${spring.profiles.active}.yml
+  config:
+    import:
+      - optional:nacos:${spring.application.name}-${spring.profiles.active}.yml

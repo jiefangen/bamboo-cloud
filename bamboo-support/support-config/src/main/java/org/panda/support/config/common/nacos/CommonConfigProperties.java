@@ -15,6 +15,6 @@ public class CommonConfigProperties {
 
     private String group;
 
-    private String useLocalCache;
+    private Boolean useLocalCache;
 
 }
