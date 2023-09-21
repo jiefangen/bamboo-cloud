@@ -1,0 +1,11 @@
+spring:
+  cloud:
+    nacos:
+      config:
+        server-addr: 198.19.249.72:8848,198.19.249.101:8849,198.19.249.34:8850
+        namespace: f8e750ab-6c3b-4568-b397-0cb0ca2f3a00
+        group: SPT_GROUP
+  config:
+    import:
+      - optional:nacos:${spring.application.name}-${spring.profiles.active}.yml?refreshEnabled=false
+      - optional:nacos:common-config.properties?refreshEnabled=true
