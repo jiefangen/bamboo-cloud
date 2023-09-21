@@ -22,17 +22,22 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
         <!-- 微服务架构服务提供通用支持 -->
         <dependency>
             <groupId>org.panda.support</groupId>
             <artifactId>support-cloud-core</artifactId>
             <version>${support.version}</version>
         </dependency>
+        <!-- 监控和管理应用程序的生产级特性 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
-
+        <!-- 自动生成可视化的API文档 -->
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
             <artifactId>knife4j-openapi2-spring-boot-starter</artifactId>

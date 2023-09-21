@@ -25,7 +25,6 @@
             <artifactId>bamboo-core</artifactId>
             <version>${technology.version}</version>
         </dependency>
-
         <!-- 微服务配置中心依赖 -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
@@ -36,7 +35,6 @@
 <!--            <groupId>org.springframework.cloud</groupId>-->
 <!--            <artifactId>spring-cloud-starter-bootstrap</artifactId>-->
 <!--        </dependency>-->
-
         <!-- 微服务发现中心依赖 -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>

@@ -11,7 +11,7 @@
     1.动态服务发现
     2.配置管理
     3.服务元数据及流量管理
-#### 3、support-gateway（服务网关）
+#### 3、support-gateway-service（服务网关）
 ###### 本地端口：12003；单元测试：12103；Demo环境：22003；生产环境：32003
     1.统一网关路由
 #### 4、support-cloud-core（微服务架构服务提供通用支持）服务启动组件扫描`@Import(CloudCoreModule.class)`

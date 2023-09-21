@@ -4,3 +4,16 @@ spring:
       config:
         import-check:
           enabled: false
+
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+logging:
+  level:
+    com.alibaba.cloud.nacos.configdata: debug
+    org.panda.support.config: debug

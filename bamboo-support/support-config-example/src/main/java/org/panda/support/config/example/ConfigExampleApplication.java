@@ -12,8 +12,8 @@ import org.springframework.context.annotation.Import;
  */
 @Import({CloudCoreModule.class})
 @SpringBootApplication
-public class ConfigServerApplication {
+public class ConfigExampleApplication {
     public static void main(String[] args) {
-        SpringApplication.run(ConfigServerApplication.class, args);
+        SpringApplication.run(ConfigExampleApplication.class, args);
     }
 }
