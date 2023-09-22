@@ -32,11 +32,6 @@ public abstract class AbstractConfigListener implements ConfigListener, ContextI
     }
 
     @Override
-    public String getConfigId() {
-        return this.getDataId();
-    }
-
-    @Override
     public void execute(String content, ApplicationContext context) {
         this.process(content, context);
     }
@@ -47,7 +42,7 @@ public abstract class AbstractConfigListener implements ConfigListener, ContextI
         if (StringUtils.isBlank(group)) {
             group = nacosConfigProperties.getGroup();
         }
-        nacosConfigManager.getConfigService().addListener(getConfigId(), group, new Listener() {
+        nacosConfigManager.getConfigService().addListener(getDataId(), group, new Listener() {
             @Override
             public Executor getExecutor() {
                 return taskExecutor;
@@ -59,11 +54,6 @@ public abstract class AbstractConfigListener implements ConfigListener, ContextI
             }
         });
     }
-
-    /**
-     * 获取配置文件组
-     */
-    protected abstract String getGroup();
 
     /**
      * 获取配置文件ID

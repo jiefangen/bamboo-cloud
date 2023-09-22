@@ -1,8 +1,6 @@
 package org.panda.support.cloud.core;
 
-import org.panda.support.cloud.core.loadbalancer.LoadBalancerConfiguration;
 import org.panda.tech.core.CoreModule;
-import org.springframework.cloud.loadbalancer.annotation.LoadBalancerClients;
 import org.springframework.context.annotation.ComponentScan;
 
 /**
@@ -10,7 +8,7 @@ import org.springframework.context.annotation.ComponentScan;
  *
  * @author fangen
  **/
+@ComponentScan(basePackageClasses = CloudCoreModule.class)
 @ComponentScan(basePackageClasses = CoreModule.class)
-@LoadBalancerClients(defaultConfiguration = LoadBalancerConfiguration.class)
 public class CloudCoreModule {
 }

@@ -1,5 +1,6 @@
 package org.panda.support.cloud.core.config;
 
+import org.panda.bamboo.common.constant.basic.Strings;
 import org.springframework.context.ApplicationContext;
 
 /**
@@ -7,11 +8,13 @@ import org.springframework.context.ApplicationContext;
  */
 public interface ConfigListener {
     /**
-     * 获取配置文件ConfigId
+     * 获取配置文件属组
      *
-     * @return 配置文件ID
+     * @return 配置文件属组
      */
-    String getConfigId();
+    default String getGroup() {
+        return Strings.STR_NULL;
+    }
 
     /**
      * 业务执行器

@@ -18,6 +18,7 @@ import java.util.function.Supplier;
 public class ProfileSupplier implements Supplier<String>, ApplicationContextAware {
 
     private String profile = Strings.EMPTY; // 默认为空，表示无profile区分
+
     @Autowired
     private ProfileProperties profileProperties;
 

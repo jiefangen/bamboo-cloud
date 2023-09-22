@@ -1,14 +1,10 @@
 package org.panda.tech.core.version;
 
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.stereotype.Component;
 
 /**
  * Maven版本号读取器
  */
-@Component
-@PropertySource("classpath:maven.properties")
 public class MavenVersionReader extends AbstractVersionReader {
 
     @Override
