@@ -1,18 +1,20 @@
 ## bamboo-support（微服务治理框架支撑层）
 
 ### 一、微服务治理项目简介
-#### 1、support-config-example（配置管理样例-基于Nacos服务端口：8848）
+#### 1、support-cloud-core（微服务架构服务提供通用支持）服务启动组件扫描`@Import(CloudCoreModule.class)`
+    1.配置中心特定配置监听
+    2.服务发现规则约束
+    3.服务负载均衡规则制定
+#### 2、support-config-example（配置管理样例-基于Nacos服务端口：8848）
 ###### 本地端口：12001；单元测试：12101；Demo环境：22001；生产环境：32001
-    1.路由规则
-    2.限流规则
-    3.动态数据源
-#### 2、support-discovery-example（服务发现样例-基于Nacos服务端口：8848）
+    1.启动配置获取
+    2.配置中心配置实时监听
+    3.扩展共享配置实时获取
+#### 3、support-discovery-example（服务发现样例-基于Nacos服务端口：8848）
 ###### 本地端口：12002；单元测试：12102；Demo环境：22002；生产环境：32002
     1.动态服务发现
-    2.配置管理
+    2.服务负载请求
     3.服务元数据及流量管理
-#### 3、support-gateway-service（服务网关）
+#### 4、support-gateway-service（服务网关）
 ###### 本地端口：12003；单元测试：12103；Demo环境：22003；生产环境：32003
     1.统一网关路由
-#### 4、support-cloud-core（微服务架构服务提供通用支持）服务启动组件扫描`@Import(CloudCoreModule.class)`
-    1、

@@ -1,5 +1,6 @@
 package org.panda.support.discovery.example.controller;
 
+import org.panda.bamboo.common.util.lang.StringUtil;
 import org.panda.tech.core.web.restful.RestfulResult;
 import org.panda.tech.core.web.util.NetUtil;
 import org.panda.tech.core.web.util.WebHttpUtil;
@@ -24,10 +25,20 @@ public class HomeController {
     @Value("${server.port}")
     private String port;
 
+    private String getApplicationDesc() {
+        return StringUtil.firstToUpperCase(name) + " Microservice";
+    }
+
     @GetMapping
     @ResponseBody
-    public RestfulResult<Map<String, String>> home(HttpServletRequest request) {
-        Map<String, String> resultMap = new HashMap<>();
+    public RestfulResult<String> home() {
+        return RestfulResult.success(getApplicationDesc());
+    }
+
+    @GetMapping(value = "/index")
+    @ResponseBody
+    public RestfulResult<Map<String, Object>> index(HttpServletRequest request) {
+        Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("serviceName", name);
         resultMap.put("env", env);
         resultMap.put("port", port);
