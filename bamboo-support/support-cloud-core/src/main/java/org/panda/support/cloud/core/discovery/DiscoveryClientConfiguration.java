@@ -1,7 +1,7 @@
 package org.panda.support.cloud.core.discovery;
 
 import com.alibaba.cloud.nacos.NacosDiscoveryProperties;
-import org.panda.support.cloud.core.loadbalancer.DefaultServiceInstanceListFilter;
+import org.panda.support.cloud.core.loadbalancer.filter.DefaultServiceInstanceListFilter;
 import org.panda.tech.core.version.VersionReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;

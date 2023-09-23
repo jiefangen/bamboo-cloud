@@ -1,12 +1,16 @@
 spring:
   cloud:
     nacos:
-      discovery:
-        enabled: false
       config:
         import-check:
           enabled: false
-
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: '*'
 logging:
-  level:
-    org.panda.support.config: debug
+  org.panda.support.discovery.example: debug

@@ -2,14 +2,14 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: bamboo-cloud-spt01.orb.local:8848
-        namespace: 9c6ca821-85b7-4b4f-8d95-6be72ef1505b
+        server-addr: 198.19.249.72:8848,198.19.249.101:8849,198.19.249.34:8850
+        namespace: f8e750ab-6c3b-4568-b397-0cb0ca2f3a00
         group: SPT_GROUP
       config:
-        server-addr: bamboo-cloud-spt01.orb.local:8848
-        namespace: 9c6ca821-85b7-4b4f-8d95-6be72ef1505b
+        server-addr: 198.19.249.72:8848,198.19.249.101:8849,198.19.249.34:8850
+        namespace: f8e750ab-6c3b-4568-b397-0cb0ca2f3a00
         group: SPT_GROUP
-        file-extension: yml
-#  config:
-#    import:
-#      - optional:nacos:${spring.application.name}-${spring.profiles.active}.yml
+  config:
+    import:
+      - optional:nacos:${spring.application.name}-${spring.profiles.active}.yml?refreshEnabled=true
+      - optional:nacos:common-config.properties

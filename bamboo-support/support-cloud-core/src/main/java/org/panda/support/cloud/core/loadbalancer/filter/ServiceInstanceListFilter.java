@@ -1,4 +1,4 @@
-package org.panda.support.cloud.core.loadbalancer;
+package org.panda.support.cloud.core.loadbalancer.filter;
 
 import org.springframework.cloud.client.ServiceInstance;
 

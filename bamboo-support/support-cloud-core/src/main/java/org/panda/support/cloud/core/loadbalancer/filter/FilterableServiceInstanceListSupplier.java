@@ -1,6 +1,7 @@
-package org.panda.support.cloud.core.loadbalancer;
+package org.panda.support.cloud.core.loadbalancer.filter;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.panda.support.cloud.core.loadbalancer.filter.ServiceInstanceListFilter;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.loadbalancer.core.DelegatingServiceInstanceListSupplier;
 import org.springframework.cloud.loadbalancer.core.ServiceInstanceListSupplier;

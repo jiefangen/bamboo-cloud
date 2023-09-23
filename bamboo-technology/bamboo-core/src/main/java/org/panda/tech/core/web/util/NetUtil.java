@@ -102,11 +102,11 @@ public class NetUtil {
     }
 
     /**
-     * 获取本机内网IP地址
+     * 获取本机网卡IP地址
      *
      * @return 本机网卡IP地址
      */
-    public static String getIntranetIp() {
+    public static String getLocalIp() {
         List<String> ips = getLocalIntranetIps();
         return ips.size() > 0 ? ips.get(0) : LOCAL_IP_V4;
     }

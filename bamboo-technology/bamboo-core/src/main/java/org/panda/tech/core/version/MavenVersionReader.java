@@ -11,5 +11,4 @@ public class MavenVersionReader extends AbstractVersionReader {
     protected String readFullVersion(ApplicationContext context) {
         return context.getEnvironment().getProperty("project.version");
     }
-
 }
