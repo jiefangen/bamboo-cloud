@@ -21,10 +21,15 @@ public class NacosConsumerController {
     @Autowired
     private ConsumerService consumerService;
 
+    @GetMapping("/getSptConfigHome")
+    public RestfulResult getSptConfigHome() {
+        Object result = consumerService.getServiceHome("spt-config");
+        return RestfulResult.success(result);
+    }
+
     @GetMapping("/getSptConfigIndex")
     public RestfulResult getSptConfigIndex() {
         Object result = consumerService.getServiceIndex("spt-config");
         return RestfulResult.success(result);
     }
-
 }
