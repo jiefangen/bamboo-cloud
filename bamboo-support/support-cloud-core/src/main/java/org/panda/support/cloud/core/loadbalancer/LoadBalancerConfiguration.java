@@ -17,6 +17,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.core.env.Environment;
 
+/**
+ * 配置负载均衡策略
+ */
 @Import(NacosLoadBalancerClientConfiguration.BlockingSupportConfiguration.class)
 public class LoadBalancerConfiguration extends NacosLoadBalancerClientConfiguration {
 

@@ -5,5 +5,3 @@ spring:
     active: dev
 server:
   port: 12002
-  servlet:
-    context-path: /spt-discovery

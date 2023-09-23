@@ -1,4 +1,4 @@
-package org.panda.support.cloud.core.config;
+package org.panda.support.cloud.core.configuration;
 
 import org.panda.bamboo.common.constant.basic.Strings;
 import org.springframework.context.ApplicationContext;

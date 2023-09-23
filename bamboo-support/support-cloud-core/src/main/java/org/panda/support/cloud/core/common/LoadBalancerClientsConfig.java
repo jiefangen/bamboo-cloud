@@ -5,7 +5,7 @@ import org.springframework.cloud.loadbalancer.annotation.LoadBalancerClients;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * 客户端自定义负载
+ * 默认负载均衡客户端配置
  *
  * @author fangen
  **/

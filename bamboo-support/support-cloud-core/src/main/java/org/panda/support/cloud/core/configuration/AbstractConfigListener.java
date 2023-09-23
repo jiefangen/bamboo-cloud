@@ -1,4 +1,4 @@
-package org.panda.support.cloud.core.config;
+package org.panda.support.cloud.core.configuration;
 
 import com.alibaba.cloud.nacos.NacosConfigManager;
 import com.alibaba.cloud.nacos.NacosConfigProperties;

@@ -14,11 +14,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Nacos配置管理中心
+ * Nacos配置中心
  *
  * @author fangen
  **/
-@Api(tags = "微服务配置中心")
+@Api(tags = "通用配置内容")
 @RestController
 @RequestMapping(value = "/config")
 public class NacosConfigController {

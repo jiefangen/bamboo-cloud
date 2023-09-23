@@ -19,5 +19,4 @@ public class WebMvcConfig extends WebMvcConfigurerSupport {
     public RequestLogFilter requestLogFilter() {
         return new RequestLogFilter("/spt-discovery/**");
     }
-
 }

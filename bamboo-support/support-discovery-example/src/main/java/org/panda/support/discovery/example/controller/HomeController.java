@@ -1,6 +1,6 @@
 package org.panda.support.discovery.example.controller;
 
-import org.panda.bamboo.common.util.lang.StringUtil;
+import io.swagger.annotations.Api;
 import org.panda.tech.core.web.restful.RestfulResult;
 import org.panda.tech.core.web.util.NetUtil;
 import org.panda.tech.core.web.util.WebHttpUtil;
@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
+@Api(tags = "微服务启动语")
 @Controller
 @RequestMapping(value = "/home")
 public class HomeController {
@@ -25,24 +26,20 @@ public class HomeController {
     @Value("${server.port}")
     private String port;
 
-    private String getApplicationDesc() {
-        return StringUtil.firstToUpperCase(name) + " Microservice";
-    }
-
     @GetMapping
     @ResponseBody
     public RestfulResult<String> home() {
-        return RestfulResult.success(getApplicationDesc());
+        return RestfulResult.success("The " + name + " microservice");
     }
 
     @GetMapping(value = "/index")
     @ResponseBody
     public RestfulResult<Map<String, Object>> index(HttpServletRequest request) {
         Map<String, Object> resultMap = new HashMap<>();
-        resultMap.put("serviceName", name);
+        resultMap.put("service", name);
         resultMap.put("env", env);
         resultMap.put("port", port);
-        resultMap.put("localHost", NetUtil.getLocalHost());
+        resultMap.put("localIp", NetUtil.getLocalIp());
         resultMap.put("remoteAddress", WebHttpUtil.getRemoteAddress(request));
         return RestfulResult.success(resultMap);
     }

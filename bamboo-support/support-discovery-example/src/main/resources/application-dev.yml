@@ -1,11 +1,11 @@
 spring:
   cloud:
     nacos:
-      discovery:
+      config:
         server-addr: 127.0.0.1:8848,127.0.0.1:8849,127.0.0.1:8850
         namespace: 572bb02c-19b7-4b17-89c5-ec8dd78ae7ae
         group: SPT_GROUP
-      config:
+      discovery:
         server-addr: 127.0.0.1:8848,127.0.0.1:8849,127.0.0.1:8850
         namespace: 572bb02c-19b7-4b17-89c5-ec8dd78ae7ae
         group: SPT_GROUP

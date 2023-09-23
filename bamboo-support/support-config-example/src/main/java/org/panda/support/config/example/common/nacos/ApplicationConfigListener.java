@@ -2,7 +2,7 @@ package org.panda.support.config.example.common.nacos;
 
 import org.panda.bamboo.common.constant.basic.Strings;
 import org.panda.bamboo.common.util.LogUtil;
-import org.panda.support.cloud.core.config.AbstractConfigListener;
+import org.panda.support.cloud.core.configuration.AbstractConfigListener;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
