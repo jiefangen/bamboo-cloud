@@ -30,7 +30,7 @@ public class NacosConfigController {
     public RestfulResult getCommonConfig() {
         Environment environment = ApplicationContextBean.applicationContext.getEnvironment();
         Map<String, Object> resultMap = new HashMap<>();
-        resultMap.put("useLocalCache", environment.getProperty("nacos.common.config.useLocalCache"));
+        resultMap.put("useLocalCache", environment.getProperty("nacos.common.config.appLocalCache"));
         resultMap.put("configProperties", configProperties.toString());
         return RestfulResult.success(resultMap);
     }

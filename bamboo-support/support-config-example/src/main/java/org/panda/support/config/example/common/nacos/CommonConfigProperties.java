@@ -11,8 +11,7 @@ import org.springframework.context.annotation.Configuration;
 @RefreshScope
 public class CommonConfigProperties {
 
+    private String name;
+
     private Boolean appLocalCache;
-
-    private String desc;
-
 }

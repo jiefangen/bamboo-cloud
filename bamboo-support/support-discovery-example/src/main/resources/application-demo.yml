@@ -2,14 +2,13 @@ spring:
   cloud:
     nacos:
       config:
-        server-addr: 198.19.249.72:8848,198.19.249.101:8850,198.19.249.34:8852
-        namespace: f8e750ab-6c3b-4568-b397-0cb0ca2f3a00
+        server-addr: 198.19.249.35:7847
+        namespace: f2b00b45-b5a5-46e4-a2ad-67e83b2058b7
         group: SPT_GROUP
       discovery:
-        server-addr: 198.19.249.72:8848,198.19.249.101:8850,198.19.249.34:8852
-        namespace: f8e750ab-6c3b-4568-b397-0cb0ca2f3a00
+        server-addr: 198.19.249.35:7847
+        namespace: f2b00b45-b5a5-46e4-a2ad-67e83b2058b7
         group: SPT_GROUP
   config:
     import:
       - optional:nacos:${spring.application.name}-${spring.profiles.active}.yml?refreshEnabled=true
-      - optional:nacos:common-config.properties

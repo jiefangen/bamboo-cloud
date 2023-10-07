@@ -2,12 +2,12 @@ spring:
   cloud:
     nacos:
       config:
-        server-addr: 127.0.0.1:8848,127.0.0.1:8850,127.0.0.1:8852
-        namespace: 572bb02c-19b7-4b17-89c5-ec8dd78ae7ae
+        server-addr: 127.0.0.1:7847
+        namespace: 877bab8f-8daf-4959-b684-8fb3088ef049
         group: SPT_GROUP
       discovery:
-        server-addr: 127.0.0.1:8848,127.0.0.1:8850,127.0.0.1:8852
-        namespace: 572bb02c-19b7-4b17-89c5-ec8dd78ae7ae
+        server-addr: 127.0.0.1:7847
+        namespace: 877bab8f-8daf-4959-b684-8fb3088ef049
         group: SPT_GROUP
   config:
     import:

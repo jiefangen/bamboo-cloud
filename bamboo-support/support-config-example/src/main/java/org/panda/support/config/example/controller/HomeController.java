@@ -29,7 +29,7 @@ public class HomeController {
     @GetMapping
     @ResponseBody
     public RestfulResult<String> home() {
-        return RestfulResult.success("The" + name + " microservice");
+        return RestfulResult.success("The " + name + " microservice");
     }
 
     @GetMapping(value = "/index")
