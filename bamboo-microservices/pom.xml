@@ -19,7 +19,7 @@
         <support.version>1.0.0</support.version>
         <technology.version>1.0.0</technology.version>
 
-        <!-- 稳定微服务基础套件，优选JDK11版本 -->
+        <!-- 微服务稳定基础套件，优选JDK11版本 -->
         <spring-cloud-alibaba.version>2021.0.5.0</spring-cloud-alibaba.version>
         <spring-cloud.version>2021.0.5</spring-cloud.version>
         <spring-boot.version>2.6.13</spring-boot.version>

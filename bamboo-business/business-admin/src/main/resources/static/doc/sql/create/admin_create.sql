@@ -1,6 +1,7 @@
 /* 后台管理系统库创建脚本 */
-CREATE DATABASE  IF NOT EXISTS `admin_system` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `admin_system`;
+DROP DATABASE IF EXISTS `biz-admin`;
+CREATE DATABASE  IF NOT EXISTS `biz-admin` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `biz-admin`;
 
 SET NAMES utf8mb4;
 SET GLOBAL FOREIGN_KEY_CHECKS = 0;

@@ -17,8 +17,13 @@
 
     <properties>
         <business.version>1.0.0</business.version>
+        <service.version>1.0.0</service.version>
+        <support.version>1.0.0</support.version>
         <technology.version>1.0.0</technology.version>
 
+        <!-- 微服务稳定基础套件，优选JDK11版本 -->
+        <spring-cloud-alibaba.version>2021.0.5.0</spring-cloud-alibaba.version>
+        <spring-cloud.version>2021.0.5</spring-cloud.version>
         <spring-boot.version>2.6.13</spring-boot.version>
 
         <oracle-jdk.version>11</oracle-jdk.version>
@@ -28,12 +33,13 @@
     </properties>
 
     <dependencies>
-        <!-- 技术框架核心聚合组件依赖 -->
+        <!-- 微服务架构服务提供通用支持 -->
         <dependency>
-            <groupId>org.panda.tech</groupId>
-            <artifactId>bamboo-core</artifactId>
-            <version>1.0.0</version>
+            <groupId>org.panda.support</groupId>
+            <artifactId>support-cloud-core</artifactId>
+            <version>${support.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -44,6 +50,10 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
@@ -51,6 +61,20 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring-cloud-alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
