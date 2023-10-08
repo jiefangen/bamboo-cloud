@@ -2,13 +2,11 @@ spring:
   application:
     name: ms-notice
   profiles:
-    active: local
+    active: dev
   messages:
     basename: message/error/notice-error,message/info/notice-info
 server:
   port: 11002
-  servlet:
-    context-path: /ms-notice
 
 logging:
   level:

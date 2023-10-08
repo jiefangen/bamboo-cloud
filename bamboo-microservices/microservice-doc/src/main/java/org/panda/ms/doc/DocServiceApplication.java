@@ -1,8 +1,9 @@
 package org.panda.ms.doc;
 
-import org.panda.tech.core.CoreModule;
+import org.panda.support.cloud.core.CloudCoreModule;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Import;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -11,9 +12,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  *
  * @author fangen
  */
-@SpringBootApplication
-@Import({CoreModule.class})
+@EnableDiscoveryClient
+@Import({CloudCoreModule.class})
 @EnableTransactionManagement
+@SpringBootApplication
 public class DocServiceApplication {
     public static void main(String[] args) {
         SpringApplication.run(DocServiceApplication.class, args);

@@ -1,8 +1,9 @@
 package org.panda.ms.notice;
 
-import org.panda.tech.core.CoreModule;
+import org.panda.support.cloud.core.CloudCoreModule;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Import;
 
 /**
@@ -10,8 +11,9 @@ import org.springframework.context.annotation.Import;
  *
  * @author fangen
  */
+@EnableDiscoveryClient
+@Import({CloudCoreModule.class})
 @SpringBootApplication
-@Import({CoreModule.class})
 public class NoticeServiceApplication {
     public static void main(String[] args) {
         SpringApplication.run(NoticeServiceApplication.class, args);
