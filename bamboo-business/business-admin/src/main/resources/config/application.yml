@@ -1,17 +1,10 @@
 spring:
   application:
-    name: biz-admin
+    name: admin
   profiles:
     active: dev
 server:
   port: 10001
-  servlet:
-      context-path: /biz-admin
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml
-
-# 日志相关配置
-logging:
-  level:
-    org.panda.business.admin: debug

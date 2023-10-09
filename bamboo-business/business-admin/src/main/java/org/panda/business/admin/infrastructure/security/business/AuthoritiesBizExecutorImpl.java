@@ -155,7 +155,7 @@ public class AuthoritiesBizExecutorImpl implements AuthoritiesBizExecutor {
     @Override
     public String[] getUrlPatterns() {
         Optional<String> authUrlPatternsOptional = settingsManager.getParamValue(SettingsKeys.AUTH_URL_PATTERNS, appName);
-        String[] urlPatterns = new String[]{"/system/**"};
+        String[] urlPatterns = new String[]{"/system/**,/monitor/**,/settings/**"};
         if (authUrlPatternsOptional.isPresent()) {
             String authUrlPatterns = authUrlPatternsOptional.get();
             urlPatterns = authUrlPatterns.split("\\,");
