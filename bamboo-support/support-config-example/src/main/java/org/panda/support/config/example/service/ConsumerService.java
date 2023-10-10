@@ -1,4 +1,4 @@
-package org.panda.support.discovery.example.service;
+package org.panda.support.config.example.service;
 
 import org.panda.bamboo.common.constant.Commons;
 import org.panda.bamboo.common.constant.basic.Strings;

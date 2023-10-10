@@ -26,7 +26,21 @@ public class RestTemplateConfig {
         return factory;
     }
 
+    /**
+     * 微服务间负载通信客户端
+     */
     @LoadBalanced
+    @Bean
+    public RestTemplate restTemplateLb(ClientHttpRequestFactory factory) {
+        RestTemplate restTemplate = new RestTemplate(factory);
+        // 兼容支持中文编码
+        restTemplate.getMessageConverters().set(1, new StringHttpMessageConverter(StandardCharsets.UTF_8));
+        return restTemplate;
+    }
+
+    /**
+     * 常规服务通信客户端
+     */
     @Bean
     public RestTemplate restTemplate(ClientHttpRequestFactory factory) {
         RestTemplate restTemplate = new RestTemplate(factory);

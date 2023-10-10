@@ -1,6 +1,6 @@
 package org.panda.tech.core.version;
 
-import org.panda.tech.core.util.ProfileSupplier;
+import org.panda.tech.core.util.supplier.ProfileSupplier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;

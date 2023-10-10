@@ -1,4 +1,4 @@
-package org.panda.tech.core.util;
+package org.panda.tech.core.util.supplier;
 
 import org.panda.bamboo.common.constant.basic.Strings;
 import org.panda.bamboo.common.util.SpringUtil;

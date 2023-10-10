@@ -22,7 +22,9 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 
 /**
- * Http客户端工具类
+ * HttpClient客户端工具类
+ * 建议场景：具有稳定可靠的生态，提供身份验证、Cookie 管理、重定向管理等
+ * 根据实际需求再扩展
  */
 public class HttpClientUtil {
 
@@ -139,4 +141,19 @@ public class HttpClientUtil {
         }
     }
 
+    public static String commonRequest(HttpRequestMethod method, String url, Map<String, Object> params,
+                                       Map<String, String> headers, String encoding) throws Exception {
+        Binate<Integer, String> binary = request(method, url, params, headers, encoding);
+        return binary.getRight();
+    }
+
+    public static String commonRequestByGet(String url, Map<String, Object> params,
+                                                       Map<String, String> headers) throws Exception {
+        return commonRequest(HttpRequestMethod.GET, url, params, headers, Strings.ENCODING_UTF8);
+    }
+
+    public static String commonRequestByPost(String url, Map<String, Object> params,
+                                                        Map<String, String> headers) throws Exception {
+        return commonRequest(HttpRequestMethod.POST, url, params, headers, Strings.ENCODING_UTF8);
+    }
 }
