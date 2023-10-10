@@ -6,9 +6,7 @@ import org.panda.tech.core.web.util.NetUtil;
 import org.panda.tech.core.web.util.WebHttpUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -28,13 +26,13 @@ public class HomeController {
 
     @GetMapping
     @ResponseBody
-    public RestfulResult<String> home() {
-        return RestfulResult.success("The " + name + " microservice");
+    public RestfulResult<String> home(@RequestParam String greetings) {
+        return RestfulResult.success("Welcome to " + name + " microservice..." + greetings);
     }
 
     @GetMapping(value = "/index")
     @ResponseBody
-    public RestfulResult<Map<String, Object>> index(HttpServletRequest request) {
+    public RestfulResult index(HttpServletRequest request) {
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("service", name);
         resultMap.put("env", env);

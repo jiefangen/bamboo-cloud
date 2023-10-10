@@ -1,4 +1,4 @@
-package org.panda.support.discovery.example.service;
+package org.panda.support.discovery.example.service.restlb;
 
 import org.panda.bamboo.common.constant.Commons;
 import org.panda.bamboo.common.constant.basic.Strings;
@@ -8,36 +8,35 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Map;
+
 /**
- * 消费者服务
+ * Home服务restLb方式调用
  *
  * @author fangen
  **/
 @Service
-public class ConsumerService {
+public class HomeRestLbService {
 
     private final RestTemplate restTemplateLb;
 
     @Autowired
-    public ConsumerService(RestTemplate restTemplateLb) {
+    public HomeRestLbService(RestTemplate restTemplateLb) {
         this.restTemplateLb = restTemplateLb;
     }
 
     public Object getServiceHome(String service) {
-        String url = NetUtil.PROTOCOL_HTTP + service + "/home";
-        RestfulResult restfulResult =  restTemplateLb.getForObject(url, RestfulResult.class);
+        String url = NetUtil.PROTOCOL_HTTP + service + "/home?greetings=restTemplateLb";
+        RestfulResult<String> restfulResult =  restTemplateLb.getForObject(url, RestfulResult.class);
         if (restfulResult != null && restfulResult.getCode() == Commons.RESULT_SUCCESS_CODE) {
             return restfulResult.getData();
         }
         return Strings.STR_NULL;
     }
 
-    public Object getServiceIndex(String service) {
+    public RestfulResult<Map<String, Object>> getServiceIndex(String service) {
         String url = NetUtil.PROTOCOL_HTTP + service + "/home/index";
-        RestfulResult restfulResult =  restTemplateLb.getForObject(url, RestfulResult.class);
-        if (restfulResult != null && restfulResult.getCode() == Commons.RESULT_SUCCESS_CODE) {
-            return restfulResult.getData();
-        }
-        return Strings.STR_NULL;
+        RestfulResult<Map<String, Object>> restfulResult =  restTemplateLb.getForObject(url, RestfulResult.class);
+        return restfulResult;
     }
 }

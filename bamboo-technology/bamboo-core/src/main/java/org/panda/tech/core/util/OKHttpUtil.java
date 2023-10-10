@@ -31,8 +31,10 @@ public class OKHttpUtil {
     private static Response execute(HttpRequestMethod method, String url, Map<String, Object> params,
                                                  Map<String, String> headerMap) throws Exception {
         Request.Builder requestBuilder = new Request.Builder();
-        for (Map.Entry<String, String> entry : headerMap.entrySet()) {
-            requestBuilder.addHeader(entry.getKey(), entry.getValue());
+        if (headerMap != null && !headerMap.isEmpty()) {
+            for (Map.Entry<String, String> entry : headerMap.entrySet()) {
+                requestBuilder.addHeader(entry.getKey(), entry.getValue());
+            }
         }
         Request request = null;
         switch (method) {
