@@ -12,6 +12,7 @@
         <module>support-cloud-core</module>
         <module>support-config-example</module>
         <module>support-discovery-example</module>
+        <module>support-gateway</module>
     </modules>
 
     <properties>
