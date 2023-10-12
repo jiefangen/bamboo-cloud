@@ -67,15 +67,15 @@ spring:
             multi-statement-allow: true                                        #允许一次执行多条sql
 
 
-# Actuator监控配置,开启监控所有端点
+# actuator监控配置,开启监控所有端点
 management:
+  endpoint:
+    health:
+      show-details: always
   endpoints:
     web:
       exposure:
         include: '*'
-  endpoint:
-    health:
-      show-details: always
 
 # 日志相关配置
 logging:

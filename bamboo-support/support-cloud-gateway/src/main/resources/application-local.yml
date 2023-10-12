@@ -1,0 +1,20 @@
+spring:
+  cloud:
+    gateway:
+      routes: # 网关路由配置
+        - id: discovery_route
+          # lb指的是从nacos中按照名称获取微服务，并遵循负载均衡策略
+          uri: lb://spt-discovery
+          # 断言规则，用于路由规则的匹配
+          predicates:
+            - Path=/spt-discovery/**
+          filters:
+            # 转发之前，去掉第一层的路径
+            - StripPrefix=1
+        - id: payment_route
+          uri: lb://ms-payment
+          predicates:
+            - Path=/ms-payment/**
+            - Weight=MS_GROUP,1
+          filters:
+            - StripPrefix=1
