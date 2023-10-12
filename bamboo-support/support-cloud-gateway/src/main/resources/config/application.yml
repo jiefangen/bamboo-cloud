@@ -2,7 +2,7 @@ spring:
   application:
     name: spt-gateway
   profiles:
-    active: dev
+    active: demo
   main:
     web-application-type: reactive
 server:

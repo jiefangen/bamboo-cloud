@@ -59,14 +59,19 @@ public class OKHttpUtil {
     public static String request(HttpRequestMethod method, String url, Map<String, Object> params,
                                     Map<String, String> headerMap) throws Exception {
         Response response = execute(method, url, params, headerMap);
-        if (response == null) {
-            return Strings.STR_NULL;
+        if (response != null) {
+            try {
+                String responseBody = Objects.requireNonNull(response.body()).string();
+                if (!response.isSuccessful()) {
+                    LogUtil.error(OKHttpUtil.class, responseBody);
+                }
+                return responseBody;
+            } finally {
+                // 确保关闭请求连接
+                response.close();
+            }
         }
-        String responseBody = Objects.requireNonNull(response.body()).string();
-        if (!response.isSuccessful()) {
-            LogUtil.error(OKHttpUtil.class, responseBody);
-        }
-        return responseBody;
+        return Strings.STR_NULL;
     }
 
 

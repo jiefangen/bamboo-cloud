@@ -27,6 +27,10 @@ public class HomeController {
     private String port;
 
     private String getApplicationDesc() {
+        if (name.contains("-")) {
+            String appName = name.split("-")[1];
+            return StringUtil.firstToUpperCase(appName) + " Microservice";
+        }
         return StringUtil.firstToUpperCase(name) + " Microservice";
     }
 
