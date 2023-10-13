@@ -2,7 +2,7 @@ package org.panda.tech.data.support;
 
 import org.panda.bamboo.common.util.clazz.ClassUtil;
 import org.panda.tech.data.Repox;
-import org.panda.tech.data.model.entity.Entity;
+import org.panda.bamboo.common.model.entity.Entity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 

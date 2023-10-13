@@ -122,6 +122,36 @@ public class StringUtil {
     }
 
     /**
+     * 在指定字符串中查找指定正则表达式首个匹配的起始位置
+     *
+     * @param s       字符串
+     * @param pattern 正则表达式
+     * @return 首个匹配的起始位置
+     */
+    public static int regexFirstStart(String s, String pattern) {
+        Matcher matcher = Pattern.compile(pattern).matcher(s);
+        if (matcher.find()) {
+            return matcher.start();
+        }
+        return -1;
+    }
+
+    /**
+     * 在指定字符串中查找指定正则表达式首个匹配的结束位置
+     *
+     * @param s       字符串
+     * @param pattern 正则表达式
+     * @return 首个匹配的结束位置
+     */
+    public static int regexFirstEnd(String s, String pattern) {
+        Matcher matcher = Pattern.compile(pattern).matcher(s);
+        if (matcher.find()) {
+            return matcher.end();
+        }
+        return -1;
+    }
+
+    /**
      * 生成随机字符串。其中type指定随机字符串类型，取值范围: RANDOM_TYPE_NUMBER, RANDOM_TYPE_LETTER,
      * RANDOM_TYPE_MIXED
      *

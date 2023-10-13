@@ -1,6 +1,6 @@
 package org.panda.tech.data.cache;
 
-import org.panda.tech.data.model.entity.Unity;
+import org.panda.bamboo.common.model.entity.Unity;
 
 import java.io.Serializable;
 

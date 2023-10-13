@@ -3,7 +3,7 @@ package org.panda.tech.data.support;
 import org.panda.bamboo.common.util.clazz.ClassUtil;
 import org.panda.bamboo.core.beans.ContextInitializedBean;
 import org.panda.tech.data.Repox;
-import org.panda.tech.data.model.entity.Entity;
+import org.panda.bamboo.common.model.entity.Entity;
 import org.springframework.aop.framework.Advised;
 import org.springframework.context.ApplicationContext;
 import org.springframework.data.repository.CrudRepository;

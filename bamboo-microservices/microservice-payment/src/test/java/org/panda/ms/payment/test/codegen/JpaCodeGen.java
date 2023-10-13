@@ -6,7 +6,7 @@ import org.panda.ms.payment.test.config.JpaCodegenProperties;
 import org.panda.tech.data.jpa.codegen.JpaCodeGenConfigSupport;
 import org.panda.tech.data.jpa.codegen.JpaEntityGenerator;
 import org.panda.tech.data.jpa.codegen.JpaRepoGenerator;
-import org.panda.tech.data.model.entity.Entity;
+import org.panda.bamboo.common.model.entity.Entity;
 
 public class JpaCodeGen extends JpaCodeGenConfigSupport {
 

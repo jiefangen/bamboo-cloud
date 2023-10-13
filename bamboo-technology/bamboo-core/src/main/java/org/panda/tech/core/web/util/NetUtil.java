@@ -8,6 +8,7 @@ import org.panda.bamboo.common.util.lang.StringUtil;
 
 import java.io.UnsupportedEncodingException;
 import java.net.*;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 /**
@@ -457,6 +458,10 @@ public class NetUtil {
             return true;
         }
         return false;
+    }
+
+    public static String encode(String s) {
+        return URLEncoder.encode(s, StandardCharsets.UTF_8);
     }
 
 }

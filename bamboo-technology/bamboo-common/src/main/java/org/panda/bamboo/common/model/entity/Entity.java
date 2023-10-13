@@ -1,6 +1,6 @@
-package org.panda.tech.data.model.entity;
+package org.panda.bamboo.common.model.entity;
 
-import org.panda.tech.data.model.DataModel;
+import org.panda.bamboo.common.model.DomainModel;
 
 /**
  * 实体模型，具有唯一标识属性的数据领域模型
@@ -8,5 +8,5 @@ import org.panda.tech.data.model.DataModel;
  *
  * @author fangen
  */
-public interface Entity extends DataModel {
+public interface Entity extends DomainModel {
 }
