@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: spt-sso
+  profiles:
+    active: dev
+server:
+  port: 12004

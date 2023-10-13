@@ -11,6 +11,7 @@
     <modules>
         <module>support-cloud-core</module>
         <module>support-cloud-gateway</module>
+        <module>support-cloud-sso</module>
         <module>support-config-example</module>
         <module>support-discovery-example</module>
     </modules>
