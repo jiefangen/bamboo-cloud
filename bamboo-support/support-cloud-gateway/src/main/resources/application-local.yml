@@ -4,18 +4,43 @@ spring:
       discovery:
         group: BAMBOO_GROUP
     gateway:
-      # 网关路由配置
       routes:
-        - id: document_route
-          # lb指的是从nacos中按照名称获取微服务，并遵循负载均衡策略
-          uri: lb://ms-document
-          # 断言规则，用于路由规则的匹配
+        # 路由的唯一标识，区别于其他Route
+        - id: discovery_route
+          # 路由指向目的地uri，即客户端请求最终被转发到的微服务
+          uri: lb://spt-discovery
+          # 用于多个Route之间的排序，数值越小排序越靠前，匹配优先级越高
+          order: 1
+          # 用来进行条件判断，只有断言都返回真，才会真正的执行路由
           predicates:
-            - Path=/ms-document/**
+            - Path=/spt-discovery/**
+          # 过滤器用于修改请求和响应信息
           filters:
             # 转发之前，去掉第一层的路径
             - StripPrefix=1
-        - id: ms-notice_route
+            # 时间校验
+            - After=2022-02-10T16:45:10.259+08:00[Asia/Shanghai] # 在这个时间点之后可以访问
+            - Before=2022-02-10T16:45:10.259+08:00[Asia/Shanghai] # 在这个时间点之前可以访问
+            # Cookie校验
+            - Cookie=age,18 # age是cookie名，18是cookie值，携带该cookie才能访问
+            # Header校验
+            - Header=token,123 # 携带该Header才能访问
+            # Host校验
+            - Host=**.orb.local.com
+            # Method方法校验
+            - Method=GET
+            # Query参数校验
+            - Query=baz,123
+            # RemoteAddr地址校验
+            - RemoteAddr=192.168.234.122,192.168.234.123
+
+        - id: document_route
+          uri: lb://ms-document
+          predicates:
+            - Path=/ms-document/**
+          filters:
+            - StripPrefix=1
+        - id: notice_route
           uri: lb://ms-notice
           predicates:
             - Path=/ms-notice/**
@@ -27,6 +52,12 @@ spring:
             - Path=/ms-payment/**
           filters:
             - StripPrefix=1
+    sentinel:
+      transport:
+        port: 8719 # 默认8719(当前服务，对sentinel提供的，调用端口号，用于监控服务访问数据)
+        dashboard: localhost:7719
+      eager: true
+
       # 跨域配置
       globalcors:
         cors-configurations:
@@ -38,3 +69,5 @@ spring:
               - DELETE
               - PUT
               - OPTIONS
+
+

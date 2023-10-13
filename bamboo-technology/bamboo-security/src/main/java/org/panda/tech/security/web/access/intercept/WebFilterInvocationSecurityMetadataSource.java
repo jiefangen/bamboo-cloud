@@ -28,7 +28,7 @@ import java.util.*;
  * 用于获取访问资源需要具备的权限
  */
 public class WebFilterInvocationSecurityMetadataSource
-        implements FilterInvocationSecurityMetadataSource, ContextInitializedBean, ConfigAuthorityResolver {
+        implements FilterInvocationSecurityMetadataSource, ConfigAuthorityResolver, ContextInitializedBean {
 
     @Autowired
     private HandlerMethodMapping handlerMethodMapping;
