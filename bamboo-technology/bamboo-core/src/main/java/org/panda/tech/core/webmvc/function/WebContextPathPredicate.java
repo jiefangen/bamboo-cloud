@@ -1,4 +1,4 @@
-package org.panda.tech.core.web.mvc.function;
+package org.panda.tech.core.webmvc.function;
 
 import org.apache.commons.lang3.StringUtils;
 import org.panda.bamboo.common.constant.basic.Strings;

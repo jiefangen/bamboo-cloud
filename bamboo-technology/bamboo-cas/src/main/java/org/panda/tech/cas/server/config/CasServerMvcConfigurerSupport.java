@@ -1,6 +1,6 @@
 package org.panda.tech.cas.server.config;
 
-import org.panda.tech.core.web.mvc.view.config.WebViewMvcConfigurerSupport;
+import org.panda.tech.core.webmvc.view.config.WebViewMvcConfigurerSupport;
 import org.sitemesh.builder.SiteMeshFilterBuilder;
 
 /**

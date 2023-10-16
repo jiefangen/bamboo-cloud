@@ -10,6 +10,7 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.*;
 import java.security.*;
+import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
@@ -81,6 +82,26 @@ public class EncryptUtil {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T extends PublicKey> T generatePublic(KeyFactory factory, String publicKey) {
+        try {
+            byte[] data = Base64.getDecoder().decode(publicKey);
+            return (T) factory.generatePublic(new X509EncodedKeySpec(data));
+        } catch (InvalidKeySpecException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T extends PrivateKey> T generatePrivate(KeyFactory factory, String privateKey) {
+        try {
+            byte[] data = Base64.getDecoder().decode(privateKey);
+            return (T) factory.generatePrivate(new PKCS8EncodedKeySpec(data));
+        } catch (InvalidKeySpecException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static String encryptByAes(String source, String key) {

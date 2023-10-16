@@ -40,7 +40,10 @@ public class WebConstants {
      * 头信息：原始请求
      */
     public static final String HEADER_ORIGINAL_REQUEST = "Original-Request";
-
+    /**
+     * 头信息名：鉴权业务类型
+     */
+    public static final String HEADER_AUTH_TYPE = "Auth-Type";
     /**
      * 头信息名：鉴权认证
      */

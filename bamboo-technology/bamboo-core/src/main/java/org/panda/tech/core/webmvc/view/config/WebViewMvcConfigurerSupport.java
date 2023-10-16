@@ -1,9 +1,8 @@
-package org.panda.tech.core.web.mvc.view.config;
+package org.panda.tech.core.webmvc.view.config;
 
 import org.apache.commons.lang3.StringUtils;
 import org.panda.bamboo.common.constant.basic.Strings;
 import org.panda.bamboo.common.util.lang.StringUtil;
-import org.panda.tech.core.web.mvc.function.WebContextPathPredicate;
 import org.panda.tech.core.web.mvc.servlet.filter.ForbidAccessFilter;
 import org.panda.tech.core.web.mvc.servlet.resource.AntPatternResourceResolver;
 import org.panda.tech.core.web.mvc.support.WebMvcConfigurerSupport;
@@ -15,12 +14,10 @@ import org.springframework.boot.autoconfigure.web.servlet.WebMvcProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.Ordered;
-import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
 import javax.servlet.DispatcherType;
-import java.util.List;
 
 /**
  * WEB视图层MVC配置支持
@@ -31,10 +28,6 @@ public abstract class WebViewMvcConfigurerSupport extends WebMvcConfigurerSuppor
     private WebMvcProperties mvcProperties;
     @Autowired
     private WebProperties webProperties;
-//    @Autowired
-//    private ViewErrorPathProperties pathProperties;
-    @Autowired
-    private WebContextPathPredicate webContextPathPredicate;
 
     @Bean
     public FilterRegistrationBean<ForbidAccessFilter> forbidAccessFilter() {
@@ -64,11 +57,6 @@ public abstract class WebViewMvcConfigurerSupport extends WebMvcConfigurerSuppor
         builder.addExcludedPath("/swagger-ui.html");
         builder.addExcludedPath("/qrcode");
         builder.addExcludedPath("/qrcode/*");
-    }
-
-    @Override
-    public void configureHandlerExceptionResolvers(List<HandlerExceptionResolver> resolvers) {
-//        resolvers.add(new ViewDefaultExceptionResolver(this.pathProperties, this.webContextPathPredicate));
     }
 
     @Override

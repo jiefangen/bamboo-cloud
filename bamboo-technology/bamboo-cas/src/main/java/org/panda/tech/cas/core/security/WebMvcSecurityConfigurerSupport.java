@@ -6,11 +6,14 @@ import org.panda.tech.core.web.config.meta.ApiMetaProperties;
 import org.panda.tech.core.web.config.security.WebSecurityProperties;
 import org.panda.tech.core.web.mvc.servlet.mvc.method.HandlerMethodMapping;
 import org.panda.tech.core.web.mvc.util.SwaggerUtil;
+import org.panda.tech.cas.core.security.feign.FeignJwtAuthenticationFilter;
+import org.panda.tech.security.access.ConfigAuthorityAnnotationResolver;
 import org.panda.tech.security.access.UserAuthorityAccessDecisionManager;
 import org.panda.tech.security.config.WebHttpSecurityConfigurer;
 import org.panda.tech.security.config.annotation.ConfigAnonymous;
 import org.panda.tech.security.config.annotation.ConfigAuthority;
 import org.panda.tech.security.config.annotation.ConfigPermission;
+import org.panda.tech.security.user.UserDetailsProvider;
 import org.panda.tech.security.web.SecurityUrlProvider;
 import org.panda.tech.security.web.access.AccessDeniedBusinessExceptionHandler;
 import org.panda.tech.security.web.access.intercept.WebFilterInvocationSecurityMetadataSource;
@@ -39,10 +42,6 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RegexRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.truenewx.tnxjee.model.spec.user.security.UserDetailsProvider;
-import org.truenewx.tnxjee.webmvc.feign.FeignJwtAuthenticationFilter;
-import org.truenewx.tnxjee.webmvc.security.core.DefaultUserDetailsProvider;
-import org.truenewx.tnxjee.webmvc.security.web.access.ConfigAuthorityAnnotationResolver;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -229,7 +228,7 @@ public abstract class WebMvcSecurityConfigurerSupport extends WebSecurityConfigu
         matchers.add(new AntPathRequestMatcher("/error/**"));
         // 打开登录表单页面和登出的请求始终可匿名访问
         // 注意：不能将请求URL加入忽略清单中，如果加入，则请求将无法经过安全框架过滤器处理
-        String loginFormUrl = this.urlProvider.getDefaultLoginFormUrl();
+        String loginFormUrl = this.urlProvider.getDefaultLoginUrl();
         if (loginFormUrl.startsWith(Strings.SLASH)) { // 相对路径才需要添加到匿名清单中
             int index = loginFormUrl.indexOf(Strings.QUESTION);
             if (index > 0) { // 去掉登录表单地址中可能的参数

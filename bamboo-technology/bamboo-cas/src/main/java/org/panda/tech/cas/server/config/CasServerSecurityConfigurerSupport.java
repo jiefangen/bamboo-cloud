@@ -1,13 +1,13 @@
 package org.panda.tech.cas.server.config;
 
+import org.panda.tech.cas.core.security.WebViewSecurityConfigurerSupport;
+import org.panda.tech.cas.server.authentication.CasAuthenticationSuccessHandler;
+import org.panda.tech.cas.server.authentication.logout.CasServerLogoutHandler;
+import org.panda.tech.cas.server.authentication.logout.CasServerLogoutSuccessHandler;
 import org.panda.tech.security.config.WebHttpSecurityConfigurer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
-import org.truenewx.tnxjee.webmvc.view.security.config.WebViewSecurityConfigurerSupport;
-import org.truenewx.tnxjeex.cas.server.authentication.CasAuthenticationSuccessHandler;
-import org.truenewx.tnxjeex.cas.server.authentication.logout.CasServerLogoutHandler;
-import org.truenewx.tnxjeex.cas.server.authentication.logout.CasServerLogoutSuccessHandler;
 
 /**
  * CAS服务端安全配置器支持

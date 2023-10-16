@@ -3,14 +3,12 @@ package org.panda.tech.cas.core.security;
 import org.apache.commons.lang3.StringUtils;
 import org.panda.bamboo.common.constant.basic.Strings;
 import org.panda.bamboo.common.util.lang.StringUtil;
-import org.panda.tech.core.web.util.NetUtil;
+import org.panda.tech.cas.core.security.controller.RedirectControllerSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.servlet.WebMvcProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.access.AccessDeniedHandlerImpl;
-import org.truenewx.tnxjee.webmvc.view.controller.RedirectControllerSupport;
-import org.truenewx.tnxjee.webmvc.view.exception.resolver.ViewResolvableExceptionResolver;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -21,30 +19,12 @@ import java.util.Collections;
 public abstract class WebViewSecurityConfigurerSupport extends WebMvcSecurityConfigurerSupport {
 
     @Autowired
-    private ViewResolvableExceptionResolver viewResolvableExceptionResolver;
-    @Autowired
     private WebMvcProperties mvcProperties;
 
     @Bean
     @Override
     public AccessDeniedHandler accessDeniedHandler() {
         AccessDeniedHandlerImpl accessDeniedHandler = (AccessDeniedHandlerImpl) super.accessDeniedHandler();
-        String prefix = this.mvcProperties.getView().getPrefix();
-        if (StringUtils.isNotBlank(prefix)) {
-            prefix = NetUtil.standardizeUri(prefix);
-        } else {
-            prefix = Strings.EMPTY;
-        }
-        String businessErrorPath = this.viewResolvableExceptionResolver.getBusinessErrorPath();
-        if (StringUtils.isNotBlank(businessErrorPath)) {
-            businessErrorPath = NetUtil.standardizeUri(businessErrorPath);
-        } else {
-            businessErrorPath = Strings.EMPTY;
-        }
-        String errorPage = prefix + businessErrorPath + this.mvcProperties.getView().getSuffix();
-        if (StringUtils.isNotBlank(errorPage)) {
-            accessDeniedHandler.setErrorPage(errorPage);
-        }
         return accessDeniedHandler;
     }
 

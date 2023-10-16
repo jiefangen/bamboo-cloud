@@ -28,6 +28,30 @@ public class NetUtil {
     }
 
     /**
+     * 拼接URI
+     *
+     * @param contextUri 上下文URI
+     * @param path       相对路径
+     * @return 拼接后的完整URI
+     */
+    public static String concatUri(String contextUri, String path) {
+        // 如果相对路径为空或/，则无需拼接
+        if (StringUtils.isBlank(path) || Strings.SLASH.equals(path)) {
+            return contextUri;
+        }
+        if (contextUri == null) {
+            return null;
+        }
+        if (contextUri.endsWith(Strings.SLASH)) {
+            contextUri = contextUri.substring(0, contextUri.length() - 1);
+        }
+        if (!path.startsWith(Strings.SLASH)) {
+            path = Strings.SLASH + path;
+        }
+        return contextUri + path;
+    }
+
+    /**
      * 获取指定主机名（域名）对应的IP地址
      *
      * @param host 主机名（域名）
@@ -462,6 +486,59 @@ public class NetUtil {
 
     public static String encode(String s) {
         return URLEncoder.encode(s, StandardCharsets.UTF_8);
+    }
+
+    public static boolean isRelativeUri(String uri) {
+        return uri.startsWith(Strings.SLASH) && !uri.startsWith(Strings.DOUBLE_SLASH);
+    }
+
+    public static String getContextUri(String uri, String contextPath, boolean withContextPath) {
+        // 去掉#后的锚点
+        int index = uri.indexOf(Strings.WELL);
+        if (index >= 0) {
+            uri = uri.substring(0, index);
+        }
+        // 去掉?后的参数
+        index = uri.indexOf(Strings.QUESTION);
+        if (index >= 0) {
+            uri = uri.substring(0, index);
+        }
+        if (StringUtils.isBlank(contextPath) || Strings.SLASH.equals(contextPath)) {
+            contextPath = Strings.EMPTY;
+        }
+        if (isRelativeUri(uri)) {
+            // contextPath为空，则必然匹配，结果为/
+            if (contextPath.length() == 0) {
+                return Strings.SLASH;
+            }
+            // contextPath不为空，则uri以contextPath开头，才是匹配的相对地址
+            if (uri.startsWith(contextPath + Strings.SLASH) || uri.equals(contextPath)) {
+                return withContextPath ? contextPath : Strings.SLASH;
+            }
+            return null; // 不匹配，无法解析出上下文地址
+        }
+        // 绝对地址
+        index = uri.indexOf(Strings.DOUBLE_SLASH);
+        if (index >= 0) {
+            index = uri.indexOf(Strings.SLASH, index + Strings.DOUBLE_SLASH.length()); // 除协议部分外的第一个/
+            if (index > 0) {
+                String contextUri = uri.substring(0, index);
+                if (contextPath.length() > 0) { // contextPath不为空，则需匹配
+                    String suffix = uri.substring(index);
+                    if (suffix.startsWith(contextPath + Strings.SLASH) || suffix.equals(contextPath)) {
+                        if (withContextPath) {
+                            contextUri += contextPath;
+                        }
+                    } else {
+                        return null;
+                    }
+                }
+                return contextUri;
+            } else if (contextPath.length() == 0) { // 除协议部分外，没有后续/，则contextPath必须为空才匹配
+                return uri;
+            }
+        }
+        return null; // 无法解析出上下文地址
     }
 
 }
