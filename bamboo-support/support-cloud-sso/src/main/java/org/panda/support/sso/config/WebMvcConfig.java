@@ -1,7 +1,7 @@
 package org.panda.support.sso.config;
 
 import org.panda.tech.core.web.mvc.servlet.filter.RequestLogFilter;
-import org.panda.tech.core.web.mvc.support.WebMvcConfigurerSupport;
+import org.panda.tech.core.webmvc.view.config.WebViewMvcConfigurerSupport;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
  * @author fangen
  **/
 @Configuration
-public class WebMvcConfig extends WebMvcConfigurerSupport {
+public class WebMvcConfig extends WebViewMvcConfigurerSupport {
     /**
      * web请求日志过滤器
      */

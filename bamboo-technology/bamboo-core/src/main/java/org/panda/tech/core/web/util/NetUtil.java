@@ -401,6 +401,28 @@ public class NetUtil {
     }
 
     /**
+     * 标准化URI地址。所谓标准URI即：所有斜杠均为/，以/开头，不以/结尾
+     *
+     * @param uri URI
+     * @return 标准化后的URI
+     */
+    public static String standardizeUri(String uri) {
+        if (isRelativeUri(uri)) {
+            uri = uri.replace('\\', '/');
+            if (!uri.startsWith(Strings.SLASH)) {
+                uri = Strings.SLASH + uri;
+            }
+            if (Strings.SLASH.equals(uri)) {
+                return uri;
+            }
+        }
+        if (uri.endsWith(Strings.SLASH)) {
+            uri = uri.substring(0, uri.length() - 1);
+        }
+        return uri;
+    }
+
+    /**
      * 从指定URL中截取请求action部分，即请求url中去掉参数和请求后缀之后的部分
      *
      * @param url 请求url

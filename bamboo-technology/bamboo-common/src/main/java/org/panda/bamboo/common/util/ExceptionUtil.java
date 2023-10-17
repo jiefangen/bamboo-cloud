@@ -2,8 +2,6 @@ package org.panda.bamboo.common.util;
 
 /**
  * 异常工具类
- *
- * @author jianglei
  */
 public class ExceptionUtil {
 

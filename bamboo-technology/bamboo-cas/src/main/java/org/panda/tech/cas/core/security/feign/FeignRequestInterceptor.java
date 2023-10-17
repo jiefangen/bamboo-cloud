@@ -1,14 +1,16 @@
 package org.panda.tech.cas.core.security.feign;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Enumeration;
-import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
-
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
 import org.apache.commons.lang3.StringUtils;
+import org.panda.bamboo.common.constant.basic.Strings;
+import org.panda.bamboo.common.util.LogUtil;
+import org.panda.tech.cas.core.annotation.GrantAuthority;
+import org.panda.tech.core.web.config.WebConstants;
+import org.panda.tech.core.web.context.SpringWebContext;
+import org.panda.tech.core.webmvc.jwt.JwtGenerator;
+import org.panda.tech.security.user.UserSpecificDetails;
+import org.panda.tech.security.util.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.core.annotation.AnnotationUtils;
@@ -16,20 +18,15 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
-import org.truenewx.tnxjee.core.Strings;
-import org.truenewx.tnxjee.core.api.RpcApi;
-import org.truenewx.tnxjee.core.util.LogUtil;
-import org.truenewx.tnxjee.model.spec.user.security.UserSpecificDetails;
-import org.truenewx.tnxjee.service.feign.GrantAuthority;
-import org.truenewx.tnxjee.web.context.SpringWebContext;
-import org.truenewx.tnxjee.web.util.WebConstants;
-import org.truenewx.tnxjee.webmvc.jwt.JwtGenerator;
-import org.truenewx.tnxjee.webmvc.security.util.SecurityUtil;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Enumeration;
+import java.util.Map;
 
 /**
  * Feign请求拦截器
- *
- * @author jianglei
  */
 @Component
 public class FeignRequestInterceptor implements RequestInterceptor {
@@ -49,7 +46,7 @@ public class FeignRequestInterceptor implements RequestInterceptor {
                     // Feign头信息中未包含的才传递，以避免Feign创建的头信息被改动，且不传递JWT而是重新构建JWT
                     if (!feignHeaders.containsKey(headerName)
                             && !HttpHeaders.TRANSFER_ENCODING.equalsIgnoreCase(headerName)
-                            && !WebConstants.HEADER_RPC_JWT.equalsIgnoreCase(headerName)) {
+                            && !WebConstants.HEADER_AUTH_JWT.equalsIgnoreCase(headerName)) {
                         Enumeration<String> requestHeaders = request.getHeaders(headerName);
                         Collection<String> headerValues = new ArrayList<>();
                         while (requestHeaders.hasMoreElements()) {
@@ -69,7 +66,7 @@ public class FeignRequestInterceptor implements RequestInterceptor {
         } else {
             LogUtil.debug(getClass(), "====== The jwt length is {}.", jwt.length());
         }
-        template.header(WebConstants.HEADER_RPC_JWT, jwt);
+        template.header(WebConstants.HEADER_AUTH_JWT, jwt);
 
         // 确保远程调用始终使用JSON格式传递数据，避免出现html结果
         template.removeHeader(HttpHeaders.ACCEPT);
@@ -108,7 +105,7 @@ public class FeignRequestInterceptor implements RequestInterceptor {
                 }
             }
             if (StringUtils.isNotBlank(type)) {
-                template.header(WebConstants.HEADER_RPC_TYPE, type);
+                template.header(WebConstants.HEADER_AUTH_JWT, type);
             }
             return this.jwtGenerator.generate(type, userDetails);
         }
@@ -117,13 +114,9 @@ public class FeignRequestInterceptor implements RequestInterceptor {
 
     private String getApiType(RequestTemplate template) {
         Class<?> apiClass = template.methodMetadata().method().getDeclaringClass();
-        RpcApi apiAnno = AnnotationUtils.findAnnotation(apiClass, RpcApi.class);
-        if (apiAnno == null) {
-            FeignClient feignClient = AnnotationUtils.findAnnotation(apiClass, FeignClient.class);
-            Assert.notNull(feignClient, () -> "Annotation @" + RpcApi.class.getName() + " or "
-                    + FeignClient.class.getName() + " is required for " + apiClass);
-        }
-        return apiAnno == null ? Strings.EMPTY : apiAnno.value();
+        FeignClient feignClient = AnnotationUtils.findAnnotation(apiClass, FeignClient.class);
+        Assert.notNull(feignClient, () -> "Annotation @" + FeignClient.class.getName() + " is required for " + apiClass);
+        return Strings.EMPTY;
     }
 
     private UserSpecificDetails<?> buildGrantUserSpecificDetails(GrantAuthority grantAuthority) {
