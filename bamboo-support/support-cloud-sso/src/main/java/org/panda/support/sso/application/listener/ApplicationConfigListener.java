@@ -1,4 +1,4 @@
-package org.panda.support.sso.config.listener;
+package org.panda.support.sso.application.listener;
 
 import org.panda.bamboo.common.constant.basic.Strings;
 import org.panda.bamboo.common.util.LogUtil;

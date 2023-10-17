@@ -1,4 +1,4 @@
-package org.panda.support.sso.config;
+package org.panda.support.sso.common.config;
 
 import org.panda.tech.core.web.mvc.servlet.filter.RequestLogFilter;
 import org.panda.tech.core.webmvc.view.config.WebViewMvcConfigurerSupport;

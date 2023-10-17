@@ -15,8 +15,8 @@ import org.springframework.context.annotation.Import;
 @EnableDiscoveryClient
 @Import({CloudCoreModule.class, CasModule.class})
 @SpringBootApplication
-public class SsoApplication {
+public class SsoSptApplication {
     public static void main(String[] args) {
-        SpringApplication.run(SsoApplication.class, args);
+        SpringApplication.run(SsoSptApplication.class, args);
     }
 }

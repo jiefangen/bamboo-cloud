@@ -151,8 +151,8 @@ public abstract class WebMvcSecurityConfigurerSupport extends WebSecurityConfigu
      */
     protected Collection<String> getIgnoringAntPatterns() {
         Collection<String> patterns = new HashSet<>();
-
         if (SwaggerUtil.isEnabled(getApplicationContext())) {
+            patterns.add("/doc.html");
             patterns.add("/swagger-ui.html");
             patterns.add("/webjars/**");
             patterns.add("/v2/api-docs");

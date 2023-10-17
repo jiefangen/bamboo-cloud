@@ -1,4 +1,4 @@
-package org.panda.support.sso.config;
+package org.panda.support.sso.common.config;
 
 import lombok.Setter;
 import org.panda.bamboo.Framework;
@@ -18,7 +18,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.util.StringUtils;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -33,10 +32,10 @@ import java.util.Collection;
 import java.util.List;
 
 @Setter
-@ConfigurationProperties(prefix = "swagger.config")
+@ConfigurationProperties(prefix="swagger.config")
 @EnableSwagger2WebMvc
 @Configuration
-public class SwaggerConfig implements WebMvcConfigurer {
+public class SwaggerConfig {
 
     private static final String SWAGGER_DESC = "单点登录微服务支撑服务，致力于提供微服务架构中的认证和访问授权能力。";
 

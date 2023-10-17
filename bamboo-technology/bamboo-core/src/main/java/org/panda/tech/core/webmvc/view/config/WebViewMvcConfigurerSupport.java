@@ -55,8 +55,7 @@ public abstract class WebViewMvcConfigurerSupport extends WebMvcConfigurerSuppor
 
     protected void buildSiteMeshFilter(SiteMeshFilterBuilder builder) {
         builder.addExcludedPath("/swagger-ui.html");
-        builder.addExcludedPath("/qrcode");
-        builder.addExcludedPath("/qrcode/*");
+        builder.addExcludedPath("/doc.html");
     }
 
     @Override
