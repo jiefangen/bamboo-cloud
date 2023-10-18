@@ -5,7 +5,7 @@ import org.panda.tech.cas.server.service.CasServiceManager;
 import org.panda.tech.cas.server.ticket.CasTicketManager;
 import org.panda.tech.core.web.util.NetUtil;
 import org.panda.tech.core.web.util.WebHttpUtil;
-import org.panda.tech.core.webmvc.view.util.WebMvcViewResolver;
+import org.panda.tech.core.webmvc.view.config.WebMvcViewResolver;
 import org.panda.tech.core.webmvc.view.util.WebViewUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;

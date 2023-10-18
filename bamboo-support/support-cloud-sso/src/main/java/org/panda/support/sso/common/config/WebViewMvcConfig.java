@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
  * @author fangen
  **/
 @Configuration
-public class WebMvcConfig extends WebViewMvcConfigurerSupport {
+public class WebViewMvcConfig extends WebViewMvcConfigurerSupport {
     /**
      * web请求日志过滤器
      */

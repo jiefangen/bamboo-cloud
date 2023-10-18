@@ -1,4 +1,4 @@
-package org.panda.tech.core.webmvc.view.util;
+package org.panda.tech.core.webmvc.view.config;
 
 import org.jetbrains.annotations.NotNull;
 import org.panda.bamboo.common.constant.basic.Strings;

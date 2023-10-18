@@ -6,6 +6,9 @@ import org.panda.bamboo.common.util.lang.StringUtil;
 import org.panda.tech.core.web.mvc.servlet.filter.ForbidAccessFilter;
 import org.panda.tech.core.web.mvc.servlet.resource.AntPatternResourceResolver;
 import org.panda.tech.core.web.mvc.support.WebMvcConfigurerSupport;
+import org.panda.tech.core.webmvc.function.WebContextPathPredicate;
+import org.panda.tech.core.webmvc.view.exception.resolver.ViewDefaultExceptionResolver;
+import org.panda.tech.core.webmvc.view.exception.resolver.ViewErrorPathProperties;
 import org.sitemesh.builder.SiteMeshFilterBuilder;
 import org.sitemesh.config.ConfigurableSiteMeshFilter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +17,12 @@ import org.springframework.boot.autoconfigure.web.servlet.WebMvcProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.Ordered;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
 import javax.servlet.DispatcherType;
+import java.util.List;
 
 /**
  * WEB视图层MVC配置支持
@@ -28,6 +33,10 @@ public abstract class WebViewMvcConfigurerSupport extends WebMvcConfigurerSuppor
     private WebMvcProperties mvcProperties;
     @Autowired
     private WebProperties webProperties;
+    @Autowired
+    private ViewErrorPathProperties pathProperties;
+    @Autowired
+    private WebContextPathPredicate webContextPathPredicate;
 
     @Bean
     public FilterRegistrationBean<ForbidAccessFilter> forbidAccessFilter() {
@@ -59,6 +68,11 @@ public abstract class WebViewMvcConfigurerSupport extends WebMvcConfigurerSuppor
     }
 
     @Override
+    public void configureHandlerExceptionResolvers(List<HandlerExceptionResolver> resolvers) {
+        resolvers.add(new ViewDefaultExceptionResolver(this.pathProperties, this.webContextPathPredicate));
+    }
+
+    @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         super.addResourceHandlers(registry);
 
@@ -82,7 +96,7 @@ public abstract class WebViewMvcConfigurerSupport extends WebMvcConfigurerSuppor
                     registration.resourceChain(true).addResolver(new AntPatternResourceResolver(pattern));
                 }
             }
-            registry.setOrder(Ordered.HIGHEST_PRECEDENCE + 2000);
+            registry.setOrder(0); // 设置静态资源优先加载
         }
     }
 
