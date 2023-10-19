@@ -10,7 +10,7 @@ public class CasConstants {
 
     public static final String URL_LOGIN = "/login";
 
-    public static final String COOKIE_TGT = "CASTGC";
+    public static final String COOKIE_TGT = "CAS-TGC";
 
     /**
      * 参数：服务

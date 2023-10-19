@@ -18,7 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  * @author fangen
  **/
 @Configuration
-@Order(10) // 必须指定该配置顺序，否则会与安全框架中的配置冲突
+@Order(101) // 必须指定该配置顺序，否则会与安全框架中的配置冲突
 public class WebSecurityConfig extends WebMvcSecurityConfigurerSupport {
 
     @Bean

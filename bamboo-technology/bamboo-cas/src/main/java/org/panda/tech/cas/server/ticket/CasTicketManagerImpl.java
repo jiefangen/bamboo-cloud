@@ -126,8 +126,7 @@ public class CasTicketManagerImpl implements CasTicketManager {
         TicketGrantingTicket ticketGrantingTicket = findValidTicketGrantingTicket(request);
         if (ticketGrantingTicket != null) {
             String ticketGrantingTicketId = ticketGrantingTicket.getId();
-            AppTicket appTicket = this.appTicketRepo.findByTicketGrantingTicketIdAndApp(ticketGrantingTicketId,
-                    appName);
+            AppTicket appTicket = this.appTicketRepo.findByTicketGrantingTicketIdAndApp(ticketGrantingTicketId, appName);
             if (appTicket == null) { // 不存在则创建新的
                 // 创建新的服务票据前，先进行可能的范围切换动作
                 if (this.scopeResolver != null) {

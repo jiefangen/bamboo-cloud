@@ -1,11 +1,11 @@
 package org.panda.tech.cas.server.authentication;
 
+import org.panda.bamboo.common.util.LogUtil;
 import org.panda.tech.cas.core.CasConstants;
 import org.panda.tech.cas.server.service.CasServiceManager;
 import org.panda.tech.cas.server.ticket.CasTicketManager;
 import org.panda.tech.core.web.util.NetUtil;
 import org.panda.tech.core.web.util.WebHttpUtil;
-import org.panda.tech.core.webmvc.view.config.WebMvcViewResolver;
 import org.panda.tech.core.webmvc.view.util.WebViewUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -27,8 +27,6 @@ public class CasAuthenticationSuccessHandler implements AuthenticationSuccessHan
     private CasServiceManager serviceManager;
     @Autowired
     private CasTicketManager ticketManager;
-    @Autowired
-    private WebMvcViewResolver mvcViewResolver;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
@@ -45,7 +43,7 @@ public class CasAuthenticationSuccessHandler implements AuthenticationSuccessHan
             // 此处一定是表单提交鉴权成功，无需AjaxRedirectStrategy
             WebViewUtil.redirect(request, response, targetUrl);
         } catch (Exception e) {
-
+            LogUtil.error(getClass(), e);
         }
     }
 

@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class CasServiceAuthenticationDetails implements Serializable {
 
-    private static final long serialVersionUID = -8966249391535990582L;
+    private static final long serialVersionUID = 2601595191074890901L;
 
     private String service;
     private String scope;

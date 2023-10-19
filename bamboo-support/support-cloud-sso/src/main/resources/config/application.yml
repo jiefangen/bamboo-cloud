@@ -1,6 +1,6 @@
 spring:
   application:
-    name: spt-sso
+    name: cas
   profiles:
     active: dev
 server:

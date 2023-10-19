@@ -12,6 +12,7 @@
         <module>microservice-doc</module>
         <module>microservice-notice</module>
         <module>microservice-payment</module>
+        <module>microservice-cas-server</module>
     </modules>
 
     <properties>

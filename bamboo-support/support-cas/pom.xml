@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>bamboo-support</artifactId>
+        <groupId>org.panda.support</groupId>
+        <version>1.0.RELEASE</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.panda.support.cas</groupId>
+    <artifactId>support-cas</artifactId>
+    <version>1.0.RELEASE</version>
+    <packaging>pom</packaging>
+    <modules>
+        <module>support-cas-core</module>
+        <module>support-cas-server</module>
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.panda.support.cas</groupId>
+                <artifactId>support-cas-core</artifactId>
+                <version>${support.version}</version>
+            </dependency>
+            <!-- 与spring-security-cas中依赖的版本保持一致 -->
+            <dependency>
+                <groupId>org.jasig.cas.client</groupId>
+                <artifactId>cas-client-core</artifactId>
+                <version>3.6.4</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+</project>

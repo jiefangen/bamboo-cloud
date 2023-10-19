@@ -27,8 +27,7 @@ public class CasServerServiceController {
     @GetMapping("/serviceValidate")
     @ConfigAnonymous
     @ResponseBody
-    public Assertion serviceValidate(@RequestParam("service") String service,
-            @RequestParam("ticket") String ticket) {
+    public Assertion serviceValidate(@RequestParam("service") String service, @RequestParam("ticket") String ticket) {
         service = URLDecoder.decode(service, StandardCharsets.UTF_8);
         String app = this.serviceManager.getAppName(service);
         return this.ticketManager.validateAppTicket(app, ticket);

@@ -11,6 +11,6 @@ import org.springframework.stereotype.Controller;
  **/
 @Api(tags = "CAS服务端登录控制器")
 @Controller
-public class CasLoginController extends CasServerLoginControllerSupport {
+public class CasServerLoginController extends CasServerLoginControllerSupport {
 
 }

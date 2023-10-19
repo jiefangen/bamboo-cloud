@@ -1,7 +1,7 @@
 package org.panda.support.sso.common.config;
 
+import org.panda.tech.cas.server.config.CasServerMvcConfigurerSupport;
 import org.panda.tech.core.web.mvc.servlet.filter.RequestLogFilter;
-import org.panda.tech.core.webmvc.view.config.WebViewMvcConfigurerSupport;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -11,12 +11,12 @@ import org.springframework.context.annotation.Configuration;
  * @author fangen
  **/
 @Configuration
-public class WebViewMvcConfig extends WebViewMvcConfigurerSupport {
+public class CasMvcConfig extends CasServerMvcConfigurerSupport {
     /**
      * web请求日志过滤器
      */
     @Bean
     public RequestLogFilter requestLogFilter() {
-        return new RequestLogFilter("/spt-sso/**");
+        return new RequestLogFilter("/spt-cas/**");
     }
 }

@@ -1,0 +1,16 @@
+spring:
+  cloud:
+    nacos:
+      config:
+        import-check:
+          enabled: false
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+logging:
+  org.panda.support.sso: debug
