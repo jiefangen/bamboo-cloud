@@ -4,7 +4,6 @@ import io.swagger.annotations.Api;
 import org.panda.tech.core.web.restful.RestfulResult;
 import org.panda.tech.core.web.util.NetUtil;
 import org.panda.tech.core.web.util.WebHttpUtil;
-import org.panda.tech.security.config.annotation.ConfigAnonymous;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,7 +28,6 @@ public class HomeController {
 
     @GetMapping(value = "/index")
     @ResponseBody
-    @ConfigAnonymous
     public RestfulResult<Map<String, Object>> index(HttpServletRequest request) {
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("service", name);

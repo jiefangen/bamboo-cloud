@@ -1,6 +1,6 @@
 package org.panda.ms.cas.server.infrastructure.security.authentication;
 
-import org.panda.support.sso.common.constant.SsoConstants;
+import org.panda.ms.cas.server.common.constant.CasConstants;
 import org.panda.tech.core.web.restful.RestfulResult;
 import org.panda.tech.security.web.authentication.ResolvableExceptionAuthenticationFailureHandler;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -23,13 +23,13 @@ public class LoginAuthenticationFailureHandler extends ResolvableExceptionAuthen
     @Override
     protected Object getFailureResult(HttpServletRequest request, AuthenticationException exception) {
         if (exception instanceof UsernameNotFoundException) {
-            return RestfulResult.failure(SsoConstants.USER_NOT_EXIST_CODE, exception.getMessage());
+            return RestfulResult.failure(CasConstants.USER_NOT_EXIST_CODE, exception.getMessage());
         } else if (exception instanceof BadCredentialsException) {
-            return RestfulResult.failure(SsoConstants.PWD_WRONG_CODE, exception.getMessage());
+            return RestfulResult.failure(CasConstants.PWD_WRONG_CODE, exception.getMessage());
         } else if (exception instanceof DisabledException) {
-            return RestfulResult.failure(SsoConstants.USER_DISABLED_CODE, exception.getMessage());
+            return RestfulResult.failure(CasConstants.USER_DISABLED_CODE, exception.getMessage());
         } else if (exception instanceof LockedException) {
-            return RestfulResult.failure(SsoConstants.USER_LOCKED_CODE, exception.getMessage());
+            return RestfulResult.failure(CasConstants.USER_LOCKED_CODE, exception.getMessage());
         }
         return null;
     }

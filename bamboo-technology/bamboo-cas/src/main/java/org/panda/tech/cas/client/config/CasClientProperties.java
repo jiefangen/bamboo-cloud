@@ -51,7 +51,7 @@ public class CasClientProperties extends ServiceProperties {
                         "There is no app named '{}' in bamboo.common.apps. '{}' has been used as the service",
                         this.appName, service);
             } else {
-                service = app.getContextUri(false) + app.getLoginedPath();
+                service = app.getContextUri(false) + app.getLoginPath();
             }
             setService(service);
         }
