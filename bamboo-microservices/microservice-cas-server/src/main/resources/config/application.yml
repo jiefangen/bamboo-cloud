@@ -1,6 +1,6 @@
 spring:
   application:
-    name: cas-server
+    name: cas
   profiles:
     active: dev
 server:

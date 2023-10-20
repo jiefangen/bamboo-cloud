@@ -65,6 +65,7 @@ public abstract class WebViewMvcConfigurerSupport extends WebMvcConfigurerSuppor
     protected void buildSiteMeshFilter(SiteMeshFilterBuilder builder) {
         builder.addExcludedPath("/swagger-ui.html");
         builder.addExcludedPath("/doc.html");
+        builder.addExcludedPath("/v2/api-docs");
     }
 
     @Override

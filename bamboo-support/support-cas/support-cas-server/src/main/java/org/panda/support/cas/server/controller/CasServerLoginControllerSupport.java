@@ -71,6 +71,7 @@ public abstract class CasServerLoginControllerSupport {
                 });
                 response.setHeader(WebConstants.HEADER_LOGIN_URL, url.toString()); // 将当前ajax请求URL作为登录URL返回
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+//                this.ticketManager.createTicketGrantingTicket(request, response);
             }
             return null;
         } else {

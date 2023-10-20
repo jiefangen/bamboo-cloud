@@ -21,8 +21,6 @@
         <module>bamboo-data-mybatis</module>
         <!-- 服务安全支持模块-为上层服务提供鉴权标准 -->
         <module>bamboo-security</module>
-        <!-- 单点登录鉴权支持模块-为上层微服务登录鉴权提供支持 -->
-        <module>bamboo-cas</module>
     </modules>
 
     <properties>

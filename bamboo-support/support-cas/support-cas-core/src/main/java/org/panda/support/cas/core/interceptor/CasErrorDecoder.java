@@ -5,7 +5,6 @@ import feign.codec.ErrorDecoder;
 import org.apache.commons.io.IOUtils;
 import org.panda.bamboo.common.util.LogUtil;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -13,7 +12,7 @@ import java.nio.charset.StandardCharsets;
 /**
  * CAS错误解码器
  */
-@Component
+//@Component
 public class CasErrorDecoder extends ErrorDecoder.Default {
 
     @Override

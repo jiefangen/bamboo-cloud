@@ -5,14 +5,13 @@ import org.panda.tech.security.user.DefaultUserSpecificDetails;
 import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Component;
 
 /**
  * 加载用户特性服务
  *
  * @author fangen
  **/
-@Component
+//@Component
 public class UserDetailsServiceImpl implements AuthenticationUserDetailsService<CasUserSpecificDetailsAuthenticationToken> {
 
     @Override
