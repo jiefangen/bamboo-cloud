@@ -12,7 +12,7 @@ import java.util.Map;
  */
 public class SimpleAssertion implements Assertion {
 
-    private static final long serialVersionUID = -5843298720172335725L;
+    private static final long serialVersionUID = -4955706628554239179L;
 
     private UserSpecificDetails<?> userDetails;
     private Date validFromDate;

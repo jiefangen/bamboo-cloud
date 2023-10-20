@@ -16,6 +16,10 @@ public class WebSecurityProperties {
      * 注意：设置为true会带来安全隐患，忘记配置权限注解的处理方法将可匿名访问
      */
     private boolean anonymousWithoutAnnotation;
+    /**
+     * JWT认证鉴权类型，默认使用内部鉴定方式
+     */
+    private String jwtAuthFilterType;
 
     public boolean isCsrfEnabled() {
         return this.csrfEnabled;
@@ -41,4 +45,11 @@ public class WebSecurityProperties {
         this.anonymousWithoutAnnotation = anonymousWithoutAnnotation;
     }
 
+    public String getJwtAuthFilterType() {
+        return jwtAuthFilterType;
+    }
+
+    public void setJwtAuthFilterType(String jwtAuthFilterType) {
+        this.jwtAuthFilterType = jwtAuthFilterType;
+    }
 }

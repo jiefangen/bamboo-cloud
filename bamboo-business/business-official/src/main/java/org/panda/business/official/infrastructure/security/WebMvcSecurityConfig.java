@@ -1,8 +1,8 @@
-package org.panda.ms.cas.server.infrastructure.security;
+package org.panda.business.official.infrastructure.security;
 
+import org.panda.tech.security.config.WebMvcSecurityConfigurerSupport;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -12,8 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  * @author fangen
  **/
 @Configuration
-@Order(106) // 必须指定该配置顺序，否则会与安全框架中的配置冲突
-public class WebSecurityConfig extends WebMvcSecurityConfigurerSupport {
+public class WebMvcSecurityConfig extends WebMvcSecurityConfigurerSupport {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
