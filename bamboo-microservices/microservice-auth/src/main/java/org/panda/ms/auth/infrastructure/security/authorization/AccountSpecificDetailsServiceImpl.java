@@ -1,4 +1,4 @@
-package org.panda.ms.auth.infrastructure.security.business;
+package org.panda.ms.auth.infrastructure.security.authorization;
 
 import org.apache.commons.lang3.StringUtils;
 import org.panda.bamboo.common.constant.basic.Strings;
@@ -21,12 +21,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 用户特性细节服务组件
+ * 账户特性细节服务组件
  *
  * @author fangen
  **/
 @Component
-public class UserSpecificDetailsServiceImpl implements UserSpecificDetailsService {
+public class AccountSpecificDetailsServiceImpl implements UserSpecificDetailsService {
 
     @Autowired
     private SysUserRoleService userRoleService;

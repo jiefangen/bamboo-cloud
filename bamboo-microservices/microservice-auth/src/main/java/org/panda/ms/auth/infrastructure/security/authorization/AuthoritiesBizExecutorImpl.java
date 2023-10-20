@@ -1,4 +1,4 @@
-package org.panda.ms.auth.infrastructure.security.business;
+package org.panda.ms.auth.infrastructure.security.authorization;
 
 import org.panda.tech.security.web.AuthoritiesBizExecutor;
 import org.springframework.stereotype.Component;
