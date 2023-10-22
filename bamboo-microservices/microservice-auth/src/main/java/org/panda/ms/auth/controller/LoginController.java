@@ -1,6 +1,7 @@
 package org.panda.ms.auth.controller;
 
 import io.swagger.annotations.Api;
+import org.panda.ms.auth.core.cas.controller.CasServerLoginControllerSupport;
 import org.panda.tech.core.web.restful.RestfulResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
  **/
 @Api(tags = "认证服务登录控制器")
 @RestController
-public class LoginController {
+public class LoginController extends CasServerLoginControllerSupport {
 
     @PostMapping("/login")
     public RestfulResult login(@RequestParam String username, @RequestParam String password) {

@@ -37,7 +37,7 @@ import java.util.List;
 @Configuration
 @ConfigurationProperties(prefix="bamboo.swagger.config")
 @EnableSwagger2WebMvc
-public class SwaggerConfig extends WebMvcConfig {
+public class SwaggerConfig {
 
     @Value(AppConstants.EL_SPRING_PROFILES_ACTIVE)
     private String env;

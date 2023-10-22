@@ -1,8 +1,0 @@
-org/panda/support/cas/core/interceptor/CasErrorDecoder.class
-org/panda/support/cas/core/validation/SimpleAssertion.class
-org/panda/support/cas/core/CasConstants.class
-org/panda/support/cas/core/authentication/logout/CasLogoutSuccessHandler.class
-org/panda/support/cas/core/interceptor/CasRequestInterceptor$1.class
-org/panda/support/cas/core/util/CasUtil.class
-org/panda/support/cas/core/authentication/SimpleAttributePrincipal.class
-org/panda/support/cas/core/interceptor/CasRequestInterceptor.class

@@ -13,7 +13,6 @@
         <module>support-cloud-gateway</module>
         <module>support-config-example</module>
         <module>support-discovery-example</module>
-        <module>support-cas</module>
     </modules>
 
     <properties>

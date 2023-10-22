@@ -4,7 +4,9 @@ spring:
   profiles:
     active: dev
 server:
-  port: 11004
+  port: 11005
+  servlet:
+    context-path: /cas
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml
