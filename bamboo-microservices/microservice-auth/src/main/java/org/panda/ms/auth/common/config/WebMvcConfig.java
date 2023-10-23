@@ -1,4 +1,4 @@
-package org.panda.ms.cas.server.common.config;
+package org.panda.ms.auth.common.config;
 
 import org.panda.tech.core.web.jwt.DefaultInternalJwtResolver;
 import org.panda.tech.core.web.jwt.InternalJwtResolver;
@@ -20,7 +20,7 @@ public class WebMvcConfig extends WebMvcConfigurerSupport {
      */
     @Bean
     public RequestLogFilter requestLogFilter() {
-        return new RequestLogFilter("/cas/**");
+        return new RequestLogFilter("/auth/**");
     }
 
     /**

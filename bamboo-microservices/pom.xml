@@ -13,6 +13,7 @@
         <module>microservice-notice</module>
         <module>microservice-payment</module>
         <module>microservice-cas-server</module>
+        <module>microservice-auth</module>
     </modules>
 
     <properties>

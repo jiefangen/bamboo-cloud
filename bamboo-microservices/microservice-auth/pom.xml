@@ -9,9 +9,9 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>microservice-cas-server</artifactId>
+    <artifactId>microservice-auth</artifactId>
     <version>${service.version}</version>
-    <description>cas认证授权服务端</description>
+    <description>应用api认证授权服务</description>
 
     <properties>
         <knife4j-openapi2.version>4.1.0</knife4j-openapi2.version>
@@ -50,12 +50,6 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <scope>runtime</scope>
-        </dependency>
-        <!-- 与spring-security-cas中依赖的版本保持一致 -->
-        <dependency>
-            <groupId>org.jasig.cas.client</groupId>
-            <artifactId>cas-client-core</artifactId>
-            <version>3.6.4</version>
         </dependency>
     </dependencies>
 
