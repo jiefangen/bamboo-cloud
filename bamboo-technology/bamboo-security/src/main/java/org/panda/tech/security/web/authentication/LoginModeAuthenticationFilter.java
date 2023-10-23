@@ -75,5 +75,4 @@ public class LoginModeAuthenticationFilter extends LoginAuthenticationFilter {
         authRequest.setDetails(this.authenticationDetailsSource.buildDetails(request));
     }
 
-
 }
