@@ -1,5 +1,6 @@
 package org.panda.ms.auth.infrastructure.security.authentication;
 
+import org.panda.ms.auth.infrastructure.security.authentication.login.AuthLoginAuthenticationSuccessHandler;
 import org.panda.tech.security.config.LoginSecurityConfigurerSupport;
 import org.panda.tech.security.web.authentication.LoginAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public abstract class AbstractAuthServerLoginSecurityConfigurer<PF extends Abstr
         extends LoginSecurityConfigurerSupport<PF, AP> {
 
     @Autowired
-    private AuthAuthenticationSuccessHandler authenticationSuccessHandler;
+    private AuthLoginAuthenticationSuccessHandler authenticationSuccessHandler;
 
     @Override
     protected void configure(HttpSecurity http, PF filter) {

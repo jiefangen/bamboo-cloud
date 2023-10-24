@@ -1,6 +1,6 @@
 package org.panda.ms.auth.infrastructure.security;
 
-import org.panda.ms.auth.infrastructure.security.authentication.AuthAuthenticationSuccessHandler;
+import org.panda.ms.auth.infrastructure.security.authentication.login.AuthLoginAuthenticationSuccessHandler;
 import org.panda.ms.auth.infrastructure.security.authentication.logout.AuthServerLogoutHandler;
 import org.panda.ms.auth.infrastructure.security.authentication.logout.AuthServerLogoutSuccessHandler;
 import org.panda.tech.security.config.WebHttpSecurityConfigurer;
@@ -22,8 +22,8 @@ public class AuthWebMvcSecurityConfig extends WebMvcSecurityConfigurerSupport {
     private AuthServerLogoutHandler logoutHandler;
 
     @Bean
-    public AuthAuthenticationSuccessHandler authenticationSuccessHandler() {
-        return new AuthAuthenticationSuccessHandler();
+    public AuthLoginAuthenticationSuccessHandler authenticationSuccessHandler() {
+        return new AuthLoginAuthenticationSuccessHandler();
     }
 
     @Bean

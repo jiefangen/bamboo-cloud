@@ -1,4 +1,6 @@
-package org.panda.tech.core.webmvc.jwt;
+package org.panda.tech.core.webmvc.jwt.symmetric;
+
+import org.panda.tech.core.webmvc.jwt.JwtDecryption;
 
 /**
  * JWT对称解密方

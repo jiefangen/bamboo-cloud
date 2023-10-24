@@ -5,14 +5,13 @@ import org.panda.tech.core.config.app.AppConstants;
 import org.panda.tech.core.crypto.aes.AesEncryptor;
 import org.panda.tech.core.jwt.AbstractInternalJwtConfiguration;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
 
 /**
  * WebJwt配置器
  *
  * @author fangen
  **/
-@Configuration
+//@Configuration
 public class AuthWebJwtConfig extends AbstractInternalJwtConfiguration {
     /**
      * 随机生成的key，每次启动都会有不同的密钥产生

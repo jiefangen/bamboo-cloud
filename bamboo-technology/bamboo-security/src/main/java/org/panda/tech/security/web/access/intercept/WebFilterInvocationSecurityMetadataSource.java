@@ -39,8 +39,7 @@ public class WebFilterInvocationSecurityMetadataSource
 
     private FilterInvocationSecurityMetadataSource origin;
 
-    private AuthoritiesBizExecutor authoritiesBizExecutor = new AuthoritiesBizExecutor() {
-    };
+    private AuthoritiesBizExecutor authoritiesBizExecutor = new AuthoritiesBizExecutor() {};
 
     public void setOrigin(FilterInvocationSecurityMetadataSource origin) {
         this.origin = origin;

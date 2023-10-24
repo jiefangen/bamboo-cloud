@@ -1,6 +1,7 @@
-package org.panda.tech.core.webmvc.jwt;
+package org.panda.tech.core.webmvc.jwt.symmetric;
 
 import org.panda.tech.core.config.app.AppConstants;
+import org.panda.tech.core.webmvc.jwt.JwtEncryption;
 import org.springframework.beans.factory.annotation.Value;
 
 /**

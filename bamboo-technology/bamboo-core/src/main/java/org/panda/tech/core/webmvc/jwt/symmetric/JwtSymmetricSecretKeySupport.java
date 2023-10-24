@@ -1,4 +1,4 @@
-package org.panda.tech.core.webmvc.jwt;
+package org.panda.tech.core.webmvc.jwt.symmetric;
 
 import org.apache.commons.lang3.StringUtils;
 import org.panda.bamboo.common.constant.basic.Strings;

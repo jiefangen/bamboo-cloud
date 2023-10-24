@@ -17,8 +17,8 @@ import org.panda.tech.security.web.AuthoritiesBizExecutor;
 import org.panda.tech.security.web.SecurityUrlProvider;
 import org.panda.tech.security.web.access.AccessDeniedBusinessExceptionHandler;
 import org.panda.tech.security.web.access.intercept.WebFilterInvocationSecurityMetadataSource;
-import org.panda.tech.security.web.authentication.CasJwtAuthenticationFilter;
 import org.panda.tech.security.web.authentication.JwtAuthenticationFilter;
+import org.panda.tech.security.web.authentication.InternalJwtAuthenticationFilter;
 import org.panda.tech.security.web.authentication.WebAuthenticationEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -62,7 +62,7 @@ public abstract class WebMvcSecurityConfigurerSupport extends WebSecurityConfigu
     private WebSecurityProperties securityProperties;
     @Autowired
     private ApiMetaProperties apiMetaProperties;
-    @Autowired
+    @Autowired(required = false)
     private AuthoritiesBizExecutor authoritiesBizExecutor;
     @Autowired(required = false)
     private ConfigAuthorityAnnotationResolver configAuthorityAnnotationResolver;
@@ -79,7 +79,11 @@ public abstract class WebMvcSecurityConfigurerSupport extends WebSecurityConfigu
     // 获取访问资源需要具备的权限
     @Bean
     public WebFilterInvocationSecurityMetadataSource securityMetadataSource() {
-        return new WebFilterInvocationSecurityMetadataSource(authoritiesBizExecutor);
+        if (authoritiesBizExecutor == null) {
+            return new WebFilterInvocationSecurityMetadataSource();
+        } else {
+            return new WebFilterInvocationSecurityMetadataSource(authoritiesBizExecutor);
+        }
     }
 
     // 登录用户访问资源的权限判断
@@ -182,12 +186,12 @@ public abstract class WebMvcSecurityConfigurerSupport extends WebSecurityConfigu
         for (SecurityConfigurerAdapter configurer : configurers) {
             http.apply(configurer);
         }
-        if ("cas".equalsIgnoreCase(this.securityProperties.getJwtAuthFilterType())) {
-            http.addFilterAfter(new CasJwtAuthenticationFilter(getApplicationContext()),
+        if ("external".equalsIgnoreCase(this.securityProperties.getJwtAuthFilterType())) {
+            http.addFilterAfter(new JwtAuthenticationFilter(getApplicationContext()),
                     UsernamePasswordAuthenticationFilter.class);
         } else {
             // 默认使用内部JWT鉴定过滤器
-            http.addFilterAfter(new JwtAuthenticationFilter(getApplicationContext()),
+            http.addFilterAfter(new InternalJwtAuthenticationFilter(getApplicationContext()),
                     UsernamePasswordAuthenticationFilter.class);
         }
 

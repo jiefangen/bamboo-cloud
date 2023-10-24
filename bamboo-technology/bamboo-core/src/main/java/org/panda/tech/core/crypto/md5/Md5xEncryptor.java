@@ -1,5 +1,6 @@
 package org.panda.tech.core.crypto.md5;
 
+import org.panda.bamboo.common.constant.basic.Strings;
 import org.panda.bamboo.common.util.EncryptUtil;
 import org.panda.tech.core.crypto.KeyEncryptor;
 
@@ -66,7 +67,7 @@ public class Md5xEncryptor implements KeyEncryptor {
 
     private String encryptByMd5Source(String md5Source, Object secretKey, long staticKey) {
         if (secretKey == null) {
-            secretKey = "";
+            secretKey = Strings.EMPTY;
         }
         String keyMd5 = EncryptUtil.encryptByMd5(staticKey + secretKey.toString());
         char[] keyChars = keyMd5.toCharArray();

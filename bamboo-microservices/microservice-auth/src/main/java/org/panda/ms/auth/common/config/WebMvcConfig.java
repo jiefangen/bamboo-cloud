@@ -1,9 +1,11 @@
 package org.panda.ms.auth.common.config;
 
-import org.panda.tech.core.web.jwt.DefaultInternalJwtResolver;
-import org.panda.tech.core.web.jwt.InternalJwtResolver;
 import org.panda.tech.core.web.mvc.servlet.filter.RequestLogFilter;
 import org.panda.tech.core.web.mvc.support.WebMvcConfigurerSupport;
+import org.panda.tech.core.webmvc.jwt.JwtGenerator;
+import org.panda.tech.core.webmvc.jwt.JwtGeneratorImpl;
+import org.panda.tech.core.webmvc.jwt.JwtParser;
+import org.panda.tech.core.webmvc.jwt.JwtParserImpl;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +17,7 @@ import org.springframework.context.annotation.Configuration;
  **/
 @Configuration
 public class WebMvcConfig extends WebMvcConfigurerSupport {
+
     /**
      * web请求日志过滤器
      */
@@ -24,11 +27,21 @@ public class WebMvcConfig extends WebMvcConfigurerSupport {
     }
 
     /**
-     * 声明JWT解决器，视具体应用而定
+     * 声明JWT解析器
      */
     @Bean
-    @ConditionalOnMissingBean(InternalJwtResolver.class)
-    public InternalJwtResolver internalJwtResolver() {
-        return new DefaultInternalJwtResolver();
+    @ConditionalOnMissingBean(JwtParser.class)
+    public JwtParser jwtParser() {
+        return new JwtParserImpl();
     }
+
+    /**
+     * 声明JWT生成器
+     */
+    @Bean
+    @ConditionalOnMissingBean(JwtGenerator.class)
+    public JwtGenerator jwtGenerator() {
+        return new JwtGeneratorImpl();
+    }
+
 }

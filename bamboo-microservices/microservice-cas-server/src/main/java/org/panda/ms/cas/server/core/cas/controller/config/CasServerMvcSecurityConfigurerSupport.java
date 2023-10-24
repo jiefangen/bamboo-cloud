@@ -1,4 +1,4 @@
-package org.panda.ms.cas.server.core.cas.config;
+package org.panda.ms.cas.server.core.cas.controller.config;
 
 import org.panda.ms.cas.server.core.cas.authentication.CasAuthenticationSuccessHandler;
 import org.panda.ms.cas.server.core.cas.authentication.logout.CasServerLogoutHandler;

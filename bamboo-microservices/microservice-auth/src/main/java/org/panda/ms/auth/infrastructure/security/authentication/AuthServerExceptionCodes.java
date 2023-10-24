@@ -14,9 +14,9 @@ public class AuthServerExceptionCodes {
     public static final String INVALID_SERVICE = "error.auth.server.invalid_service";
 
     /**
-     * 无效的应用票据
+     * 无效的应用token
      */
-    public static final String INVALID_APP_TICKET = "error.auth.server.invalid_app_ticket";
+    public static final String INVALID_APP_TOKEN = "error.auth.server.invalid_app_token";
 
     /**
      * 不支持的登录认证方式

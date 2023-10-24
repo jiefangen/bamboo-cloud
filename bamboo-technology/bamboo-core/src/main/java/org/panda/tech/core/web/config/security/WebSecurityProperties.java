@@ -17,7 +17,8 @@ public class WebSecurityProperties {
      */
     private boolean anonymousWithoutAnnotation;
     /**
-     * JWT认证鉴权类型，默认使用内部鉴定方式
+     * JWT认证鉴权类型，默认使用内部鉴定方式。
+     * 设置external，鉴定外部应用提供更为安全的加密方式
      */
     private String jwtAuthFilterType;
 

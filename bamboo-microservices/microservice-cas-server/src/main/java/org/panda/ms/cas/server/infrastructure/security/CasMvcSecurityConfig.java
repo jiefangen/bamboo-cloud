@@ -1,6 +1,6 @@
 package org.panda.ms.cas.server.infrastructure.security;
 
-import org.panda.ms.cas.server.core.cas.config.CasServerMvcSecurityConfigurerSupport;
+import org.panda.ms.cas.server.core.cas.controller.config.CasServerMvcSecurityConfigurerSupport;
 import org.springframework.context.annotation.Configuration;
 
 /**

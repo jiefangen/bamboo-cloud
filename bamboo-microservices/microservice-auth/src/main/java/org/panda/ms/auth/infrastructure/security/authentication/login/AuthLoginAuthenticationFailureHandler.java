@@ -1,4 +1,4 @@
-package org.panda.ms.auth.infrastructure.security.authentication;
+package org.panda.ms.auth.infrastructure.security.authentication.login;
 
 import org.panda.ms.auth.common.constant.AuthConstants;
 import org.panda.tech.core.web.restful.RestfulResult;
@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author fangen
  **/
 @Component
-public class LoginAuthenticationFailureHandler extends ResolvableExceptionAuthenticationFailureHandler {
+public class AuthLoginAuthenticationFailureHandler extends ResolvableExceptionAuthenticationFailureHandler {
 
     @Override
     protected Object getFailureResult(HttpServletRequest request, AuthenticationException exception) {

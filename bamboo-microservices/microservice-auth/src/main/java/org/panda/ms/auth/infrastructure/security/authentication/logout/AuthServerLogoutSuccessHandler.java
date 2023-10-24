@@ -1,10 +1,10 @@
 package org.panda.ms.auth.infrastructure.security.authentication.logout;
 
-import org.panda.bamboo.common.util.LogUtil;
 import org.panda.tech.core.web.config.WebConstants;
-import org.panda.tech.core.web.jwt.InternalJwtResolver;
 import org.panda.tech.core.web.restful.RestfulResult;
 import org.panda.tech.core.web.util.WebHttpUtil;
+import org.panda.tech.core.webmvc.jwt.JwtParser;
+import org.panda.tech.security.user.DefaultUserSpecificDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
@@ -20,19 +20,15 @@ import java.io.IOException;
 public class AuthServerLogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler {
 
     @Autowired
-    private InternalJwtResolver jwtResolver;
+    private JwtParser jwtParser;
 
     @Override
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
             throws IOException, ServletException {
+        String type = request.getHeader(WebConstants.HEADER_AUTH_TYPE);
         String jwt = request.getHeader(WebConstants.HEADER_AUTH_JWT);
-        boolean jwtVerify = false;
-        try {
-            jwtVerify = jwtResolver.verify(jwt);
-        } catch (Exception e) {
-            LogUtil.error(getClass(), e);
-        }
-        if (jwtVerify) {
+        DefaultUserSpecificDetails userSpecificDetails = jwtParser.parse(type, jwt, DefaultUserSpecificDetails.class);
+        if (userSpecificDetails != null) {
             // 登出成功token失效处理
             // 处理完成返回登出成功
             WebHttpUtil.buildJsonResponse(response, RestfulResult.success());

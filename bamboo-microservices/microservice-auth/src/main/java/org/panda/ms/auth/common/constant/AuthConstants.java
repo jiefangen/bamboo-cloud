@@ -8,7 +8,7 @@ public class AuthConstants {
      * 用户账户不存在
      */
     public static final int USER_NOT_EXIST_CODE = 5001;
-    public static final String USERNAME_NOT_EXIST = "Username does not exist.";
+    public static final String USERNAME_NOT_EXIST = "Account does not exist.";
     /**
      * 密码验证错误
      */
