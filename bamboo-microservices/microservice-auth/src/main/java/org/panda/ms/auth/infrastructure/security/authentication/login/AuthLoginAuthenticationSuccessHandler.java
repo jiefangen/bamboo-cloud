@@ -1,7 +1,10 @@
 package org.panda.ms.auth.infrastructure.security.authentication.login;
 
+import org.panda.bamboo.common.exception.business.BusinessException;
 import org.panda.bamboo.common.util.LogUtil;
 import org.panda.ms.auth.infrastructure.security.authentication.AuthAccountSpecificDetailsAuthenticationToken;
+import org.panda.ms.auth.infrastructure.security.service.AuthServerExceptionCodes;
+import org.panda.ms.auth.infrastructure.security.service.AuthServiceManager;
 import org.panda.tech.core.web.restful.RestfulResult;
 import org.panda.tech.core.web.util.WebHttpUtil;
 import org.panda.tech.core.webmvc.jwt.JwtGenerator;
@@ -23,6 +26,8 @@ public class AuthLoginAuthenticationSuccessHandler implements AuthenticationSucc
 
     @Autowired
     private JwtGenerator jwtGenerator;
+    @Autowired
+    private AuthServiceManager serviceManager;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
@@ -32,11 +37,15 @@ public class AuthLoginAuthenticationSuccessHandler implements AuthenticationSucc
                 AuthAccountSpecificDetailsAuthenticationToken authAccountToken =
                         (AuthAccountSpecificDetailsAuthenticationToken) authentication;
                 String service = authAccountToken.getService();
+                String appName = this.serviceManager.getAppName(service);
+                if (appName == null) {
+                    throw new BusinessException(AuthServerExceptionCodes.INVALID_SERVICE);
+                }
                 // 安全认证登录成功后的业务处理
                 if (SecurityUtil.isAuthorized() && jwtGenerator.isAvailable()) {
                     DefaultUserSpecificDetails userSpecificDetails = SecurityUtil.getAuthorizedUserDetails();
                     // 登录成功，生成账户token返回，用于应用交互凭证
-                    String token = jwtGenerator.generate(service, userSpecificDetails);
+                    String token = jwtGenerator.generate(appName, userSpecificDetails);
                     WebHttpUtil.buildJsonResponse(response, RestfulResult.success(token));
                 }
             } else {

@@ -1,0 +1,20 @@
+package org.panda.ms.auth.service.impl;
+
+import org.panda.ms.auth.model.entity.AuthRole;
+import org.panda.ms.auth.repository.AuthRoleMapper;
+import org.panda.ms.auth.service.AuthRoleService;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.stereotype.Service;
+
+/**
+ * <p>
+ * 应用认证角色 服务实现类
+ * </p>
+ *
+ * @author bamboo-code-generator
+ * @since 2023-10-25
+ */
+@Service
+public class AuthRoleServiceImpl extends ServiceImpl<AuthRoleMapper, AuthRole> implements AuthRoleService {
+
+}

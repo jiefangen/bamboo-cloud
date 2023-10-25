@@ -1,8 +1,11 @@
 package org.panda.ms.auth.infrastructure.security.authentication;
 
 import org.panda.bamboo.common.exception.business.BusinessException;
+import org.panda.ms.auth.infrastructure.security.service.AuthServerExceptionCodes;
+import org.panda.ms.auth.infrastructure.security.service.AuthServiceManager;
 import org.panda.tech.security.authentication.AbstractAuthenticationProvider;
 import org.panda.tech.security.user.UserSpecificDetails;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -15,8 +18,8 @@ import org.springframework.security.core.AuthenticationException;
 public abstract class AbstractAuthServerAuthenticationProvider<A extends Authentication>
         extends AbstractAuthenticationProvider<A> {
 
-//    @Autowired
-//    private AuthServiceManager serviceManager;
+    @Autowired
+    private AuthServiceManager serviceManager;
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -26,12 +29,14 @@ public abstract class AbstractAuthServerAuthenticationProvider<A extends Authent
         if (details instanceof AuthServiceAuthenticationDetails) {
             AuthServiceAuthenticationDetails authenticationDetails = (AuthServiceAuthenticationDetails) details;
             String service = authenticationDetails.getService();
-            // TODO 通过服务获取appName
-//            String appName = this.serviceManager.getAppName(service);
+            String appName = this.serviceManager.getAppName(service);
+            if (appName == null) {
+                throw new BusinessException(AuthServerExceptionCodes.INVALID_SERVICE);
+            }
             String scope = authenticationDetails.getScope();
             String ip = authenticationDetails.getIp();
             try {
-                UserSpecificDetails<?> userDetails = authenticate("appName", scope, token);
+                UserSpecificDetails<?> userDetails = authenticate(appName, scope, token);
                 if (userDetails == null) {
                     throw new BusinessException(AuthServerExceptionCodes.UNSUPPORTED_AUTHENTICATE_MODE);
                 }

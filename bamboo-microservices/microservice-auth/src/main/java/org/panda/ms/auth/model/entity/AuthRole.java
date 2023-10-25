@@ -1,30 +1,29 @@
 package org.panda.ms.auth.model.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import java.time.LocalDateTime;
+import com.baomidou.mybatisplus.annotation.TableField;
+import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.io.Serializable;
-import java.time.LocalDateTime;
-
 /**
  * <p>
- * 系统角色
+ * 应用认证角色
  * </p>
  *
  * @author bamboo-code-generator
- * @since 2023-06-06
+ * @since 2023-10-25
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@TableName("sys_role")
-@ApiModel(value="SysRole对象", description="系统角色")
-public class SysRole implements Serializable {
+@TableName("auth_role")
+@ApiModel(value="AuthRole对象", description="应用认证角色")
+public class AuthRole implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

@@ -23,7 +23,7 @@ public class AuthLoginAuthenticationFailureHandler extends ResolvableExceptionAu
     @Override
     protected Object getFailureResult(HttpServletRequest request, AuthenticationException exception) {
         if (exception instanceof UsernameNotFoundException) {
-            return RestfulResult.failure(AuthConstants.USER_NOT_EXIST_CODE, exception.getMessage());
+            return RestfulResult.failure(AuthConstants.ACCOUNT_NOT_EXIST_CODE, exception.getMessage());
         } else if (exception instanceof BadCredentialsException) {
             return RestfulResult.failure(AuthConstants.PWD_WRONG_CODE, exception.getMessage());
         } else if (exception instanceof DisabledException) {

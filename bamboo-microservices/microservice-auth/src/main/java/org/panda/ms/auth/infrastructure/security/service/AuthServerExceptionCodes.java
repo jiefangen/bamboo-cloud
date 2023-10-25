@@ -1,4 +1,4 @@
-package org.panda.ms.auth.infrastructure.security.authentication;
+package org.panda.ms.auth.infrastructure.security.service;
 
 /**
  * Auth服务器异常错误码集

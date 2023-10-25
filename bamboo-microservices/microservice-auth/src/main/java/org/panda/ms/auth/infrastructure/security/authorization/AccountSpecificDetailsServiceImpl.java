@@ -4,9 +4,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.panda.bamboo.common.constant.basic.Strings;
 import org.panda.bamboo.common.exception.business.param.RequiredParamException;
 import org.panda.ms.auth.common.constant.AuthConstants;
-import org.panda.ms.auth.model.dto.SysUserDto;
-import org.panda.ms.auth.model.entity.SysUser;
-import org.panda.ms.auth.service.SysUserRoleService;
+import org.panda.ms.auth.model.dto.AuthAccountDto;
+import org.panda.ms.auth.model.entity.AuthAccount;
+import org.panda.ms.auth.service.AuthAccountService;
 import org.panda.tech.core.spec.user.DefaultUserIdentity;
 import org.panda.tech.security.user.DefaultUserSpecificDetails;
 import org.panda.tech.security.user.UserGrantedAuthority;
@@ -29,40 +29,40 @@ import java.util.List;
 public class AccountSpecificDetailsServiceImpl implements UserSpecificDetailsService {
 
     @Autowired
-    private SysUserRoleService userRoleService;
+    private AuthAccountService accountService;
 
     @Override
     public UserSpecificDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         if (StringUtils.isEmpty(username)) {
             throw new RequiredParamException();
         }
-        // 用户信息查询判断拦截
-        SysUserDto sysUserDto = userRoleService.getUserAndRoles(username);
-        if (sysUserDto == null || sysUserDto.getUser() == null) {
-            throw new UsernameNotFoundException(AuthConstants.USERNAME_NOT_EXIST);
+        // 账户信息查询判断拦截
+        AuthAccountDto authAccountDto = accountService.getAccountAndRoles(username);
+        if (authAccountDto == null || authAccountDto.getAccount() == null) {
+            throw new UsernameNotFoundException(AuthConstants.ACCOUNT_NOT_EXIST);
         }
-        SysUser sysUser = sysUserDto.getUser();
-        // 组装用户特性细节
+        AuthAccount authAccount = authAccountDto.getAccount();
+        // 组装账户特性细节
         DefaultUserSpecificDetails userSpecificDetails = new DefaultUserSpecificDetails();
         userSpecificDetails.setUsername(username);
-        userSpecificDetails.setCaption(sysUser.getNickname());
+        userSpecificDetails.setCaption(authAccount.getMerchantNum());
         // 从数据库中直接取加密密码
-        String encodedPassword = sysUser.getPassword();
+        String encodedPassword = authAccount.getPassword();
         userSpecificDetails.setPassword(encodedPassword);
-        userSpecificDetails.setIdentity(new DefaultUserIdentity(sysUser.getUserType(), sysUser.getId()));
+        userSpecificDetails.setIdentity(new DefaultUserIdentity(authAccount.getAccountType(), authAccount.getId()));
 
         // 添加角色鉴权以及权限鉴权，每次访问带有权限限制的接口时就会验证，拥有对应权限code的话才可以正常访问。
         List<GrantedAuthority> authorities = new ArrayList<>();
         UserGrantedAuthority grantedAuthority = new UserGrantedAuthority();
-        grantedAuthority.setType(sysUser.getUserType());
-        grantedAuthority.setRank(sysUser.getUserRank());
+        grantedAuthority.setType(authAccount.getAccount());
+        grantedAuthority.setRank(authAccount.getAccountRank());
         grantedAuthority.setApp(Strings.ASTERISK); // 通配符'*'
-        grantedAuthority.setPermissions(sysUserDto.getRoleCodes());
+        grantedAuthority.setPermissions(authAccountDto.getRoleCodes());
         authorities.add(grantedAuthority);
         userSpecificDetails.setAuthorities(authorities);
 
         // 账户状态配置
-        userSpecificDetails.setEnabled(sysUser.getEnabled());
+        userSpecificDetails.setEnabled(authAccount.getEnabled());
         userSpecificDetails.setAccountNonLocked(true);
         userSpecificDetails.setAccountNonExpired(true);
         userSpecificDetails.setCredentialsNonExpired(true);
