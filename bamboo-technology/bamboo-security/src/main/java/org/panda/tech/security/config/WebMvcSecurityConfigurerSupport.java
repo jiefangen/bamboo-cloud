@@ -107,11 +107,8 @@ public abstract class WebMvcSecurityConfigurerSupport extends WebSecurityConfigu
     // 登出成功后的处理
     @Bean
     public LogoutSuccessHandler logoutSuccessHandler() {
-        SimpleUrlLogoutSuccessHandler handler;
-        // 先查询获取自定义登出处理器bean
-        if (getApplicationContext().containsBean("simpleUrlLogoutSuccessHandler")) {
-            handler = getApplicationContext().getBean(SimpleUrlLogoutSuccessHandler.class);
-        } else {
+        SimpleUrlLogoutSuccessHandler handler = getApplicationContext().getBean(SimpleUrlLogoutSuccessHandler.class);
+        if (handler == null) { // 未获取获取登出处理器则使用默认
             handler = new SimpleUrlLogoutSuccessHandler();
         }
         handler.setRedirectStrategy(this.redirectStrategy);

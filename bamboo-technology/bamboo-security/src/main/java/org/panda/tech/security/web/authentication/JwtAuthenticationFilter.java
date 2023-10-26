@@ -32,8 +32,6 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
             throws IOException, ServletException {
         SecurityContext securityContext = SecurityContextHolder.getContext();
-        Authentication authentication = securityContext.getAuthentication();
-
         if (this.jwtParser.isAvailable()) {
             HttpServletRequest request = (HttpServletRequest) req;
             String type = request.getHeader(WebConstants.HEADER_AUTH_TYPE);
@@ -44,10 +42,9 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
                 securityContext.setAuthentication(authResult);
             }
         }
-
         chain.doFilter(req, res);
-        // 恢复原授权
-        securityContext.setAuthentication(authentication);
+        // 针对本次访问临时授权，完成后清除安全框架上下文信息
+        SecurityContextHolder.clearContext();
     }
 
 }

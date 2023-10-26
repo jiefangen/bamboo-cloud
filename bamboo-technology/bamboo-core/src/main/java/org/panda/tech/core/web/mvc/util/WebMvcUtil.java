@@ -93,8 +93,8 @@ public class WebMvcUtil {
     }
 
     public static boolean isInternalReq(HttpServletRequest request) {
-        String internalJwt = request.getHeader(WebConstants.HEADER_AUTH_JWT);
-        if (internalJwt != null) {
+        String authJwt = request.getHeader(WebConstants.HEADER_AUTH_JWT);
+        if (StringUtils.isNotBlank(authJwt)) {
             return true;
         }
         String userAgent = request.getHeader(HttpHeaders.USER_AGENT);
