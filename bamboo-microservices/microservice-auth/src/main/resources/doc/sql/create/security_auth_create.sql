@@ -9,7 +9,7 @@ SET GLOBAL FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `auth_account`;
 CREATE TABLE `auth_account` (
                           `id` INT unsigned AUTO_INCREMENT NOT NULL COMMENT '主键ID',
-                          `account` VARCHAR(100) NOT NULL COMMENT '账户',
+                          `username` VARCHAR(100) NOT NULL COMMENT '账户名',
                           `password` VARCHAR(500) NOT NULL COMMENT '密码',
                           `merchant_num` VARCHAR(100) COMMENT '商户号',
                           `account_type` VARCHAR(80) COMMENT '账户类型',
@@ -19,7 +19,8 @@ CREATE TABLE `auth_account` (
                           `create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
                           `update_time` DATETIME ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
                           PRIMARY KEY (`id`) USING BTREE,
-                          UNIQUE KEY `UQ_ACCOUNT` (`account`)
+                          UNIQUE KEY `UQ_USERNAME` (`username`),
+                          UNIQUE KEY `UQ_MERCHANT_NUM` (`merchant_num`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1000 CHARACTER SET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='应用认证账户' ROW_FORMAT=Compact;
 
 

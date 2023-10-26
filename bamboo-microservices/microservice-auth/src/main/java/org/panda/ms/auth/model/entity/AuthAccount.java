@@ -32,9 +32,9 @@ public class AuthAccount implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    @ApiModelProperty(value = "账户")
-    @TableField("account")
-    private String account;
+    @ApiModelProperty(value = "账户名")
+    @TableField("username")
+    private String username;
 
     @ApiModelProperty(value = "密码")
     @TableField("password")

@@ -1,5 +1,6 @@
 package org.panda.ms.auth.common.jwt;
 
+import org.apache.commons.lang3.StringUtils;
 import org.panda.tech.core.webmvc.jwt.symmetric.JwtSymmetricEncryption;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -27,7 +28,9 @@ public class AuthJwtEncryption extends JwtSymmetricEncryption {
 
     @Override
     public String getPayload(String type) {
-        // TODO 通过type查询访问应用相关信息
-        return type;
+        if (StringUtils.isNotBlank(type)) {
+            // 通过type查询访问应用相关信息
+        }
+        return "payload";
     }
 }

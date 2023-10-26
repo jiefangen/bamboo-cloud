@@ -25,11 +25,11 @@ public class AuthLoginAuthenticationFailureHandler extends ResolvableExceptionAu
         if (exception instanceof UsernameNotFoundException) {
             return RestfulResult.failure(AuthConstants.ACCOUNT_NOT_EXIST_CODE, exception.getMessage());
         } else if (exception instanceof BadCredentialsException) {
-            return RestfulResult.failure(AuthConstants.PWD_WRONG_CODE, exception.getMessage());
+            return RestfulResult.failure(AuthConstants.BAD_CREDENTIALS_CODE, exception.getMessage());
         } else if (exception instanceof DisabledException) {
-            return RestfulResult.failure(AuthConstants.USER_DISABLED_CODE, exception.getMessage());
+            return RestfulResult.failure(AuthConstants.ACCOUNT_DISABLED_CODE, exception.getMessage());
         } else if (exception instanceof LockedException) {
-            return RestfulResult.failure(AuthConstants.USER_LOCKED_CODE, exception.getMessage());
+            return RestfulResult.failure(AuthConstants.ACCOUNT_LOCKED_CODE, exception.getMessage());
         }
         return null;
     }

@@ -54,7 +54,7 @@ public class AccountSpecificDetailsServiceImpl implements UserSpecificDetailsSer
         // 添加角色鉴权以及权限鉴权，每次访问带有权限限制的接口时就会验证，拥有对应权限code的话才可以正常访问。
         List<GrantedAuthority> authorities = new ArrayList<>();
         UserGrantedAuthority grantedAuthority = new UserGrantedAuthority();
-        grantedAuthority.setType(authAccount.getAccount());
+        grantedAuthority.setType(authAccount.getAccountType());
         grantedAuthority.setRank(authAccount.getAccountRank());
         grantedAuthority.setApp(Strings.ASTERISK); // 通配符'*'
         grantedAuthority.setPermissions(authAccountDto.getRoleCodes());

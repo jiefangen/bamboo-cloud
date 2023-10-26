@@ -9,6 +9,8 @@ import org.panda.tech.core.webmvc.jwt.JwtParserImpl;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  * WebMvc配置器
@@ -24,6 +26,14 @@ public class WebMvcConfig extends WebMvcConfigurerSupport {
     @Bean
     public RequestLogFilter requestLogFilter() {
         return new RequestLogFilter("/auth/**");
+    }
+
+    /**
+     * 密码加密器
+     */
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
     /**

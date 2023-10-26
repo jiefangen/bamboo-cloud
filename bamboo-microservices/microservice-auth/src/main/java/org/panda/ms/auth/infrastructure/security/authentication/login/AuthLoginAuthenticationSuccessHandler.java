@@ -1,5 +1,6 @@
 package org.panda.ms.auth.infrastructure.security.authentication.login;
 
+import org.panda.bamboo.common.constant.basic.Strings;
 import org.panda.bamboo.common.exception.business.BusinessException;
 import org.panda.bamboo.common.util.LogUtil;
 import org.panda.ms.auth.infrastructure.security.authentication.AuthAccountSpecificDetailsAuthenticationToken;
@@ -45,7 +46,7 @@ public class AuthLoginAuthenticationSuccessHandler implements AuthenticationSucc
                 if (SecurityUtil.isAuthorized() && jwtGenerator.isAvailable()) {
                     DefaultUserSpecificDetails userSpecificDetails = SecurityUtil.getAuthorizedUserDetails();
                     // 登录成功，生成账户token返回，用于应用交互凭证
-                    String token = jwtGenerator.generate(appName, userSpecificDetails);
+                    String token = jwtGenerator.generate(Strings.EMPTY, userSpecificDetails);
                     WebHttpUtil.buildJsonResponse(response, RestfulResult.success(token));
                 }
             } else {

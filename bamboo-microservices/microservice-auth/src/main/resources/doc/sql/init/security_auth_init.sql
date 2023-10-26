@@ -1,5 +1,5 @@
 /* 数据表初始化脚本, 默认明文密码123456 */
-insert into `auth_account` (`id`, `account`, `password`, `account_type`, `account_rank`) values
+insert into `auth_account` (`id`, `username`, `password`, `account_type`, `account_rank`) values
 (101, 'bamboo_admin', '$2a$10$EMNrFn9zjcJZQf6z8WxG6OhdC5tQbk5a39hPG61aHkTGOVWacAWFi', 'manager', '1'),
 (102, 'bamboo_general', '$2a$10$EMNrFn9zjcJZQf6z8WxG6OhdC5tQbk5a39hPG61aHkTGOVWacAWFi', 'general', '1'),
 (103, 'bamboo_customer', '$2a$10$EMNrFn9zjcJZQf6z8WxG6OhdC5tQbk5a39hPG61aHkTGOVWacAWFi', 'customer', '1');

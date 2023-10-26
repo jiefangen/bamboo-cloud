@@ -14,6 +14,6 @@ import org.panda.ms.auth.model.entity.AuthAccount;
  */
 public interface AuthAccountService extends IService<AuthAccount> {
 
-    AuthAccountDto getAccountAndRoles(String account);
+    AuthAccountDto getAccountAndRoles(String username);
 
 }

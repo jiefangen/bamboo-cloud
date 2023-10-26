@@ -25,9 +25,9 @@ import java.util.stream.Collectors;
 public class AuthAccountServiceImpl extends ServiceImpl<AuthAccountMapper, AuthAccount> implements AuthAccountService {
 
     @Override
-    public AuthAccountDto getAccountAndRoles(String account) {
+    public AuthAccountDto getAccountAndRoles(String username) {
         AuthAccount accountParam = new AuthAccount();
-        accountParam.setAccount(account);
+        accountParam.setUsername(username);
         AuthAccountDto authAccountDto = this.baseMapper.findAccountAndRoles(accountParam);
         if (authAccountDto == null) {
             return null;
