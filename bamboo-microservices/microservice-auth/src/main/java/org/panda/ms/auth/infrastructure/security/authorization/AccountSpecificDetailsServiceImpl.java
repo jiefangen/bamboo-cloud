@@ -2,7 +2,7 @@ package org.panda.ms.auth.infrastructure.security.authorization;
 
 import org.apache.commons.lang3.StringUtils;
 import org.panda.bamboo.common.constant.basic.Strings;
-import org.panda.bamboo.common.exception.business.param.RequiredParamException;
+import org.panda.tech.core.exception.business.param.RequiredParamException;
 import org.panda.ms.auth.common.constant.AuthConstants;
 import org.panda.ms.auth.model.dto.AuthAccountDto;
 import org.panda.ms.auth.model.entity.AuthAccount;

@@ -1,4 +1,4 @@
-package org.panda.tech.security.web.controller;
+package org.panda.tech.security.web.endpoint;
 
 import org.panda.tech.security.config.annotation.ConfigAnonymous;
 import org.springframework.stereotype.Controller;

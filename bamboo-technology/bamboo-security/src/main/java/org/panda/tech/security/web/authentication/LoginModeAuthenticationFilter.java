@@ -1,7 +1,7 @@
 package org.panda.tech.security.web.authentication;
 
 import org.apache.commons.lang3.StringUtils;
-import org.panda.bamboo.common.exception.business.BusinessException;
+import org.panda.tech.core.exception.business.BusinessException;
 import org.panda.tech.core.web.config.LoginModeEnum;
 import org.panda.tech.security.config.exception.BusinessAuthenticationException;
 import org.springframework.context.ApplicationContext;

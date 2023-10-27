@@ -3,7 +3,7 @@ package org.panda.business.admin.modules.system.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.collections4.CollectionUtils;
 import org.panda.bamboo.common.constant.Commons;
-import org.panda.bamboo.common.exception.business.BusinessException;
+import org.panda.tech.core.exception.business.BusinessException;
 import org.panda.business.admin.application.resolver.MessageSourceResolver;
 import org.panda.business.admin.common.constant.enums.RoleCode;
 import org.panda.business.admin.modules.system.api.vo.MenuVO;

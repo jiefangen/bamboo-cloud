@@ -36,11 +36,12 @@ DROP TABLE IF EXISTS `auth_role`;
 CREATE TABLE `auth_role` (
                           `id` INT unsigned AUTO_INCREMENT NOT NULL COMMENT '主键ID',
                           `role_name` VARCHAR(100) NOT NULL COMMENT '角色名',
-                          `role_code` VARCHAR(20) NOT NULL COMMENT '角色编码',
+                          `role_code` VARCHAR(100) NOT NULL COMMENT '角色编码',
                           `description` VARCHAR(200) COMMENT '描述',
                           `create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
                           `update_time` DATETIME ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-                          PRIMARY KEY (`id`) USING BTREE
+                          PRIMARY KEY (`id`) USING BTREE,
+                          UNIQUE KEY `UQ_ROLE_CODE` (`role_code`),
 ) ENGINE=InnoDB AUTO_INCREMENT=1000 CHARACTER SET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='应用认证角色' ROW_FORMAT=Compact;
 
 
@@ -56,13 +57,14 @@ DROP TABLE IF EXISTS `auth_permission`;
 CREATE TABLE `auth_permission` (
                                 `id` INT unsigned AUTO_INCREMENT NOT NULL COMMENT '主键ID',
                                 `permission_name` VARCHAR(64) NOT NULL COMMENT '权限名称',
-                                `permission_code` VARCHAR(20) NOT NULL COMMENT '权限编码',
+                                `permission_code` VARCHAR(100) NOT NULL COMMENT '权限编码',
                                 `description` VARCHAR(200) COMMENT '描述',
                                 `resources_id` INT unsigned NOT NULL COMMENT '资源ID',
                                 `resources_type` VARCHAR(20) NOT NULL COMMENT '资源类型',
                                 `source` VARCHAR(50) COMMENT '权限来源',
                                 `resources` VARCHAR(100) COMMENT '资源',
-                                PRIMARY KEY (`id`) USING BTREE
+                                PRIMARY KEY (`id`) USING BTREE,
+                                UNIQUE KEY `UQ_PERMISSION_CODE` (`permission_code`),
 ) ENGINE=InnoDB AUTO_INCREMENT=1000 CHARACTER SET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='应用资源权限' ROW_FORMAT=Compact;
 
 ALTER TABLE `auth_account_role` ADD CONSTRAINT fk_auth_account_role_user_id_user FOREIGN KEY (`account_id`) REFERENCES auth_account (`id`);

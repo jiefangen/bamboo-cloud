@@ -1,10 +1,12 @@
 package org.panda.ms.auth.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.panda.ms.auth.model.entity.AuthRole;
 import org.panda.ms.auth.repository.AuthRoleMapper;
 import org.panda.ms.auth.service.AuthRoleService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+
+import java.util.Set;
 
 /**
  * <p>
@@ -17,4 +19,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthRoleServiceImpl extends ServiceImpl<AuthRoleMapper, AuthRole> implements AuthRoleService {
 
+    @Override
+    public Set<String> getPermissions(Set<String> roleCodes) {
+        return this.baseMapper.selectPermissionsByRoleCodes(roleCodes);
+    }
 }

@@ -1,4 +1,4 @@
-package org.panda.bamboo.common.exception;
+package org.panda.tech.core.exception;
 
 /**
  * 全局异常通用常量

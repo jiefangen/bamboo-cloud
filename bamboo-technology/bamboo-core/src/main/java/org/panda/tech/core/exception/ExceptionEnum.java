@@ -1,11 +1,12 @@
-package org.panda.bamboo.common.exception;
+package org.panda.tech.core.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.panda.tech.core.web.restful.Result;
 
 @Getter
 @AllArgsConstructor
-public enum ExceptionEnum {
+public enum ExceptionEnum implements Result {
     /**
      * 业务异常
      */

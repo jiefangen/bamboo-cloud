@@ -2,7 +2,7 @@ package org.panda.ms.cas.server.core.cas.ticket;
 
 import org.jasig.cas.client.validation.Assertion;
 import org.panda.bamboo.common.constant.basic.Strings;
-import org.panda.bamboo.common.exception.business.BusinessException;
+import org.panda.tech.core.exception.business.BusinessException;
 import org.panda.bamboo.common.util.EncryptUtil;
 import org.panda.ms.cas.server.core.cas.authentication.CasServerScopeResolver;
 import org.panda.ms.cas.server.core.cas.entity.AppTicket;

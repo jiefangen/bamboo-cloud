@@ -2,7 +2,7 @@ package org.panda.business.official.infrastructure.security.business;
 
 import org.apache.commons.lang3.StringUtils;
 import org.panda.bamboo.common.constant.basic.Strings;
-import org.panda.bamboo.common.exception.business.param.RequiredParamException;
+import org.panda.tech.core.exception.business.param.RequiredParamException;
 import org.panda.business.official.common.constant.AuthConstants;
 import org.panda.business.official.modules.system.service.ISysUserRoleService;
 import org.panda.business.official.modules.system.service.dto.SysUserDto;

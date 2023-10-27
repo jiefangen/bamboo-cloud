@@ -3,7 +3,7 @@ package org.panda.business.admin.infrastructure.security.business;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.panda.bamboo.common.constant.basic.Strings;
-import org.panda.bamboo.common.exception.business.param.RequiredParamException;
+import org.panda.tech.core.exception.business.param.RequiredParamException;
 import org.panda.business.admin.common.constant.SystemConstants;
 import org.panda.business.admin.modules.system.service.SysPermissionService;
 import org.panda.business.admin.modules.system.service.SysUserService;

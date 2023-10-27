@@ -1,7 +1,7 @@
 package org.panda.ms.auth.infrastructure.security.authentication.login;
 
 import org.panda.bamboo.common.constant.basic.Strings;
-import org.panda.bamboo.common.exception.business.BusinessException;
+import org.panda.tech.core.exception.business.BusinessException;
 import org.panda.bamboo.common.util.LogUtil;
 import org.panda.ms.auth.infrastructure.security.authentication.AuthAccountSpecificDetailsAuthenticationToken;
 import org.panda.ms.auth.infrastructure.security.service.AuthServerExceptionCodes;

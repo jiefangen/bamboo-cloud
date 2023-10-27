@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import io.swagger.annotations.Api;
 import org.apache.commons.lang3.StringUtils;
 import org.panda.bamboo.common.constant.Commons;
-import org.panda.bamboo.common.exception.business.BusinessException;
+import org.panda.tech.core.exception.business.BusinessException;
 import org.panda.business.admin.common.constant.Authority;
 import org.panda.business.admin.modules.settings.api.param.DictDataParam;
 import org.panda.business.admin.modules.settings.api.param.DictDataQueryParam;

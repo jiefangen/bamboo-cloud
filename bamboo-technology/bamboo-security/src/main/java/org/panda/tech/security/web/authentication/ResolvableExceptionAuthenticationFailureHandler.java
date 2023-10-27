@@ -2,7 +2,7 @@ package org.panda.tech.security.web.authentication;
 
 import org.apache.commons.lang3.StringUtils;
 import org.panda.bamboo.common.constant.basic.Strings;
-import org.panda.bamboo.common.exception.ExceptionEnum;
+import org.panda.tech.core.exception.ExceptionEnum;
 import org.panda.bamboo.common.util.LogUtil;
 import org.panda.bamboo.common.util.jackson.JsonUtil;
 import org.panda.tech.core.web.restful.RestfulResult;

@@ -5,7 +5,7 @@ import org.panda.bamboo.common.constant.basic.Strings;
 import org.panda.bamboo.common.util.lang.StringUtil;
 import org.panda.tech.core.web.util.NetUtil;
 import org.panda.tech.core.webmvc.view.exception.resolver.ViewResolvableExceptionResolver;
-import org.panda.tech.security.web.controller.RedirectControllerSupport;
+import org.panda.tech.security.web.endpoint.RedirectControllerSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.servlet.WebMvcProperties;
 import org.springframework.context.annotation.Bean;

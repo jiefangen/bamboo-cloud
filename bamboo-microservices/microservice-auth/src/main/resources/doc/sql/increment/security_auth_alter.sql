@@ -8,4 +8,5 @@
 */
 begin by fangen
 ALTER TABLE auth_account ADD UNIQUE `UQ_MERCHANT_NUM` (merchant_num);
+ALTER TABLE auth_permission MODIFY permission_code VARCHAR(100);
 end by fangen

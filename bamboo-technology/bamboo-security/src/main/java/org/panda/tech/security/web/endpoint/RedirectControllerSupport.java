@@ -1,4 +1,4 @@
-package org.panda.tech.security.web.controller;
+package org.panda.tech.security.web.endpoint;
 
 import org.panda.tech.core.web.mvc.controller.JumpControllerSupport;
 import org.springframework.beans.factory.annotation.Autowired;

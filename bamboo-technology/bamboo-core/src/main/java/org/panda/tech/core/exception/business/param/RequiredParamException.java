@@ -1,6 +1,6 @@
-package org.panda.bamboo.common.exception.business.param;
+package org.panda.tech.core.exception.business.param;
 
-import org.panda.bamboo.common.exception.ExceptionEnum;
+import org.panda.tech.core.exception.ExceptionEnum;
 
 /**
  * 必传参数异常

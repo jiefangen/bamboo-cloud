@@ -16,7 +16,7 @@ import org.apache.poi.sl.usermodel.*;
 import org.apache.poi.xslf.usermodel.*;
 import org.openxmlformats.schemas.drawingml.x2006.main.CTTextParagraph;
 import org.panda.bamboo.common.constant.file.FileExtensions;
-import org.panda.bamboo.common.exception.business.BusinessException;
+import org.panda.tech.core.exception.business.BusinessException;
 import org.panda.bamboo.common.util.LogUtil;
 import org.panda.bamboo.common.util.clazz.BeanUtil;
 import org.panda.bamboo.common.util.lang.StringUtil;

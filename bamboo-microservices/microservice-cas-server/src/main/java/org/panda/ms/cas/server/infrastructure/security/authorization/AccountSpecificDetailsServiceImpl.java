@@ -2,7 +2,7 @@ package org.panda.ms.cas.server.infrastructure.security.authorization;
 
 import org.apache.commons.lang3.StringUtils;
 import org.panda.bamboo.common.constant.basic.Strings;
-import org.panda.bamboo.common.exception.business.param.RequiredParamException;
+import org.panda.tech.core.exception.business.param.RequiredParamException;
 import org.panda.ms.cas.server.common.constant.AuthConstants;
 import org.panda.ms.cas.server.model.dto.SysUserDto;
 import org.panda.ms.cas.server.model.entity.SysUser;

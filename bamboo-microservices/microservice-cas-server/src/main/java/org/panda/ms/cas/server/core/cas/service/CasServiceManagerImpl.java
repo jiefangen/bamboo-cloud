@@ -2,7 +2,7 @@ package org.panda.ms.cas.server.core.cas.service;
 
 import org.apache.commons.lang3.StringUtils;
 import org.panda.bamboo.common.constant.basic.Strings;
-import org.panda.bamboo.common.exception.business.BusinessException;
+import org.panda.tech.core.exception.business.BusinessException;
 import org.panda.ms.cas.server.core.cas.ticket.CasTicketManager;
 import org.panda.tech.security.cas.CasConstants;
 import org.panda.tech.security.cas.util.CasUtil;

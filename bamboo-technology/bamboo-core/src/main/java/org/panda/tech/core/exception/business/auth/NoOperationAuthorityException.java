@@ -1,7 +1,7 @@
-package org.panda.bamboo.common.exception.business.auth;
+package org.panda.tech.core.exception.business.auth;
 
-import org.panda.bamboo.common.exception.ExceptionEnum;
-import org.panda.bamboo.common.exception.business.BusinessException;
+import org.panda.tech.core.exception.ExceptionEnum;
+import org.panda.tech.core.exception.business.BusinessException;
 
 /**
  * 没有操作权限的异常

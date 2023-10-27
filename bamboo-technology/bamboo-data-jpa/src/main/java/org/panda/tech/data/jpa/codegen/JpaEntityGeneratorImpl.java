@@ -4,13 +4,12 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.panda.bamboo.common.constant.Commons;
 import org.panda.bamboo.common.constant.basic.Strings;
-import org.panda.bamboo.common.exception.business.param.RequiredParamException;
 import org.panda.bamboo.common.util.LogUtil;
 import org.panda.bamboo.common.util.lang.StringUtil;
 import org.panda.bamboo.core.context.ApplicationContextBean;
 import org.panda.tech.data.codegen.ClassGeneratorSupport;
-import org.panda.tech.data.codegen.metadata.DatabaseTool;
 import org.panda.tech.data.codegen.metadata.ColumnMetaData;
+import org.panda.tech.data.codegen.metadata.DatabaseTool;
 import org.panda.tech.data.codegen.metadata.FieldMetaData;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 
@@ -41,7 +40,8 @@ public class JpaEntityGeneratorImpl extends ClassGeneratorSupport implements Jpa
     @Override
     public void generate(String... tableOrEntityNames) throws Exception {
         if (ArrayUtils.isEmpty(tableOrEntityNames)) {
-            throw new RequiredParamException();
+            LogUtil.error(getClass(), "tableOrEntityNames parameters required!");
+            return;
         }
         for (String tableOrEntityName : tableOrEntityNames) {
             generateEntity(tableOrEntityName);
@@ -51,7 +51,8 @@ public class JpaEntityGeneratorImpl extends ClassGeneratorSupport implements Jpa
     @Override
     public void generate(String tableOrEntityName) throws Exception {
         if (StringUtils.isEmpty(tableOrEntityName)) {
-            throw new RequiredParamException();
+            LogUtil.error(getClass(), "tableOrEntityName parameters required!");
+            return;
         }
         generateEntity(tableOrEntityName);
     }

@@ -2,7 +2,7 @@ package org.panda.ms.auth.infrastructure.security.service;
 
 import org.apache.commons.lang3.StringUtils;
 import org.panda.bamboo.common.constant.basic.Strings;
-import org.panda.bamboo.common.exception.business.BusinessException;
+import org.panda.tech.core.exception.business.BusinessException;
 import org.panda.tech.core.config.CommonProperties;
 import org.panda.tech.core.config.app.AppConfiguration;
 import org.panda.tech.core.web.util.NetUtil;

@@ -1,6 +1,6 @@
 package org.panda.ms.auth.infrastructure.security.authentication;
 
-import org.panda.bamboo.common.exception.business.BusinessException;
+import org.panda.tech.core.exception.business.BusinessException;
 import org.panda.ms.auth.infrastructure.security.service.AuthServerExceptionCodes;
 import org.panda.ms.auth.infrastructure.security.service.AuthServiceManager;
 import org.panda.tech.security.authentication.AbstractAuthenticationProvider;

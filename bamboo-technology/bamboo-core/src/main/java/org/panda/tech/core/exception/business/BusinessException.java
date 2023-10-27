@@ -1,7 +1,7 @@
-package org.panda.bamboo.common.exception.business;
+package org.panda.tech.core.exception.business;
 
 import org.panda.bamboo.common.exception.AbstractRuntimeException;
-import org.panda.bamboo.common.exception.ExceptionEnum;
+import org.panda.tech.core.exception.ExceptionEnum;
 
 import java.util.Objects;
 

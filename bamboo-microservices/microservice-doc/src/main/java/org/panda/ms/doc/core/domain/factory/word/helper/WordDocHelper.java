@@ -5,7 +5,7 @@ import org.apache.poi.hwpf.converter.WordToHtmlConverter;
 import org.apache.poi.hwpf.extractor.WordExtractor;
 import org.panda.bamboo.common.constant.basic.Strings;
 import org.panda.bamboo.common.constant.file.FileExtensions;
-import org.panda.bamboo.common.exception.business.BusinessException;
+import org.panda.tech.core.exception.business.BusinessException;
 import org.panda.bamboo.common.util.LogUtil;
 import org.panda.bamboo.common.util.io.IOUtil;
 import org.panda.ms.doc.common.DocExceptionCodes;

@@ -3,7 +3,7 @@ package org.panda.ms.doc.core.domain.factory.excel.helper;
 import org.apache.poi.hssf.extractor.ExcelExtractor;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.panda.bamboo.common.constant.file.FileExtensions;
-import org.panda.bamboo.common.exception.business.BusinessException;
+import org.panda.tech.core.exception.business.BusinessException;
 import org.panda.bamboo.common.util.LogUtil;
 import org.panda.ms.doc.common.DocExceptionCodes;
 import org.panda.ms.doc.common.util.DocUtil;

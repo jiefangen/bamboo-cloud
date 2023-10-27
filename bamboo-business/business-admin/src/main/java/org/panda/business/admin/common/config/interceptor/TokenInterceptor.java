@@ -1,7 +1,7 @@
 package org.panda.business.admin.common.config.interceptor;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import org.panda.bamboo.common.exception.ExceptionEnum;
+import org.panda.tech.core.exception.ExceptionEnum;
 import org.panda.bamboo.common.util.lang.StringUtil;
 import org.panda.business.admin.common.constant.SystemConstants;
 import org.panda.business.admin.modules.monitor.service.SysUserTokenService;
