@@ -3,10 +3,12 @@ package org.panda.ms.auth.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.panda.bamboo.common.util.lang.StringUtil;
+import org.panda.ms.auth.common.util.CommonUtil;
 import org.panda.ms.auth.model.entity.AppServer;
 import org.panda.ms.auth.repository.AppServerMapper;
 import org.panda.ms.auth.service.AppServerService;
-import org.panda.ms.auth.service.AuthRoleService;
+import org.panda.ms.auth.service.AuthPermissionService;
 import org.panda.tech.core.web.context.SpringWebContext;
 import org.panda.tech.core.web.util.WebHttpUtil;
 import org.panda.tech.security.cas.CasConstants;
@@ -31,7 +33,7 @@ import java.util.Set;
 public class AppServerServiceImpl extends ServiceImpl<AppServerMapper, AppServer> implements AppServerService {
 
     @Autowired
-    private AuthRoleService authRoleService;
+    private AuthPermissionService authPermissionService;
 
     @Override
     public boolean permissionVerification(String service, Collection<? extends GrantedAuthority> grantedAuthorities) {
@@ -48,9 +50,10 @@ public class AppServerServiceImpl extends ServiceImpl<AppServerMapper, AppServer
                     UserGrantedAuthority userGrantedAuthority = (UserGrantedAuthority) grantedAuthority;
                     Set<String> roleCodes = userGrantedAuthority.getPermissions();
                     if (CollectionUtils.isNotEmpty(roleCodes)) {
-                        Set<String> permissions = authRoleService.getPermissions(roleCodes);
+                        Set<String> permissions = authPermissionService.getPermissions(roleCodes);
                         if (CollectionUtils.isNotEmpty(permissions)) {
-                            return permissions.contains(service);
+                            // 服务授权鉴定
+                            return isGranted(permissions, service);
                         }
                     }
                 }
@@ -58,4 +61,10 @@ public class AppServerServiceImpl extends ServiceImpl<AppServerMapper, AppServer
         }
         return false;
     }
+
+    private boolean isGranted(Set<String> permissions, String service) {
+        String apiCode = CommonUtil.getPermissionCode(service).toUpperCase();
+        return StringUtil.antPathMatchOneOf(apiCode, permissions);
+    }
+
 }

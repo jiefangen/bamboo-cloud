@@ -36,7 +36,8 @@ public class AuthLoginAuthenticator implements AuthServerLoginAuthenticator<Defa
     public UserSpecificDetails<?> authenticate(String appName, String scope, DefaultAuthenticationToken token) {
         String username = token.getUsername();
         String password = token.getPassword();
-        DefaultUserSpecificDetails userSpecificDetails = (DefaultUserSpecificDetails) specificDetailsService.loadUserByUsername(username);
+        DefaultUserSpecificDetails userSpecificDetails =
+                (DefaultUserSpecificDetails) specificDetailsService.loadUserByUsername(username);
         if (!userSpecificDetails.isEnabled()) { // 账户禁用状态拦截
             throw new DisabledException(AuthConstants.ACCOUNT_DISABLED);
         }

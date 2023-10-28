@@ -2,11 +2,6 @@ package org.panda.ms.auth.infrastructure.security.service;
 
 import org.apache.commons.lang3.StringUtils;
 import org.panda.bamboo.common.constant.basic.Strings;
-import org.panda.tech.core.exception.business.BusinessException;
-import org.panda.tech.core.config.CommonProperties;
-import org.panda.tech.core.config.app.AppConfiguration;
-import org.panda.tech.core.web.util.NetUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,12 +12,6 @@ import java.util.List;
  */
 @Component
 public class AuthServiceManagerImpl implements AuthServiceManager {
-
-    @Autowired
-    private CommonProperties commonProperties;
-//    @Autowired
-//    private CasTicketManager ticketManager;
-
 
     @Override
     public String getAppName(String url) {
@@ -42,35 +31,31 @@ public class AuthServiceManagerImpl implements AuthServiceManager {
         if (url.startsWith(Strings.SLASH)) { // 截取后确保不以/开头
             url = url.substring(1);
         }
-        return url.substring(0, url.indexOf(Strings.SLASH));
+        if (url.contains(Strings.SLASH)) {
+            return url.substring(0, url.indexOf(Strings.SLASH));
+        }
+        return url;
     }
 
     @Override
     public List<String> getServices(String appName) {
-        AppConfiguration app = this.commonProperties.getApp(appName);
         return null;
     }
 
-    private String getService(AppConfiguration app) {
-        if (app != null) {
-            String contextUri = app.getContextUri(false);
-            return NetUtil.concatUri(contextUri, app.getLoginedPath());
-        }
-        return null;
-    }
-
-    private AppConfiguration loadAppConfiguration(String appName) {
-        AppConfiguration configuration = this.commonProperties.getApp(appName);
-        if (configuration == null) {
-            throw new BusinessException(AuthServerExceptionCodes.INVALID_SERVICE);
-        }
-        return configuration;
-    }
 
     @Override
     public String getUri(HttpServletRequest request, String service) {
-        String appName = getAppName(service);
-        return loadAppConfiguration(appName).getDirectUri();
+        int protocolIndex = service.indexOf("://");
+        String Uri = Strings.EMPTY;
+        if (protocolIndex >= 0) { // 带有协议和域名的url
+            Uri = service.substring(protocolIndex + 3);
+            int slashIndex = Uri.indexOf(Strings.SLASH);
+            Uri = service.substring(slashIndex + 1);
+        }
+        if (Uri.startsWith(Strings.SLASH)) { // 截取后确保不以/开头
+            Uri = Uri.substring(1);
+        }
+        return Uri;
     }
 
 }
