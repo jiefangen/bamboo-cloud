@@ -34,6 +34,12 @@ spring:
             # RemoteAddr地址校验
             - RemoteAddr=192.168.234.122,192.168.234.123
 
+        - id: auth_route
+          uri: lb://ms-auth
+          predicates:
+            - Path=/ms-auth/**
+          filters:
+            - StripPrefix=1
         - id: document_route
           uri: lb://ms-document
           predicates:
@@ -70,4 +76,8 @@ spring:
               - PUT
               - OPTIONS
 
-
+# Gateway Security Configuration
+bamboo:
+  gateway:
+    security:
+      ignoringPatterns: /auth/home/*,/ms-payment/home/*

@@ -15,6 +15,10 @@ public class AuthJwtProperties {
      * 加密静态KEY
      */
     protected static final long STATIC_KEY = 22269618L;
+    /**
+     * 默认负载参量
+     */
+    protected static final String DEFAULT_PAYLOAD = "payload";
 
     @Value(AppConstants.EL_SPRING_APP_NAME)
     private String name;

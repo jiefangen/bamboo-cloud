@@ -29,8 +29,8 @@ public class AuthJwtEncryption extends JwtSymmetricEncryption {
     @Override
     public String getPayload(String type) {
         if (StringUtils.isNotBlank(type)) {
-            // 通过type查询访问应用相关信息
+            // 通过type生成访问应用相关信息
         }
-        return "payload";
+        return AuthJwtProperties.DEFAULT_PAYLOAD;
     }
 }

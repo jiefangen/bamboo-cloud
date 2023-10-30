@@ -1,8 +1,10 @@
-package org.panda.support.gateway.controller;
+package org.panda.ms.auth.controller;
 
+import io.swagger.annotations.Api;
 import org.panda.tech.core.web.restful.RestfulResult;
 import org.panda.tech.core.web.util.NetUtil;
 import org.panda.tech.core.web.util.WebHttpUtil;
+import org.panda.tech.security.config.annotation.ConfigAnonymous;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
+@Api(tags = "微服务启动语")
 @Controller
 @RequestMapping(value = "/home")
 public class HomeController {
@@ -24,14 +27,9 @@ public class HomeController {
     @Value("${server.port}")
     private String port;
 
-    @GetMapping
-    @ResponseBody
-    public RestfulResult<String> home() {
-        return RestfulResult.success("The " + name + " microservice");
-    }
-
     @GetMapping(value = "/index")
     @ResponseBody
+    @ConfigAnonymous
     public RestfulResult<Map<String, Object>> index(HttpServletRequest request) {
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("service", name);

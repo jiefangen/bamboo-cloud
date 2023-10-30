@@ -28,12 +28,6 @@
             <artifactId>support-cloud-core</artifactId>
             <version>${support.version}</version>
         </dependency>
-        <!-- 技术框架security安全框架支持 -->
-<!--        <dependency>-->
-<!--            <groupId>org.panda.tech</groupId>-->
-<!--            <artifactId>bamboo-security</artifactId>-->
-<!--            <version>${technology.version}</version>-->
-<!--        </dependency>-->
         <!-- 监控和管理应用程序的生产级特性 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
