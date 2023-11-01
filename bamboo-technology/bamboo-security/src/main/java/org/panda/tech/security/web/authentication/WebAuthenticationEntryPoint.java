@@ -79,13 +79,13 @@ public class WebAuthenticationEntryPoint extends LoginUrlAuthenticationEntryPoin
             } else {
                 this.redirectStrategy.sendRedirect(request, response, loginPageUrl);
             }
-            Object obj = RestfulResult.failure(ExceptionEnum.ILLEGAL_TOKEN.getCode(), ExceptionEnum.ILLEGAL_TOKEN.getMessage());
+            Object obj = RestfulResult.getFailure(ExceptionEnum.ILLEGAL_TOKEN);
             WebHttpUtil.buildJsonResponse(response, obj);
             return;
         }
         if (WebMvcUtil.isInternalReq(request)) { // 内部调用直接返回401错误
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            Object obj = RestfulResult.failure(ExceptionEnum.ILLEGAL_TOKEN.getCode(), ExceptionEnum.ILLEGAL_TOKEN.getMessage());
+            Object obj = RestfulResult.getFailure(ExceptionEnum.ILLEGAL_TOKEN);
             WebHttpUtil.buildJsonResponse(response, obj);
             return;
         }

@@ -61,7 +61,7 @@ public class TokenInterceptor implements HandlerInterceptor {
         try {
             jwtVerify = jwtResolver.verify(jwt);
         } catch (Exception e) {
-            Object obj = RestfulResult.failure(ExceptionEnum.ILLEGAL_TOKEN.getCode(), ExceptionEnum.ILLEGAL_TOKEN.getMessage());
+            Object obj = RestfulResult.getFailure(ExceptionEnum.ILLEGAL_TOKEN);
             WebHttpUtil.buildJsonResponse(response, obj);
             return false;
         }
@@ -75,8 +75,7 @@ public class TokenInterceptor implements HandlerInterceptor {
             if (userToken != null && userToken.getStatus() != null) { // 失效
                 Integer status = userToken.getStatus();
                 if (status == 3 || LocalDateTime.now().isAfter(userToken.getExpirationTime())) {
-                    failureResult = RestfulResult.failure(ExceptionEnum.TOKEN_EXPIRED.getCode(),
-                            ExceptionEnum.TOKEN_EXPIRED.getMessage());
+                    failureResult = RestfulResult.getFailure(ExceptionEnum.TOKEN_EXPIRED);
                 } else {
                     if (status == 1) { // 在线有效
                         interceptPass = true;

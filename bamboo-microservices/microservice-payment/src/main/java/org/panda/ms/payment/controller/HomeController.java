@@ -3,12 +3,10 @@ package org.panda.ms.payment.controller;
 import io.swagger.annotations.Api;
 import org.panda.bamboo.common.constant.basic.Strings;
 import org.panda.bamboo.common.util.lang.StringUtil;
-import org.panda.ms.payment.service.feign.AuthServerClient;
 import org.panda.ms.payment.core.domain.model.PaymentResult;
 import org.panda.tech.core.web.restful.RestfulResult;
 import org.panda.tech.core.web.util.NetUtil;
 import org.panda.tech.core.web.util.WebHttpUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -25,9 +23,6 @@ import java.math.BigDecimal;
 @Controller
 @RequestMapping(value = "/home")
 public class HomeController {
-
-    @Autowired
-    private AuthServerClient authServerClient;
 
     @Value("${spring.application.name}")
     private String name;
@@ -47,7 +42,6 @@ public class HomeController {
     @GetMapping
     @ResponseBody
     public RestfulResult<String> home() {
-        authServerClient.validate("");
         return RestfulResult.success(getApplicationDesc());
     }
 
