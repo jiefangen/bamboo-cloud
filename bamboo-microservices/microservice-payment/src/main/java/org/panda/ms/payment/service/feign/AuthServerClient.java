@@ -1,6 +1,8 @@
-package org.panda.support.gateway.service.feign;
+package org.panda.ms.payment.service.feign;
 
 import org.panda.tech.core.web.restful.RestfulResult;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -9,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
  *
  * @author fangen
  **/
-//@Component
-//@FeignClient(value = "ms-auth")
+@Component
+@FeignClient(value = "ms-auth")
 public interface AuthServerClient {
 
     @GetMapping(value = "/auth/access/validate")

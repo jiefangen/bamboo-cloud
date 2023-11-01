@@ -6,7 +6,7 @@ import org.springframework.context.ApplicationContext;
 /**
  * 配置中心配置监听器
  */
-public interface ConfigListener {
+public interface ConfigCenterListener {
     /**
      * 获取配置文件属组
      *

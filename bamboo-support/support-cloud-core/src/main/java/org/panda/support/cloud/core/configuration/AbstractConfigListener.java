@@ -15,7 +15,7 @@ import java.util.concurrent.Executor;
  *
  * @author fangen
  **/
-public abstract class AbstractConfigListener implements ConfigListener, ContextInitializedBean {
+public abstract class AbstractConfigListener implements ConfigCenterListener, ContextInitializedBean {
 
     @Autowired
     private NacosConfigManager nacosConfigManager;

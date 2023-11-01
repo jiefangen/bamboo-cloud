@@ -55,7 +55,6 @@ public class AuthorizeGlobalFilter implements GlobalFilter, Ordered {
             // Auth服务器验证令牌
             return chain.filter(exchange);
         }
-
         exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
         return exchange.getResponse().setComplete();
     }
