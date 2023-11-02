@@ -11,6 +11,8 @@ CREATE TABLE `auth_account` (
                           `id` INT unsigned AUTO_INCREMENT NOT NULL COMMENT '主键ID',
                           `username` VARCHAR(100) NOT NULL COMMENT '账户名',
                           `password` VARCHAR(500) NOT NULL COMMENT '密码',
+                          `secret_key` VARCHAR(100) NOT NULL COMMENT '密钥',
+                          `credentials` VARCHAR(300) COMMENT '账户凭证',
                           `merchant_num` VARCHAR(100) COMMENT '商户号',
                           `account_type` VARCHAR(80) COMMENT '账户类型',
                           `account_rank` VARCHAR(10) DEFAULT '1' NOT NULL COMMENT '账户等级：1～n',

@@ -40,6 +40,14 @@ public class AuthAccount implements Serializable {
     @TableField("password")
     private String password;
 
+    @ApiModelProperty(value = "密钥")
+    @TableField("secret_key")
+    private String secretKey;
+
+    @ApiModelProperty(value = "账户凭证")
+    @TableField("credentials")
+    private String credentials;
+
     @ApiModelProperty(value = "商户号")
     @TableField("merchant_num")
     private String merchantNum;

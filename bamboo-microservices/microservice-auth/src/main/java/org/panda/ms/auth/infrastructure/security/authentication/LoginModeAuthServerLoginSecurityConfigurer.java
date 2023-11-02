@@ -1,7 +1,6 @@
 package org.panda.ms.auth.infrastructure.security.authentication;
 
 import org.panda.tech.core.web.config.LoginModeEnum;
-import org.panda.tech.security.web.authentication.DefaultAuthenticationTokenResolver;
 import org.panda.tech.security.web.authentication.LoginModeAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
@@ -19,8 +18,8 @@ public class LoginModeAuthServerLoginSecurityConfigurer extends
     }
 
     @Bean
-    public DefaultAuthenticationTokenResolver defaultAuthenticationTokenResolver() {
-        return new DefaultAuthenticationTokenResolver(LoginModeEnum.ACCOUNT.getValue());
+    public AuthAccountAuthenticationTokenResolver defaultAuthenticationTokenResolver() {
+        return new AuthAccountAuthenticationTokenResolver(LoginModeEnum.ACCOUNT.getValue());
     }
 
 }

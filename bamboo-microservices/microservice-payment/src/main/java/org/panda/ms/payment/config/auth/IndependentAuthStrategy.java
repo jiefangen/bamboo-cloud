@@ -1,7 +1,7 @@
-package org.panda.ms.payment.config.interceptor;
+package org.panda.ms.payment.config.auth;
 
 import org.panda.bamboo.common.constant.Commons;
-import org.panda.ms.payment.config.interceptor.client.AuthServerClient;
+import org.panda.ms.payment.config.auth.client.AuthServerClient;
 import org.panda.support.cloud.core.security.AuthManagerStrategy;
 import org.panda.tech.core.web.restful.RestfulResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +19,21 @@ public class IndependentAuthStrategy implements AuthManagerStrategy {
     private AuthServerClient authServerClient;
 
     @Override
+    public RestfulResult<String> getAuthToken(String service, String username, String password) {
+        return authServerClient.login(service, username, password);
+    }
+
+    @Override
+    public RestfulResult<String> getAuthToken(String credentials, String server) {
+        return authServerClient.login(credentials, server);
+    }
+
+    @Override
     public boolean verification(String token, String service) {
         RestfulResult verifyResult = authServerClient.validate(token, service);
-        if (Commons.RESULT_SUCCESS_CODE == verifyResult.getCode()
-                && Commons.RESULT_SUCCESS.equals(verifyResult.getMessage())) {
-            return true;
+        if (verifyResult != null) {
+            return Commons.RESULT_SUCCESS_CODE == verifyResult.getCode()
+                    && Commons.RESULT_SUCCESS.equals(verifyResult.getMessage());
         }
         return false;
     }

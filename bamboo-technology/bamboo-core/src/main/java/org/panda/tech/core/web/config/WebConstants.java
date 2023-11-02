@@ -53,6 +53,14 @@ public class WebConstants {
      * 头信息名：鉴权认证
      */
     public static final String HEADER_AUTH_JWT = "Authorization";
+    /**
+     * 头信息名：鉴权密钥
+     */
+    public static final String HEADER_SECRET_KEY = "Secret-Key";
+    /**
+     * 头信息名：鉴权账户加密凭证
+     */
+    public static final String HEADER_AUTH_CREDENTIALS = "Credentials";
 
     /**
      * 默认的跳转目标参数

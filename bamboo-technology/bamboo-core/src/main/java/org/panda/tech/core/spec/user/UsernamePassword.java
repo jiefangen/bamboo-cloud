@@ -1,4 +1,4 @@
-package org.panda.tech.security.user;
+package org.panda.tech.core.spec.user;
 
 /**
  * 用户名密码

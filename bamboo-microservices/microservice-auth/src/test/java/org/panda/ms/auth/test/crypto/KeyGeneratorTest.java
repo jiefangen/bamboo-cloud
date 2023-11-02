@@ -1,10 +1,12 @@
 package org.panda.ms.auth.test.crypto;
 
 import org.junit.jupiter.api.Test;
+import org.panda.bamboo.common.util.jackson.JsonUtil;
 import org.panda.bamboo.common.util.lang.StringUtil;
 import org.panda.ms.auth.test.AuthServiceApplicationTest;
 import org.panda.tech.core.config.app.AppConstants;
 import org.panda.tech.core.crypto.aes.AesEncryptor;
+import org.panda.tech.core.spec.user.UsernamePassword;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,10 +26,13 @@ public class KeyGeneratorTest extends AuthServiceApplicationTest {
 
     @Test
     void fixedKeyGenerator() {
-        String key = StringUtil.randomNormalMixeds(11);
+        String key = StringUtil.randomNormalMixeds(32);
         System.out.println("key: " + key);
         AesEncryptor aesEncryptor = new AesEncryptor();
-        String encryptedText = aesEncryptor.encrypt(appName, key);
+        UsernamePassword usernamePassword = new UsernamePassword();
+        usernamePassword.setUsername("bamboo_customer");
+        usernamePassword.setPassword("123456");
+        String encryptedText = aesEncryptor.encrypt(JsonUtil.toJson(usernamePassword), key);
         System.out.println("encryptedText: " + encryptedText);
         String decryptSource = aesEncryptor.decrypt(encryptedText, key);
         System.out.println("decryptSource: " + decryptSource);

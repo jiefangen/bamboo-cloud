@@ -2,6 +2,7 @@ package org.panda.ms.auth.infrastructure.security.authentication.login;
 
 import org.panda.ms.auth.common.constant.AuthConstants;
 import org.panda.tech.core.web.restful.RestfulResult;
+import org.panda.tech.security.config.exception.BusinessAuthenticationException;
 import org.panda.tech.security.web.authentication.ResolvableExceptionAuthenticationFailureHandler;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
@@ -30,6 +31,8 @@ public class AuthLoginAuthenticationFailureHandler extends ResolvableExceptionAu
             return RestfulResult.failure(AuthConstants.ACCOUNT_DISABLED_CODE, exception.getMessage());
         } else if (exception instanceof LockedException) {
             return RestfulResult.failure(AuthConstants.ACCOUNT_LOCKED_CODE, exception.getMessage());
+        } else if (exception instanceof BusinessAuthenticationException) {
+            return RestfulResult.failure(AuthConstants.BAD_CREDENTIALS_CODE, exception.getMessage());
         }
         return null;
     }

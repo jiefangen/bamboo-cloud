@@ -3,6 +3,7 @@ package org.panda.bamboo.common.util;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.panda.bamboo.common.constant.basic.Strings;
+import org.slf4j.Logger;
 import org.springframework.util.DigestUtils;
 
 import javax.crypto.Cipher;
@@ -21,6 +22,8 @@ import java.util.Base64;
  * @author fangen
  */
 public class EncryptUtil {
+
+    private static final Logger LOGGER = LogUtil.getLogger(EncryptUtil.class);
 
     private static byte[] toBytes(Object source) {
         try {
@@ -149,7 +152,7 @@ public class EncryptUtil {
             // 返回解密结果
             return new String(decrypted, Strings.ENCODING_UTF8);
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage());
         }
         return null;
     }
