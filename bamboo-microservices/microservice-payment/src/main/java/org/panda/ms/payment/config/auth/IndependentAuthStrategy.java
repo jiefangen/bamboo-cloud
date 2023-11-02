@@ -24,8 +24,8 @@ public class IndependentAuthStrategy implements AuthManagerStrategy {
     }
 
     @Override
-    public RestfulResult<String> getAuthToken(String credentials, String server) {
-        return authServerClient.login(credentials, server);
+    public RestfulResult<String> getTokenByCredentials(String secretKey, String credentials, String server) {
+        return authServerClient.loginByCredentials(secretKey, credentials, server);
     }
 
     @Override

@@ -22,11 +22,12 @@ public interface AuthManagerStrategy {
     /**
      * 获取服务授权token
      *
+     * @param secretKey 密钥
      * @param credentials 账户凭证
      * @param server 可访问的服务名
      * @return 认证授权token
      */
-    RestfulResult<String> getAuthToken(String credentials, String server);
+    RestfulResult<String> getTokenByCredentials(String secretKey, String credentials, String server);
 
     /**
      * 服务授权验证

@@ -38,8 +38,10 @@ public abstract class AbstractAuthFilter extends AbstractAuthSupport implements 
             String credentials = WebHttpUtil.getHeader(request, WebConstants.HEADER_AUTH_CREDENTIALS);
             if (StringUtils.isNotBlank(credentials)) { // 触发服务自动认证获取交互凭证
                 try {
+                    String secretKey = WebHttpUtil.getHeader(request, WebConstants.HEADER_SECRET_KEY);
                     // 账户凭证验证签名请求凭证
-                    RestfulResult<String> tokenResult = super.getAuthStrategy().getAuthToken(credentials, server);
+                    RestfulResult<String> tokenResult = super.getAuthStrategy().getTokenByCredentials(secretKey,
+                            credentials, server);
                     if (Commons.RESULT_SUCCESS.equals(tokenResult.getMessage())) {
                         request.setAttribute(WebConstants.HEADER_AUTH_JWT, tokenResult.getData());
                     } else {

@@ -24,8 +24,9 @@ public interface AuthServerClient {
                                 @RequestParam("password") String password);
 
     @PostMapping("/auth/login")
-    RestfulResult<String> login(@RequestHeader(WebConstants.HEADER_AUTH_CREDENTIALS) String credentials,
-                                @RequestParam("service") String service);
+    RestfulResult<String> loginByCredentials(@RequestHeader(WebConstants.HEADER_SECRET_KEY) String secretKey,
+                                             @RequestHeader(WebConstants.HEADER_AUTH_CREDENTIALS) String credentials,
+                                             @RequestParam("service") String service);
 
     @GetMapping(value = "/auth/access/validate")
     RestfulResult validate(@RequestHeader(WebConstants.HEADER_AUTH_JWT) String authToken,
