@@ -1,4 +1,4 @@
-package org.panda.tech.security.config.annotation;
+package org.panda.tech.core.config.annotation;
 
 import org.panda.bamboo.common.constant.basic.Strings;
 
@@ -8,7 +8,7 @@ import java.lang.annotation.*;
  * 授予权限。使用该注解标注的调用接口在被调用时授予调用者指定权限。
  */
 @Documented
-@Target(ElementType.TYPE)
+@Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface GrantAuthority {
 

@@ -1,15 +1,13 @@
-package org.panda.ms.payment.config.auth.filter;
+package org.panda.ms.payment.config.security.filter;
 
-import org.panda.ms.payment.config.auth.IndependentAuthStrategy;
+import org.panda.ms.payment.config.security.IndependentAuthStrategy;
 import org.panda.support.cloud.core.security.AbstractAuthFilter;
-import org.springframework.context.annotation.Configuration;
 
 /**
  * 服务认证过滤器
  *
  * @author fangen
  **/
-@Configuration
 public class AuthenticationFilter extends AbstractAuthFilter {
 
     @Override

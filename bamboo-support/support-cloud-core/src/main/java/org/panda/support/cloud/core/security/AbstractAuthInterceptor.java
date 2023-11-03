@@ -55,7 +55,7 @@ public abstract class AbstractAuthInterceptor extends AbstractAuthSupport implem
 
     private boolean preCheck(HttpServletRequest request, HttpServletResponse response) {
         // 验证策略未配置则通过所有请求
-        if (super.getAuthStrategy() == null) {
+        if (super.isNotAuthStrategy()) {
             return true;
         }
         // 预检请求直接通过

@@ -29,6 +29,10 @@ public abstract class AbstractAuthSupport implements ContextInitializedBean {
         return authStrategyContainer.get(getStrategyType());
     }
 
+    protected boolean isNotAuthStrategy() {
+        return this.getAuthStrategy() == null;
+    }
+
     protected abstract Class<?> getStrategyType();
 
 }

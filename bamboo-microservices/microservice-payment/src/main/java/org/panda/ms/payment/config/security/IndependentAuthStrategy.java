@@ -1,7 +1,7 @@
-package org.panda.ms.payment.config.auth;
+package org.panda.ms.payment.config.security;
 
 import org.panda.bamboo.common.constant.Commons;
-import org.panda.ms.payment.config.auth.client.AuthServerClient;
+import org.panda.ms.payment.config.security.client.AuthServerClient;
 import org.panda.support.cloud.core.security.AuthManagerStrategy;
 import org.panda.tech.core.web.restful.RestfulResult;
 import org.springframework.beans.factory.annotation.Autowired;

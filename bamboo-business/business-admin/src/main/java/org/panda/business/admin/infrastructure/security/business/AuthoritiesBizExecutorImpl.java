@@ -41,8 +41,8 @@ public class AuthoritiesBizExecutorImpl implements AuthoritiesBizExecutor {
     public static final String SOURCE_EVENT = "applicationEvent";
     public static final String ASSOC_LOAD = "autoload";
 
-    private AtomicCounter permissionCounter = new AtomicCounter();
-    private AtomicCounter rolePerCounter = new AtomicCounter();
+    private final AtomicCounter permissionCounter = new AtomicCounter();
+    private final AtomicCounter rolePerCounter = new AtomicCounter();
 
     @Value(AppConstants.EL_SPRING_APP_NAME)
     private String appName;

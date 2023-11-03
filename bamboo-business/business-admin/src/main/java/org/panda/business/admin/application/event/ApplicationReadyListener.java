@@ -19,7 +19,8 @@ public class ApplicationReadyListener implements ApplicationListener<Application
     public void onApplicationEvent(ApplicationReadyEvent event) {
         if (!Profiles.JUNIT.equals(ApplicationContextBean.getActiveProfile())) {
             // 权限集扩展业务执行
-            AuthoritiesBizExecutor authoritiesBizExecutor = event.getApplicationContext().getBean(AuthoritiesBizExecutor.class);
+            AuthoritiesBizExecutor authoritiesBizExecutor = event.getApplicationContext()
+                    .getBean(AuthoritiesBizExecutor.class);
             authoritiesBizExecutor.execute();
         }
     }
