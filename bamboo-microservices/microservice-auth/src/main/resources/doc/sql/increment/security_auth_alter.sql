@@ -13,4 +13,7 @@ ALTER TABLE auth_permission MODIFY permission_code VARCHAR(100);
 ALTER TABLE auth_account ADD `credentials` VARCHAR(150) COMMENT '账户凭证' AFTER `password`;
 ALTER TABLE auth_account ADD `secret_key` VARCHAR(100) NOT NULL COMMENT '密钥' AFTER `password`;
 ALTER TABLE auth_account MODIFY credentials VARCHAR(300) COMMENT '账户凭证';
+
+ALTER TABLE auth_permission ADD UNIQUE `UQ_PERMISSION_CODE` (`permission_code`);
+ALTER TABLE app_server ADD UNIQUE `UQ_APP_CODE` (`app_code`);
 end by fangen

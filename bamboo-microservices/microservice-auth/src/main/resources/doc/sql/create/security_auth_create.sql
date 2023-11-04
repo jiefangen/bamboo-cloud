@@ -60,11 +60,11 @@ CREATE TABLE `auth_permission` (
                                 `id` INT unsigned AUTO_INCREMENT NOT NULL COMMENT '主键ID',
                                 `permission_name` VARCHAR(64) NOT NULL COMMENT '权限名称',
                                 `permission_code` VARCHAR(100) NOT NULL COMMENT '权限编码',
-                                `description` VARCHAR(200) COMMENT '描述',
                                 `resources_id` INT unsigned NOT NULL COMMENT '资源ID',
                                 `resources_type` VARCHAR(20) NOT NULL COMMENT '资源类型',
                                 `source` VARCHAR(50) COMMENT '权限来源',
                                 `resources` VARCHAR(100) COMMENT '资源',
+                                `description` VARCHAR(200) COMMENT '描述',
                                 PRIMARY KEY (`id`) USING BTREE,
                                 UNIQUE KEY `UQ_PERMISSION_CODE` (`permission_code`),
 ) ENGINE=InnoDB AUTO_INCREMENT=1000 CHARACTER SET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='应用资源权限' ROW_FORMAT=Compact;
@@ -79,11 +79,12 @@ ALTER TABLE `auth_role_permission` ADD CONSTRAINT fk_auth_role_permission_role_i
 DROP TABLE IF EXISTS `app_server`;
 CREATE TABLE `app_server` (
                            `id` INT unsigned AUTO_INCREMENT NOT NULL COMMENT '主键ID',
-                           `app_name` VARCHAR(64) NOT NULL COMMENT '应用服务名称',
-                           `app_code` VARCHAR(20) NOT NULL COMMENT '应用服务编码',
+                           `app_name` VARCHAR(60) NOT NULL COMMENT '应用服务名称',
+                           `app_code` VARCHAR(60) NOT NULL COMMENT '应用服务编码',
                            `caption` VARCHAR(200) COMMENT '标题',
                            `business` VARCHAR(200) COMMENT '业务',
                            `status` INT NOT NULL COMMENT '状态：0-停用；1-正常；2-维护中；4-故障',
-                           `scope` VARCHAR(20) COMMENT '应用服务范围',
-                           PRIMARY KEY (`id`) USING BTREE
+                           `scope` VARCHAR(100) COMMENT '应用服务范围',
+                           PRIMARY KEY (`id`) USING BTREE,
+                           UNIQUE KEY `UQ_APP_CODE` (`app_code`),
 ) ENGINE=InnoDB AUTO_INCREMENT=1000 CHARACTER SET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='应用服务' ROW_FORMAT=Compact;

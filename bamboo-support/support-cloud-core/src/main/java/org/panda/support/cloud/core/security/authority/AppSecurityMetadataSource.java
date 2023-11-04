@@ -31,10 +31,10 @@ public class AppSecurityMetadataSource implements ContextInitializedBean {
      */
     private final Map<String, Collection<AppConfigAuthority>> methodConfigAuthoritiesMapping = new HashMap<>();
 
-    private AuthoritiesBizExecutor authoritiesBizExecutor;
+    private AuthoritiesAppExecutor authoritiesAppExecutor;
 
-    public AppSecurityMetadataSource(AuthoritiesBizExecutor authoritiesBizExecutor) {
-        this.authoritiesBizExecutor = authoritiesBizExecutor;
+    public AppSecurityMetadataSource(AuthoritiesAppExecutor authoritiesAppExecutor) {
+        this.authoritiesAppExecutor = authoritiesAppExecutor;
     }
 
     @Override
@@ -47,8 +47,8 @@ public class AppSecurityMetadataSource implements ContextInitializedBean {
             }
         });
 
-        if (this.authoritiesBizExecutor != null) {
-            this.authoritiesBizExecutor.execute();
+        if (this.authoritiesAppExecutor != null) {
+            this.authoritiesAppExecutor.execute();
         }
     }
 
@@ -79,10 +79,10 @@ public class AppSecurityMetadataSource implements ContextInitializedBean {
             LogUtil.info(getClass(), "Config authorities: {} => {}", url, authStr.toString());
         }
 
-        if (this.authoritiesBizExecutor != null) {
+        if (this.authoritiesAppExecutor != null) {
             // 匹配资源加入到认证权限集合中
-            if (StringUtil.antPathMatchOneOf(url, this.authoritiesBizExecutor.getUrlPatterns())) {
-                this.authoritiesBizExecutor.setApiConfigAuthoritiesMapping(url, authorities);
+            if (StringUtil.antPathMatchOneOf(url, this.authoritiesAppExecutor.getUrlPatterns())) {
+                this.authoritiesAppExecutor.setApiConfigAuthoritiesMapping(url, authorities);
             }
         }
         return authorities;

@@ -1,4 +1,4 @@
-package org.panda.ms.payment.config.security.client;
+package org.panda.ms.payment.config.security.strategy.client;
 
 import org.panda.tech.core.web.config.WebConstants;
 import org.panda.tech.core.web.restful.RestfulResult;

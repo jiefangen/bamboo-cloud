@@ -2,6 +2,7 @@ package org.panda.ms.auth.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.panda.ms.auth.model.entity.AppServer;
+import org.panda.support.cloud.core.security.model.AppServiceModel;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
@@ -15,7 +16,6 @@ import java.util.Collection;
  * @since 2023-10-25
  */
 public interface AppServerService extends IService<AppServer> {
-
     /**
      * 服务权限验证
      *
@@ -24,5 +24,7 @@ public interface AppServerService extends IService<AppServer> {
      * @return 验证结果
      */
     boolean permissionVerification(String service, Collection<? extends GrantedAuthority> grantedAuthorities);
+
+    String initServicePermission(AppServiceModel appServiceModel);
 
 }

@@ -3,9 +3,9 @@ package org.panda.support.cloud.core.security.authority;
 import java.util.Collection;
 
 /**
- * 权限集业务扩展执行器
+ * 应用权限集业务扩展执行器
  */
-public interface AuthoritiesBizExecutor {
+public interface AuthoritiesAppExecutor {
     /**
      * 业务扩展执行，交由上层业务实现
      */

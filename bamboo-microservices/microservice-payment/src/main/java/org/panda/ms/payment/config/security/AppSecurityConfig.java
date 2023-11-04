@@ -1,9 +1,10 @@
 package org.panda.ms.payment.config.security;
 
-import org.panda.ms.payment.config.security.filter.AuthenticationFilter;
-import org.panda.ms.payment.config.security.interceptor.AuthorizationInterceptor;
+import org.panda.ms.payment.config.security.strategy.IndependentAuthStrategy;
+import org.panda.support.cloud.core.security.AuthenticationFilter;
+import org.panda.support.cloud.core.security.AuthorizationInterceptor;
 import org.panda.support.cloud.core.security.authority.AppSecurityMetadataSource;
-import org.panda.support.cloud.core.security.authority.AuthoritiesBizExecutor;
+import org.panda.support.cloud.core.security.authority.AuthoritiesAppExecutor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,21 +18,21 @@ import org.springframework.context.annotation.Configuration;
 public class AppSecurityConfig {
 
     @Autowired
-    private AuthoritiesBizExecutor authoritiesBizExecutor;
+    private AuthoritiesAppExecutor authoritiesAppExecutor;
 
     @Bean
     public AppSecurityMetadataSource appSecurityMetadataSource() {
-        return new AppSecurityMetadataSource(authoritiesBizExecutor);
+        return new AppSecurityMetadataSource(authoritiesAppExecutor);
     }
 
     @Bean
     public AuthenticationFilter authenticationFilter() {
-        return new AuthenticationFilter();
+        return new AuthenticationFilter(IndependentAuthStrategy.class);
     }
 
     @Bean
     public AuthorizationInterceptor authorizationInterceptor() {
-        return new AuthorizationInterceptor();
+        return new AuthorizationInterceptor(IndependentAuthStrategy.class);
     }
 
 }

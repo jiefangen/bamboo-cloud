@@ -20,12 +20,18 @@ import java.io.IOException;
  *
  * @author fangen
  **/
-public abstract class AbstractAuthFilter extends AbstractAuthSupport implements Filter {
+public class AuthenticationFilter extends AbstractAuthSupport implements Filter {
 
     private final Logger LOGGER = LogUtil.getLogger(getClass());
 
+    private final Class<?> strategyType;
+
     @Value(AppConstants.EL_SPRING_APP_NAME)
     private String server;
+
+    public AuthenticationFilter(Class<?> strategyType) {
+        this.strategyType = strategyType;
+    }
 
     @Override
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain)
@@ -58,4 +64,8 @@ public abstract class AbstractAuthFilter extends AbstractAuthSupport implements 
         chain.doFilter(req, resp);
     }
 
+    @Override
+    protected Class<?> getStrategyType() {
+        return this.strategyType;
+    }
 }

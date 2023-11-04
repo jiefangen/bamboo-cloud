@@ -20,17 +20,19 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.util.StringUtils;
 import springfox.documentation.builders.ApiInfoBuilder;
+import springfox.documentation.builders.ParameterBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.service.*;
+import springfox.documentation.schema.ModelRef;
+import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.Contact;
+import springfox.documentation.service.Parameter;
 import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 @Setter
@@ -59,26 +61,7 @@ public class SwaggerConfig {
                 .apis(RequestHandlerSelectors.basePackage(this.basePackage))
                 .paths(PathSelectors.any())
                 .build()
-                .securityContexts(securityContext())
-                .securitySchemes(securitySchemes());
-    }
-
-    private List<SecurityScheme> securitySchemes() {
-        return Collections.singletonList(new ApiKey(WebConstants.HEADER_AUTH_JWT, WebConstants.HEADER_AUTH_JWT, "header"));
-    }
-
-    private List<SecurityContext> securityContext() {
-        SecurityContext securityContext = SecurityContext.builder()
-                .securityReferences(defaultAuth())
-                .build();
-        return Collections.singletonList(securityContext);
-    }
-
-    List<SecurityReference> defaultAuth() {
-        AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
-        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
-        authorizationScopes[0] = authorizationScope;
-        return Collections.singletonList(new SecurityReference(WebConstants.HEADER_AUTH_JWT, authorizationScopes));
+                .globalOperationParameters(globalParameters());
     }
 
     private ApiInfo apiInfo() {
@@ -93,23 +76,29 @@ public class SwaggerConfig {
                 .build();
     }
 
+    private List<Parameter> globalParameters() {
+        List<Parameter> parameters = new ArrayList<>();
+        ParameterBuilder tokenParam = new ParameterBuilder();
+        tokenParam.name(WebConstants.HEADER_AUTH_JWT)
+                .description(WebConstants.HEADER_AUTH_JWT)
+                .modelRef(new ModelRef("string"))
+                .parameterType("header")
+                .required(false).build();
+        parameters.add(tokenParam.build());
+        return parameters;
+    }
+
     /**
      * 解决springboot升到2.6.x之后，knife4j报错
      * 适配spring-boot-starter-actuator依赖
-     *
-     * @param webEndpointsSupplier        the web endpoints supplier
-     * @param servletEndpointsSupplier    the servlet endpoints supplier
-     * @param controllerEndpointsSupplier the controller endpoints supplier
-     * @param endpointMediaTypes          the endpoint media types
-     * @param corsEndpointProperties      the cors properties
-     * @param webEndpointProperties       the web endpoints properties
-     * @param environment                 the environment
-     * @return the web mvc endpoint handler mapping
      */
     @Bean
-    public WebMvcEndpointHandlerMapping webMvcEndpointHandlerMapping(WebEndpointsSupplier webEndpointsSupplier, ServletEndpointsSupplier servletEndpointsSupplier,
-                                                                     ControllerEndpointsSupplier controllerEndpointsSupplier, EndpointMediaTypes endpointMediaTypes,
-                                                                     CorsEndpointProperties corsEndpointProperties, WebEndpointProperties webEndpointProperties,
+    public WebMvcEndpointHandlerMapping webMvcEndpointHandlerMapping(WebEndpointsSupplier webEndpointsSupplier,
+                                                                     ServletEndpointsSupplier servletEndpointsSupplier,
+                                                                     ControllerEndpointsSupplier controllerEndpointsSupplier,
+                                                                     EndpointMediaTypes endpointMediaTypes,
+                                                                     CorsEndpointProperties corsEndpointProperties,
+                                                                     WebEndpointProperties webEndpointProperties,
                                                                      Environment environment) {
         List<ExposableEndpoint<?>> allEndpoints = new ArrayList<>();
         Collection<ExposableWebEndpoint> webEndpoints = webEndpointsSupplier.getEndpoints();
@@ -119,19 +108,15 @@ public class SwaggerConfig {
         String basePath = webEndpointProperties.getBasePath();
         EndpointMapping endpointMapping = new EndpointMapping(basePath);
         boolean shouldRegisterLinksMapping = shouldRegisterLinksMapping(webEndpointProperties, environment, basePath);
-        return new WebMvcEndpointHandlerMapping(endpointMapping, webEndpoints, endpointMediaTypes, corsEndpointProperties.toCorsConfiguration(), new EndpointLinksResolver(
-                allEndpoints, basePath), shouldRegisterLinksMapping, null);
+        return new WebMvcEndpointHandlerMapping(endpointMapping, webEndpoints, endpointMediaTypes,
+                corsEndpointProperties.toCorsConfiguration(), new EndpointLinksResolver(allEndpoints, basePath),
+                shouldRegisterLinksMapping, null);
     }
 
-    /**
-     * shouldRegisterLinksMapping
-     *
-     * @param webEndpointProperties
-     * @param environment
-     * @param basePath
-     * @return
-     */
-    private boolean shouldRegisterLinksMapping(WebEndpointProperties webEndpointProperties, Environment environment, String basePath) {
-        return webEndpointProperties.getDiscovery().isEnabled() && (StringUtils.hasText(basePath) || ManagementPortType.get(environment).equals(ManagementPortType.DIFFERENT));
+    private boolean shouldRegisterLinksMapping(WebEndpointProperties webEndpointProperties, Environment environment,
+                                               String basePath) {
+        return webEndpointProperties.getDiscovery().isEnabled() && (StringUtils.hasText(basePath)
+                || ManagementPortType.get(environment).equals(ManagementPortType.DIFFERENT));
     }
+
 }

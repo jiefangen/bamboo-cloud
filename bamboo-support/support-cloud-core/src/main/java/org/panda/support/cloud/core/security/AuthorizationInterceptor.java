@@ -21,10 +21,16 @@ import java.util.List;
  *
  * @author fangen
  **/
-public abstract class AbstractAuthInterceptor extends AbstractAuthSupport implements HandlerInterceptor {
+public class AuthorizationInterceptor extends AbstractAuthSupport implements HandlerInterceptor {
+
+    private final Class<?> strategyType;
 
     @Autowired
     private WebSecurityProperties securityProperties;
+
+    public AuthorizationInterceptor(Class<?> strategyType) {
+        this.strategyType = strategyType;
+    }
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
@@ -78,4 +84,8 @@ public abstract class AbstractAuthInterceptor extends AbstractAuthSupport implem
         return false;
     }
 
+    @Override
+    protected Class<?> getStrategyType() {
+        return this.strategyType;
+    }
 }
