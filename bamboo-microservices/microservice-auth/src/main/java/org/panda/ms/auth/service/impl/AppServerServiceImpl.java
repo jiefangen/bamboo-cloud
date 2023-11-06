@@ -9,10 +9,16 @@ import org.panda.bamboo.common.constant.basic.Strings;
 import org.panda.bamboo.common.util.lang.StringUtil;
 import org.panda.ms.auth.model.entity.AppServer;
 import org.panda.ms.auth.model.entity.AuthPermission;
+import org.panda.ms.auth.model.entity.AuthRole;
+import org.panda.ms.auth.model.entity.AuthRolePermission;
 import org.panda.ms.auth.repository.AppServerMapper;
 import org.panda.ms.auth.service.AppServerService;
 import org.panda.ms.auth.service.AuthPermissionService;
+import org.panda.ms.auth.service.AuthRolePermissionService;
+import org.panda.ms.auth.service.AuthRoleService;
+import org.panda.support.cloud.core.security.authority.AppConfigAuthority;
 import org.panda.support.cloud.core.security.model.AppServiceModel;
+import org.panda.support.cloud.core.security.model.enums.AuthRoleCode;
 import org.panda.tech.core.util.CommonUtil;
 import org.panda.tech.core.web.context.SpringWebContext;
 import org.panda.tech.core.web.util.WebHttpUtil;
@@ -23,9 +29,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * <p>
@@ -40,6 +44,10 @@ public class AppServerServiceImpl extends ServiceImpl<AppServerMapper, AppServer
 
     @Autowired
     private AuthPermissionService authPermissionService;
+    @Autowired
+    private AuthRoleService authRoleService;
+    @Autowired
+    private AuthRolePermissionService authRolePermissionService;
 
     @Override
     public boolean permissionVerification(String service, Collection<? extends GrantedAuthority> grantedAuthorities) {
@@ -98,13 +106,16 @@ public class AppServerServiceImpl extends ServiceImpl<AppServerMapper, AppServer
             return appName + " service registration and save failed";
         }
 
-        Integer appServerId = appServer.getId();
-        List<AppServiceModel.Permission> permissions = appServiceModel.getPermissions();
+        this.savePermissions(appServiceModel.getPermissions(), appServer.getId(), appName);
+        return Commons.RESULT_SUCCESS;
+    }
+
+    private void savePermissions(List<AppServiceModel.Permission> permissions, Integer appServerId, String appName) {
         if (CollectionUtils.isNotEmpty(permissions)) {
             permissions.forEach(permission -> {
                 String resources = permission.getApi();
                 String permissionName = CommonUtil.getDefaultPermission(resources);
-                if (resources.contains(Strings.LEFT_BRACE) && resources.contains(Strings.RIGHT_BRACE) ) {
+                if (resources.contains(Strings.LEFT_BRACE) && resources.contains(Strings.RIGHT_BRACE)) {
                     permissionName += Strings.UNDERLINE + Strings.ASTERISK;
                 }
                 String permissionCode = permissionName.toUpperCase();
@@ -116,9 +127,45 @@ public class AppServerServiceImpl extends ServiceImpl<AppServerMapper, AppServer
                 permissionParam.setSource(appName);
                 permissionParam.setResources(resources);
                 authPermissionService.saveOrUpdate(permissionParam);
+
+                LambdaQueryWrapper<AuthPermission> queryWrapper = new LambdaQueryWrapper<>();
+                queryWrapper.eq(AuthPermission::getPermissionCode, permissionCode);
+                queryWrapper.eq(AuthPermission::getSource, appName);
+                AuthPermission authPermission = authPermissionService.getOne(queryWrapper);
+                if (authPermission != null) {
+                    this.saveAuthPerRelationship(authPermission.getId(), permission.getAppConfigAuthorities());
+                }
             });
         }
-        return Commons.RESULT_SUCCESS;
+    }
+
+    private void saveAuthPerRelationship(Integer permissionId, Collection<AppConfigAuthority> configAuthorities) {
+        if (CollectionUtils.isNotEmpty(configAuthorities)) {
+            configAuthorities.forEach(configAuthority -> {
+                String rolePermission = configAuthority.getPermission();
+                List<String> rolePermissions = new ArrayList<>();
+                if (StringUtils.isNotEmpty(rolePermission)) {
+                    if (rolePermission.contains(Strings.COMMA)) {
+                        rolePermissions.addAll(Arrays.asList(rolePermission.split(Strings.COMMA)));
+                    } else {
+                        rolePermissions.add(rolePermission);
+                    }
+                }
+                // 加入管理员角色权限，默认管理员拥有全部资源权限
+                rolePermissions.addAll(AuthRoleCode.getManagerRoles());
+                for (String roleCode : rolePermissions) {
+                    AuthRolePermission authRolePermission = new AuthRolePermission();
+                    authRolePermission.setPermissionId(permissionId);
+                    LambdaQueryWrapper<AuthRole> queryWrapper = new LambdaQueryWrapper<>();
+                    queryWrapper.eq(AuthRole::getRoleCode, roleCode);
+                    AuthRole authRole = authRoleService.getOne(queryWrapper, false);
+                    if (authRole != null) {
+                        authRolePermission.setRoleId(authRole.getId());
+                        authRolePermissionService.saveOrUpdate(authRolePermission);
+                    }
+                }
+            });
+        }
     }
 
 }

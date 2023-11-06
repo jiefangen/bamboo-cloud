@@ -8,7 +8,7 @@ import org.springframework.util.Assert;
  */
 public class AppConfigAuthority implements ConfigAttribute {
 
-    private static final long serialVersionUID = 498327687040071363L;
+    private static final long serialVersionUID = -5087737434098808197L;
 
     public static final String SEPARATOR = Strings.PLUS;
 
