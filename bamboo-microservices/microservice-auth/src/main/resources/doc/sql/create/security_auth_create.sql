@@ -64,6 +64,7 @@ CREATE TABLE `auth_permission` (
                                 `resources_type` VARCHAR(20) NOT NULL COMMENT '资源类型',
                                 `source` VARCHAR(50) COMMENT '权限来源',
                                 `resources` VARCHAR(100) COMMENT '资源',
+                                `scope` VARCHAR(100) COMMENT '权限范围',
                                 `description` VARCHAR(200) COMMENT '描述',
                                 PRIMARY KEY (`id`) USING BTREE,
                                 UNIQUE KEY `UQ_PERMISSION_CODE` (`permission_code`),

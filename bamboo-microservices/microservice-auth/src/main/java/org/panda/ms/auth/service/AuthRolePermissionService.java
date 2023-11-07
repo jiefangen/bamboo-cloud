@@ -2,6 +2,9 @@ package org.panda.ms.auth.service;
 
 import org.panda.ms.auth.model.entity.AuthRolePermission;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.panda.support.cloud.core.security.model.AppServiceModel;
+
+import java.util.List;
 
 /**
  * <p>
@@ -12,5 +15,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2023-11-04
  */
 public interface AuthRolePermissionService extends IService<AuthRolePermission> {
+
+    void initPermissions(List<AppServiceModel.Permission> permissions, Integer appServerId, String appName);
 
 }

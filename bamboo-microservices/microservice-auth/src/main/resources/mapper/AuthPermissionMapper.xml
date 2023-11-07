@@ -15,4 +15,11 @@
         </if>
     </select>
 
+    <select id="selectAnonymousPermissions" resultType="string">
+        select distinct p.permission_code
+        from auth_permission p
+        where p.scope = #{anonymousScope,jdbcType=VARCHAR}
+           or p.description = #{anonymousDesc,jdbcType=VARCHAR}
+    </select>
+
 </mapper>

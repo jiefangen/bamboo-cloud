@@ -1,4 +1,4 @@
-package org.panda.ms.payment.config.security.strategy.client;
+package org.panda.ms.notice.config.security.strategy.client;
 
 import org.panda.support.cloud.core.security.model.AppServiceModel;
 import org.panda.tech.core.web.config.WebConstants;

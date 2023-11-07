@@ -5,6 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.panda.ms.payment.core.domain.model.PaymentDefinition;
 import org.panda.ms.payment.core.domain.model.PaymentRequest;
 import org.panda.ms.payment.service.PaymentService;
+import org.panda.support.cloud.core.security.model.PerConstants;
 import org.panda.tech.core.config.annotation.GrantAuthority;
 import org.panda.tech.core.web.restful.RestfulResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class PaymentController {
 
     @PostMapping("/prepare/{gatewayName}")
     @ResponseBody
-    @GrantAuthority(app = "ms-payment")
+    @GrantAuthority(permission = PerConstants.ROLE_ACCOUNT)
     public RestfulResult prepare(@PathVariable("gatewayName") String gatewayName,
                                  @RequestBody PaymentDefinition definition) {
         PaymentRequest paymentResult = this.paymentService.payment(gatewayName, definition);

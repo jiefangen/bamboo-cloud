@@ -1,7 +1,7 @@
 package org.panda.ms.auth.service;
 
-import org.panda.ms.auth.model.entity.AuthPermission;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.panda.ms.auth.model.entity.AuthPermission;
 
 import java.util.Set;
 
@@ -16,5 +16,7 @@ import java.util.Set;
 public interface AuthPermissionService extends IService<AuthPermission> {
 
     Set<String> getPermissions(Set<String> roleCodes);
+
+    Set<String> getAnonymousPermission(String anonymousScope, String anonymousDesc);
 
 }

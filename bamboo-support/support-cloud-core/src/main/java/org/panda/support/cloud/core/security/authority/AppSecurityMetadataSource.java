@@ -5,6 +5,7 @@ import org.panda.bamboo.common.util.LogUtil;
 import org.panda.bamboo.common.util.lang.StringUtil;
 import org.panda.bamboo.core.beans.ContextInitializedBean;
 import org.panda.tech.core.config.annotation.GrantAuthority;
+import org.panda.tech.core.web.config.security.WebSecurityProperties;
 import org.panda.tech.core.web.mvc.servlet.mvc.method.HandlerMethodMapping;
 import org.panda.tech.core.web.mvc.util.WebMvcUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,14 +25,17 @@ import java.util.Map;
  **/
 public class AppSecurityMetadataSource implements ContextInitializedBean {
 
-    @Autowired
-    private HandlerMethodMapping handlerMethodMapping;
     /**
      * 映射集：方法名称-所需权限清单，用户具有权限清单中的任意一个权限，即可访问对应方法
      */
     private final Map<String, Collection<AppConfigAuthority>> methodConfigAuthoritiesMapping = new HashMap<>();
 
     private AuthoritiesAppExecutor authoritiesAppExecutor;
+
+    @Autowired
+    private HandlerMethodMapping handlerMethodMapping;
+    @Autowired
+    private WebSecurityProperties securityProperties;
 
     public AppSecurityMetadataSource(AuthoritiesAppExecutor authoritiesAppExecutor) {
         this.authoritiesAppExecutor = authoritiesAppExecutor;
@@ -46,7 +50,6 @@ public class AppSecurityMetadataSource implements ContextInitializedBean {
                 this.methodConfigAuthoritiesMapping.put(methodKey, authorities);
             }
         });
-
         if (this.authoritiesAppExecutor != null) {
             this.authoritiesAppExecutor.execute();
         }
@@ -68,8 +71,13 @@ public class AppSecurityMetadataSource implements ContextInitializedBean {
                         configAuthority.app(), permission, configAuthority.mode().name()));
             }
         }
-        if (authorities.isEmpty()) { // 没有配置权限限定，则拒绝所有访问
-            authorities.add(AppConfigAuthority.ofDenyAll());
+        if (authorities.isEmpty()) {
+            // 没有权限注解且允许匿名访问无权限注解，则允许所有请求匿名访问
+            if (this.securityProperties.isAnonymousWithoutAnnotation()) {
+                authorities.add(new AppConfigAuthority());
+            } else { // 拒绝所有访问
+                authorities.add(AppConfigAuthority.ofDenyAll());
+            }
         } else {
             StringBuilder authStr = new StringBuilder();
             authorities.forEach(authority -> {

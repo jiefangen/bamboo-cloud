@@ -3,6 +3,9 @@ package org.panda.tech.core.util;
 import org.apache.commons.lang3.StringUtils;
 import org.panda.bamboo.common.constant.basic.Strings;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * 全局通用性工具类
  **/
@@ -39,6 +42,19 @@ public class CommonUtil {
             return uri;
         }
         return removePathVariable(uri);
+    }
+
+    /**
+     * 统计字符串中大括号的个数
+     */
+    public static int countPairsOfBraces(String str) {
+        Pattern pattern = Pattern.compile("\\{[^}]*\\}");
+        Matcher matcher = pattern.matcher(str);
+        int count = 0;
+        while (matcher.find()) {
+            count++;
+        }
+        return count;
     }
 
 }

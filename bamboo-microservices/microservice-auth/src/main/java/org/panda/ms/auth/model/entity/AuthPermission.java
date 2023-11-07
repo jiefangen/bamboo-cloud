@@ -1,14 +1,15 @@
 package org.panda.ms.auth.model.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableField;
-import java.io.Serializable;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import java.io.Serializable;
 
 /**
  * <p>
@@ -38,10 +39,6 @@ public class AuthPermission implements Serializable {
     @TableField("permission_code")
     private String permissionCode;
 
-    @ApiModelProperty(value = "描述")
-    @TableField("description")
-    private String description;
-
     @ApiModelProperty(value = "资源ID")
     @TableField("resources_id")
     private Integer resourcesId;
@@ -57,6 +54,14 @@ public class AuthPermission implements Serializable {
     @ApiModelProperty(value = "资源")
     @TableField("resources")
     private String resources;
+
+    @ApiModelProperty(value = "权限范围")
+    @TableField("scope")
+    private String scope;
+
+    @ApiModelProperty(value = "描述")
+    @TableField("description")
+    private String description;
 
 
 }

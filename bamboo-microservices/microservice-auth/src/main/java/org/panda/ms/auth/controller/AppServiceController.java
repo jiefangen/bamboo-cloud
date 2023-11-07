@@ -6,9 +6,12 @@ import org.panda.bamboo.common.constant.Commons;
 import org.panda.ms.auth.service.AppServerService;
 import org.panda.support.cloud.core.security.model.AppServiceModel;
 import org.panda.tech.core.web.restful.RestfulResult;
-import org.panda.tech.security.config.annotation.ConfigPermission;
+import org.panda.tech.security.config.annotation.ConfigAnonymous;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 应用服务控制器
@@ -24,7 +27,7 @@ public class AppServiceController {
     private AppServerService appServerService;
 
     @PostMapping("/authorize")
-    @ConfigPermission
+    @ConfigAnonymous
     public RestfulResult authorize(@RequestBody AppServiceModel appServiceModel) {
         if (appServiceModel == null || StringUtils.isEmpty(appServiceModel.getAppName())) {
             return RestfulResult.failure();

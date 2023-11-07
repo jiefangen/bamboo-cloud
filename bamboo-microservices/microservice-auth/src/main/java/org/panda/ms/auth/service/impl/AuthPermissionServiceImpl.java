@@ -1,9 +1,9 @@
 package org.panda.ms.auth.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.panda.ms.auth.model.entity.AuthPermission;
 import org.panda.ms.auth.repository.AuthPermissionMapper;
 import org.panda.ms.auth.service.AuthPermissionService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
@@ -22,6 +22,11 @@ public class AuthPermissionServiceImpl extends ServiceImpl<AuthPermissionMapper,
     @Override
     public Set<String> getPermissions(Set<String> roleCodes) {
         return this.baseMapper.selectPermissionsByRoleCodes(roleCodes);
+    }
+
+    @Override
+    public Set<String> getAnonymousPermission(String anonymousScope, String anonymousDesc) {
+        return this.baseMapper.selectAnonymousPermissions(anonymousScope, anonymousDesc);
     }
 
 }

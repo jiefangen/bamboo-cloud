@@ -1,9 +1,9 @@
-package org.panda.ms.payment.config.security.executor;
+package org.panda.ms.notice.config.security.executor;
 
 import org.apache.commons.lang3.StringUtils;
 import org.panda.bamboo.common.util.LogUtil;
 import org.panda.bamboo.common.util.jackson.JsonUtil;
-import org.panda.ms.payment.config.security.strategy.client.AuthServerClient;
+import org.panda.ms.notice.config.security.strategy.client.AuthServerClient;
 import org.panda.support.cloud.core.security.authority.AppConfigAuthority;
 import org.panda.support.cloud.core.security.authority.AuthoritiesAppExecutor;
 import org.panda.support.cloud.core.security.model.AppServiceModel;
@@ -76,6 +76,6 @@ public class AuthoritiesAppExecutorImpl implements AuthoritiesAppExecutor {
 
     @Override
     public String[] getUrlPatterns() {
-        return new String[]{"/payment/**"};
+        return new String[]{"/sms/**", "/email/**"};
     }
 }

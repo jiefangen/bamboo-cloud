@@ -94,7 +94,8 @@ public class AppConfigAuthority implements ConfigAttribute {
 
     @Override
     public String getAttribute() {
-        return this.denyAll ? ATTRIBUTE_DENY_ALL : (this.type + SEPARATOR + this.rank + SEPARATOR + this.app + SEPARATOR + this.permission);
+        return this.denyAll ? ATTRIBUTE_DENY_ALL : (this.type + SEPARATOR + this.rank + SEPARATOR + this.app + SEPARATOR
+                + this.permission);
     }
 
     @Override

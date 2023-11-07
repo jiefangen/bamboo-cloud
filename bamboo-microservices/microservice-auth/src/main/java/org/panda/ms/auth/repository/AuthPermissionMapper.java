@@ -18,4 +18,6 @@ public interface AuthPermissionMapper extends BaseMapper<AuthPermission> {
 
     Set<String> selectPermissionsByRoleCodes(@Param("roleCodes") Set<String> roleCodes);
 
+    Set<String> selectAnonymousPermissions(@Param("anonymousScope")String anonymousScope,
+                                           @Param("anonymousDesc")String anonymousDesc);
 }

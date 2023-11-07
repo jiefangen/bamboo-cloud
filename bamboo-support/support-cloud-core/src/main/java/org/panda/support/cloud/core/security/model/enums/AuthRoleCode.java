@@ -26,7 +26,6 @@ public enum AuthRoleCode {
         return topRoles;
     }
 
-
     /**
      * 是否是管理员角色
      *
