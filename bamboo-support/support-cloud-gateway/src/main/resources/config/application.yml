@@ -6,7 +6,7 @@ spring:
   main:
     web-application-type: reactive
 server:
-  port: 12003
+  port: 12001
 
 
 

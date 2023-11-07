@@ -1,4 +1,4 @@
-package org.panda.support.config.example.common.nacos;
+package org.panda.support.discovery.example.common;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

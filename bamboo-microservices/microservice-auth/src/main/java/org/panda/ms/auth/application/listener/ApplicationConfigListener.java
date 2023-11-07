@@ -1,4 +1,4 @@
-package org.panda.support.gateway.config.listener;
+package org.panda.ms.auth.application.listener;
 
 import org.panda.bamboo.common.constant.basic.Strings;
 import org.panda.bamboo.common.util.LogUtil;

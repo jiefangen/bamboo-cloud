@@ -49,9 +49,10 @@ public class AuthorizeGlobalFilter implements GlobalFilter, Ordered {
             }
         }
 
-        // 令牌规则校验
+        // 鉴权规则校验
         String token = request.getHeaders().getFirst(WebConstants.HEADER_AUTH_JWT);
-        if (StringUtils.isNotBlank(token)) {
+        String credentials = request.getHeaders().getFirst(WebConstants.HEADER_AUTH_CREDENTIALS);
+        if (StringUtils.isNotEmpty(token) || StringUtils.isNotEmpty(credentials)) {
             // Auth服务器验证令牌
             return chain.filter(exchange);
         }
