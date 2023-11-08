@@ -9,6 +9,12 @@ spring:
         server-addr: 198.19.249.35:7847
         namespace: f2b00b45-b5a5-46e4-a2ad-67e83b2058b7
         group: BAMBOO_GROUP
+    sentinel:
+      transport:
+        port: 8730
+        dashboard: 198.19.249.147:9100
+      enabled: true
+
   config:
     import:
       - optional:nacos:${spring.application.name}-${spring.profiles.active}.yml?refreshEnabled=true

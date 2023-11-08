@@ -5,8 +5,11 @@ spring:
     active: demo
   main:
     web-application-type: reactive
+  cloud:
+    gateway:
+      enabled: true
+      discovery:
+        locator:
+          lower-case-service-id: true
 server:
   port: 12001
-
-
-

@@ -1,4 +1,4 @@
-package org.panda.support.gateway.config.filter;
+package org.panda.support.gateway.common.config.filter;
 
 import org.apache.commons.lang3.StringUtils;
 import org.panda.bamboo.common.util.LogUtil;

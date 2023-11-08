@@ -58,12 +58,7 @@ spring:
             - Path=/ms-payment/**
           filters:
             - StripPrefix=1
-    sentinel:
-      transport:
-        port: 8719 # 默认8719(当前服务，对sentinel提供的，调用端口号，用于监控服务访问数据)
-        dashboard: localhost:7719
-      eager: true
-
+            - RewritePath=/ms-payment/(?<segment>.*), /$\{segment}
       # 跨域配置
       globalcors:
         cors-configurations:
@@ -75,6 +70,13 @@ spring:
               - DELETE
               - PUT
               - OPTIONS
+
+    sentinel:
+      transport:
+        dashboard: 198.19.249.147:9100
+      eager: true
+      filter:
+        enabled: false
 
 # Gateway Security Configuration
 bamboo:

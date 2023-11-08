@@ -1,5 +1,8 @@
 spring:
   cloud:
+    sentinel:
+      transport:
+        dashboard: 198.19.249.147:9100
     nacos:
       config:
         import-check:

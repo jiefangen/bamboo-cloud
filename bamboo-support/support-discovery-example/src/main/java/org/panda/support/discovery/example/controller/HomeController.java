@@ -1,5 +1,6 @@
 package org.panda.support.discovery.example.controller;
 
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import io.swagger.annotations.Api;
 import org.panda.tech.core.web.restful.RestfulResult;
 import org.panda.tech.core.web.util.NetUtil;
@@ -28,12 +29,14 @@ public class HomeController {
 
     @GetMapping
     @ResponseBody
+    @SentinelResource("anonymous")
     public RestfulResult<String> home() {
         return RestfulResult.success("The " + name + " microservice");
     }
 
     @GetMapping(value = "/index")
     @ResponseBody
+    @SentinelResource("anonymous")
     public RestfulResult<Map<String, Object>> index(HttpServletRequest request) {
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("service", name);

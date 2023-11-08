@@ -1,4 +1,4 @@
-package org.panda.support.gateway.config;
+package org.panda.support.gateway.common.config;
 
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;

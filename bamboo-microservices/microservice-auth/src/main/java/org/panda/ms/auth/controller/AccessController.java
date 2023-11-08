@@ -5,7 +5,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.panda.ms.auth.service.AppServerService;
 import org.panda.tech.core.exception.ExceptionEnum;
 import org.panda.tech.core.web.restful.RestfulResult;
-import org.panda.tech.security.config.annotation.ConfigPermission;
+import org.panda.tech.security.config.annotation.ConfigAuthority;
 import org.panda.tech.security.util.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -37,7 +37,7 @@ public class AccessController {
      * @param response 响应
      */
     @GetMapping("/validate")
-    @ConfigPermission
+    @ConfigAuthority
     public RestfulResult validate(@RequestParam(value = "service", required = false) String service, HttpServletResponse response) {
         Collection<? extends GrantedAuthority> grantedAuthorities = SecurityUtil.getGrantedAuthorities();
         if (CollectionUtils.isEmpty(grantedAuthorities)) {
