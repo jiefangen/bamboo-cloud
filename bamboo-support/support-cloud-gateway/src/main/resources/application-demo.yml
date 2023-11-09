@@ -1,19 +1,42 @@
+bamboo:
+  middleware:
+    center:
+      serverAddr: 198.19.249.35:7847
+      namespace: f2b00b45-b5a5-46e4-a2ad-67e83b2058b7
 spring:
   cloud:
     nacos:
       config:
-        server-addr: 198.19.249.35:7847
-        namespace: f2b00b45-b5a5-46e4-a2ad-67e83b2058b7
+        server-addr: ${bamboo.middleware.center.serverAddr}
+        namespace: ${bamboo.middleware.center.namespace}
         group: SPT_GROUP
       discovery:
-        server-addr: 198.19.249.35:7847
-        namespace: f2b00b45-b5a5-46e4-a2ad-67e83b2058b7
+        server-addr: ${bamboo.middleware.center.serverAddr}
+        namespace: ${bamboo.middleware.center.namespace}
         group: BAMBOO_GROUP
     sentinel:
       transport:
         port: 8730
         dashboard: 198.19.249.147:9100
       enabled: true
+      datasource:
+        gw-flow:
+          nacos:
+            server-addr: ${bamboo.middleware.center.serverAddr}
+            namespace: ${bamboo.middleware.center.namespace}
+            data-id: ${spring.application.name}-sentinel-flow
+            group-id: SENTINEL_GROUP
+            data-type: json
+            rule-type: gw-flow
+        gw-api-group:
+          nacos:
+            server-addr: ${bamboo.middleware.center.serverAddr}
+            namespace: ${bamboo.middleware.center.namespace}
+            data-id: ${spring.application.name}-sentinel-api
+            group-id: SENTINEL_GROUP
+            data-type: json
+            rule-type: gw-api-group
+      eager: true
 
   config:
     import:

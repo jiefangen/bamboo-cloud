@@ -1,13 +1,18 @@
+bamboo:
+  middleware:
+    center:
+      serverAddr: 127.0.0.1:7847
+      namespace: 877bab8f-8daf-4959-b684-8fb3088ef049
 spring:
   cloud:
     nacos:
       config:
-        server-addr: 127.0.0.1:7847
-        namespace: 877bab8f-8daf-4959-b684-8fb3088ef049
+        server-addr: ${bamboo.middleware.center.serverAddr}
+        namespace: ${bamboo.middleware.center.namespace}
         group: SPT_GROUP
       discovery:
-        server-addr: 127.0.0.1:7847
-        namespace: 877bab8f-8daf-4959-b684-8fb3088ef049
+        server-addr: ${bamboo.middleware.center.serverAddr}
+        namespace: ${bamboo.middleware.center.namespace}
         group: BAMBOO_GROUP
     sentinel:
       transport:
@@ -17,17 +22,17 @@ spring:
       datasource:
         gw-flow:
           nacos: # 整合nacos，把流控规则保存到nacos，sentinel控制台启动时候就能够读取这个配置
-            server-addr: 127.0.0.1:7847
+            server-addr: ${bamboo.middleware.center.serverAddr}
+            namespace: ${bamboo.middleware.center.namespace}
             data-id: ${spring.application.name}-sentinel-flow
-            namespace: 877bab8f-8daf-4959-b684-8fb3088ef049
             group-id: SENTINEL_GROUP
             data-type: json
             rule-type: gw-flow
         gw-api-group:
           nacos:
-            server-addr: 127.0.0.1:7847
+            server-addr: ${bamboo.middleware.center.serverAddr}
+            namespace: ${bamboo.middleware.center.namespace}
             data-id: ${spring.application.name}-sentinel-api
-            namespace: 877bab8f-8daf-4959-b684-8fb3088ef049
             group-id: SENTINEL_GROUP
             data-type: json
             rule-type: gw-api-group
