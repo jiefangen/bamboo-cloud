@@ -59,27 +59,15 @@ spring:
           filters:
             - StripPrefix=1
             - RewritePath=/ms-payment/(?<segment>.*), /$\{segment}
-      # 跨域配置
-      globalcors:
-        cors-configurations:
-          '[/**]':
-            allowedOrigins: "*"
-            allowedMethods:
-              - GET
-              - POST
-              - DELETE
-              - PUT
-              - OPTIONS
 
     sentinel:
       transport:
-        dashboard: 198.19.249.147:9100
-      eager: true
-      filter:
-        enabled: false
+        port: 8720 # 默认8720(当前服务，对sentinel提供的，调用端口号，用于监控服务访问数据)
+        dashboard: localhost:9100
+      enabled: true # 服务启动时直接建立心跳连接
 
 # Gateway Security Configuration
 bamboo:
   gateway:
     security:
-      ignoringPatterns: /auth/home/*,/ms-payment/home/*
+      ignoringPatterns: /ms-auth/auth/login,/*/home/**,/*/auth/home/**

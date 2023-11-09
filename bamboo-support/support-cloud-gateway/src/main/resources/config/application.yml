@@ -1,8 +1,10 @@
+server:
+  port: 12001
 spring:
   application:
     name: spt-gateway
   profiles:
-    active: demo
+    active: dev
   main:
     web-application-type: reactive
   cloud:
@@ -11,5 +13,3 @@ spring:
       discovery:
         locator:
           lower-case-service-id: true
-server:
-  port: 12001

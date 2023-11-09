@@ -11,10 +11,27 @@ spring:
         group: BAMBOO_GROUP
     sentinel:
       transport:
-        port: 8720 # 当前服务与控制台交互的端口号，默认为8720，同一个机器上若有多个应用于控制台交互时需要设置成不同的端口
+        port: 8720 # 默认8719(当前服务，对sentinel提供的，调用端口号，用于监控服务访问数据)
         dashboard: localhost:9100
       enabled: true # 服务启动时直接建立心跳连接
-
+      datasource:
+        gw-flow:
+          nacos: # 整合nacos，把流控规则保存到nacos，sentinel控制台启动时候就能够读取这个配置
+            server-addr: 127.0.0.1:7847
+            data-id: ${spring.application.name}-sentinel-flow
+            namespace: 877bab8f-8daf-4959-b684-8fb3088ef049
+            group-id: SENTINEL_GROUP
+            data-type: json
+            rule-type: gw-flow
+        gw-api-group:
+          nacos:
+            server-addr: 127.0.0.1:7847
+            data-id: ${spring.application.name}-sentinel-api
+            namespace: 877bab8f-8daf-4959-b684-8fb3088ef049
+            group-id: SENTINEL_GROUP
+            data-type: json
+            rule-type: gw-api-group
+      eager: true
   config:
     import:
       - optional:nacos:${spring.application.name}-${spring.profiles.active}.yml?refreshEnabled=true
