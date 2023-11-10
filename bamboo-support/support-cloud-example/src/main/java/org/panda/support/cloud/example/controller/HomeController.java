@@ -1,9 +1,9 @@
-package org.panda.ms.auth.controller;
+package org.panda.support.cloud.example.controller;
 
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import io.swagger.annotations.Api;
 import org.panda.tech.core.web.controller.HomeControllerSupport;
 import org.panda.tech.core.web.restful.RestfulResult;
-import org.panda.tech.security.config.annotation.ConfigAnonymous;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -13,12 +13,12 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class HomeController extends HomeControllerSupport {
 
-    @ConfigAnonymous
+    @SentinelResource("anonymous")
     public RestfulResult<String> home() {
         return super.home();
     }
 
-    @ConfigAnonymous
+    @SentinelResource("anonymous")
     public ModelAndView index(HttpServletRequest request) {
         return super.index(request);
     }

@@ -1,0 +1,20 @@
+spring:
+  cloud:
+    nacos:
+      config:
+        server-addr: 127.0.0.1:7847
+        namespace: 877bab8f-8daf-4959-b684-8fb3088ef049
+        group: SPT_GROUP
+      discovery:
+        server-addr: 127.0.0.1:7847
+        namespace: 877bab8f-8daf-4959-b684-8fb3088ef049
+        group: BAMBOO_GROUP
+    sentinel:
+      transport:
+        port: 8721 # 默认8719(当前服务，对sentinel提供的，调用端口号，用于监控服务访问数据)
+        dashboard: localhost:9100
+      enabled: true # 服务启动时直接建立心跳连接
+  config:
+    import:
+      - optional:nacos:${spring.application.name}-${spring.profiles.active}.yml?refreshEnabled=true
+      - optional:nacos:common-config.properties

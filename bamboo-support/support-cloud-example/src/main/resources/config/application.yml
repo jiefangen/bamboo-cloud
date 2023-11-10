@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: spt-example
+  profiles:
+    active: dev
+server:
+  port: 12002

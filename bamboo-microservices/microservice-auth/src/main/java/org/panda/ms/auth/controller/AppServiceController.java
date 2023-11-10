@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * 应用服务控制器
+ * 应用服务授权控制器
  *
  * @author fangen
  **/
-@Api(tags = "应用服务控制器")
+@Api(tags = "应用服务授权控制器")
 @RestController
 @RequestMapping("/service")
 public class AppServiceController {

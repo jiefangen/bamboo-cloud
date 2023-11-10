@@ -11,7 +11,8 @@
     <modules>
         <module>support-cloud-core</module>
         <module>support-cloud-gateway</module>
-        <module>support-discovery-example</module>
+        <module>support-cloud-example</module>
+        <module>support-cloud-seata</module>
     </modules>
 
     <properties>
