@@ -18,3 +18,21 @@ spring:
     import:
       - optional:nacos:${spring.application.name}-${spring.profiles.active}.yml?refreshEnabled=true
       - optional:nacos:common-config.properties
+
+seata:
+  config:
+    type: nacos
+    nacos:
+      server-addr: 127.0.0.1:7847
+      namespace: f2b00b45-b5a5-46e4-a2ad-67e83b2058b7
+      group: SEATA_GROUP
+      data-id: seata-server.properties
+  registry:
+    type: nacos
+    nacos:
+      application: seata-server
+      server-addr: 127.0.0.1:7847
+      group: SEATA_GROUP
+      namespace: f2b00b45-b5a5-46e4-a2ad-67e83b2058b7
+      username: "nacos"
+      password: "nacos"

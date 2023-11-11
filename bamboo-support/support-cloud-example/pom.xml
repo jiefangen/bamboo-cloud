@@ -32,6 +32,12 @@
             <artifactId>support-cloud-core</artifactId>
             <version>${support.version}</version>
         </dependency>
+        <!-- 分布式事务支持 -->
+        <dependency>
+            <groupId>org.panda.support</groupId>
+            <artifactId>support-cloud-seata</artifactId>
+            <version>${support.version}</version>
+        </dependency>
         <!-- 监控和管理应用程序的生产级特性 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

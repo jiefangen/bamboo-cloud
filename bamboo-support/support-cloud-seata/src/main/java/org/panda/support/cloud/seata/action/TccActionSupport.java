@@ -10,7 +10,7 @@ import org.panda.support.cloud.seata.TccContext;
  */
 public abstract class TccActionSupport implements TccAction {
 
-    private TccContext context = new TccContext();
+    private final TccContext context = new TccContext();
 
     protected final String getXid(BusinessActionContext actionContext) {
         return actionContext == null ? RootContext.getXID() : actionContext.getXid();
