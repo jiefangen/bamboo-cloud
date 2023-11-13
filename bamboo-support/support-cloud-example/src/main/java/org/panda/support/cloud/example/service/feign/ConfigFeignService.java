@@ -20,4 +20,5 @@ public interface ConfigFeignService {
 
     @GetMapping(value = "/home/index")
     String getHomeIndex();
+
 }

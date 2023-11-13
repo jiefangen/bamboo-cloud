@@ -20,6 +20,9 @@ spring:
       - optional:nacos:common-config.properties
 
 seata:
+  enabled: true
+  application-id: ${spring.application.name}
+#  tx-service-group: ${spring.application.name}-tx-group
   config:
     type: nacos
     nacos:
@@ -27,12 +30,15 @@ seata:
       namespace: f2b00b45-b5a5-46e4-a2ad-67e83b2058b7
       group: SEATA_GROUP
       data-id: seata-server.properties
+      username: "nacos"
+      password: "nacos"
   registry:
     type: nacos
     nacos:
+      cluster: default
       application: seata-server
       server-addr: 127.0.0.1:7847
       group: SEATA_GROUP
       namespace: f2b00b45-b5a5-46e4-a2ad-67e83b2058b7
-      username: "nacos"
-      password: "nacos"
+
+
