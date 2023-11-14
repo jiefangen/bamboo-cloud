@@ -1,12 +1,11 @@
-package org.panda.support.cloud.example.service.impl;
+package org.panda.support.cloud.example.service.tcc;
 
 import io.seata.core.context.RootContext;
 import io.seata.spring.annotation.GlobalTransactional;
 import org.panda.support.cloud.example.service.TccActionOne;
 import org.panda.support.cloud.example.service.TccActionTwo;
-import org.panda.support.cloud.example.service.TccTransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,8 +14,8 @@ import java.util.Map;
 /**
  * tm业务逻辑方法
  */
-@Service
-public class TccTransactionServiceImpl implements TccTransactionService {
+@Component
+public class TccTransactionManager {
 
     @Autowired
     private TccActionOne tccActionOne;
@@ -26,11 +25,10 @@ public class TccTransactionServiceImpl implements TccTransactionService {
     /**
      * 发起分布式事务
      */
-    @Override
-    @GlobalTransactional
+    @GlobalTransactional(timeoutMills = 60000 * 3)
     public String doTransactionCommit() {
         // 第一个TCC事务参与者
-        boolean result = tccActionOne.prepare(null, 1);
+        boolean result = tccActionOne.prepare(null, "payload");
         if (!result) {
             throw new RuntimeException("TccActionOne failed.");
         }
@@ -52,11 +50,10 @@ public class TccTransactionServiceImpl implements TccTransactionService {
      * @param map the map
      * @return the string
      */
-    @Override
     @GlobalTransactional
     public String doTransactionRollback(Map map) {
         //第一个TCC 事务参与者
-        boolean result = tccActionOne.prepare(null, 1);
+        boolean result = tccActionOne.prepare(null, "payload");
         if (!result) {
             throw new RuntimeException("TccActionOne failed.");
         }
@@ -69,7 +66,7 @@ public class TccTransactionServiceImpl implements TccTransactionService {
             throw new RuntimeException("TccActionTwo failed.");
         }
         map.put("xid", RootContext.getXID());
-        throw new RuntimeException("transacton rollback");
+        throw new RuntimeException("Transaction rollback");
     }
 
 }

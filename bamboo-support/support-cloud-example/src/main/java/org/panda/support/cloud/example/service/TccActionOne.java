@@ -20,8 +20,8 @@ public interface TccActionOne {
      * @param a             the a
      * @return the boolean
      */
-    @TwoPhaseBusinessAction(name = "FeignTccActionOne", commitMethod = "commit", rollbackMethod = "rollback")
-    boolean prepare(BusinessActionContext actionContext, @BusinessActionContextParameter(paramName = "a") int a);
+    @TwoPhaseBusinessAction(name = "TccActionOne")
+    boolean prepare(BusinessActionContext actionContext, @BusinessActionContextParameter(paramName = "payload") String payload);
 
     /**
      * Commit boolean.

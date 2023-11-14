@@ -5,7 +5,7 @@ import io.seata.rm.tcc.api.BusinessActionContext;
 import io.swagger.annotations.Api;
 import org.apache.commons.lang3.StringUtils;
 import org.panda.bamboo.common.util.LogUtil;
-import org.panda.support.cloud.example.service.TccTransactionService;
+import org.panda.support.cloud.example.service.tcc.TccTransactionManager;
 import org.panda.support.cloud.seata.action.TccActionControllerSupport;
 import org.panda.tech.core.web.restful.RestfulResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ import java.util.HashMap;
 public class TmTccController extends TccActionControllerSupport {
 
     @Autowired
-    private TccTransactionService tccTransactionService;
+    private TccTransactionManager tccTransactionManager;
 
     /**
      * 调用TCC手工分布式事务-TM（事务管理器）
@@ -61,7 +61,7 @@ public class TmTccController extends TccActionControllerSupport {
 
     @Override
     public boolean commit(BusinessActionContext actionContext) {
-        String xid = tccTransactionService.doTransactionCommit();
+        String xid = tccTransactionManager.doTransactionCommit();
         if (StringUtils.isBlank(xid)) {
             LogUtil.warn(getClass(), "Transaction opening failed");
             return false;
@@ -73,11 +73,11 @@ public class TmTccController extends TccActionControllerSupport {
     @Override
     public boolean rollback(BusinessActionContext actionContext) {
         try {
-            tccTransactionService.doTransactionRollback(new HashMap(16));
+            tccTransactionManager.doTransactionRollback(new HashMap(16));
         } catch (Throwable t) {
             LogUtil.error(getClass(), "Transaction opening failed");
             Assert.isTrue(true, "Distributed transaction rollback exception");
-            return false;
+            return true;
         }
         String xid = actionContext.getXid();
         LogUtil.info(getClass(), "transaction rollback finish. xid: {}", xid);

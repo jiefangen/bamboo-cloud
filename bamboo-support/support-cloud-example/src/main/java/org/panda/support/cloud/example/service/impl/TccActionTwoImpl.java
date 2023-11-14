@@ -24,6 +24,10 @@ public class TccActionTwoImpl implements TccActionTwo {
         LogUtil.info(getClass(),
                 "TccActionTwo commit, xid:" + xid + ", b:" + actionContext.getActionContext("b") + ", c:" + actionContext
                         .getActionContext("c"));
+        try {
+            Thread.sleep(1000 * 5);
+        } catch (InterruptedException  e) {
+        }
         ResultHolder.setActionTwoResult(xid, "T");
         return true;
     }
