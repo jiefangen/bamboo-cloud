@@ -21,7 +21,7 @@ public interface TccActionOne {
      * @return the boolean
      */
     @TwoPhaseBusinessAction(name = "TccActionOne")
-    boolean prepare(BusinessActionContext actionContext, @BusinessActionContextParameter(paramName = "payload") String payload);
+    void prepare(BusinessActionContext actionContext, @BusinessActionContextParameter(paramName = "payload") String payload);
 
     /**
      * Commit boolean.

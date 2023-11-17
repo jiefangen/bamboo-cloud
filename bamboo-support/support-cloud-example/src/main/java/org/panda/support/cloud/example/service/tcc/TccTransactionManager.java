@@ -28,15 +28,12 @@ public class TccTransactionManager {
     @GlobalTransactional(timeoutMills = 60000 * 3)
     public String doTransactionCommit() {
         // 第一个TCC事务参与者
-        boolean result = tccActionOne.prepare(null, "payload");
-        if (!result) {
-            throw new RuntimeException("TccActionOne failed.");
-        }
+        tccActionOne.prepare(null, "payload");
         List list = new ArrayList();
         list.add("c1");
         list.add("c2");
         // 第二个TCC事务参与者
-        result = tccActionTwo.prepare(null, "two", list);
+        boolean result = tccActionTwo.prepare(null, "two", list);
         if (!result) {
             throw new RuntimeException("TccActionTwo failed.");
         }
@@ -53,15 +50,12 @@ public class TccTransactionManager {
     @GlobalTransactional
     public String doTransactionRollback(Map map) {
         //第一个TCC 事务参与者
-        boolean result = tccActionOne.prepare(null, "payload");
-        if (!result) {
-            throw new RuntimeException("TccActionOne failed.");
-        }
+        tccActionOne.prepare(null, "payload");
         List list = new ArrayList();
         list.add("c1");
         list.add("c2");
         // 第二个TCC事务参与者
-        result = tccActionTwo.prepare(null, "two", list);
+        boolean result = tccActionTwo.prepare(null, "two", list);
         if (!result) {
             throw new RuntimeException("TccActionTwo failed.");
         }

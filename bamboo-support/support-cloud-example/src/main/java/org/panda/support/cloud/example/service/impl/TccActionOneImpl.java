@@ -12,11 +12,10 @@ import org.springframework.stereotype.Service;
 public class TccActionOneImpl extends TccMessageProducerSupport<Object> implements TccActionOne {
 
     @Override
-    public boolean prepare(BusinessActionContext actionContext, String payload) {
+    public void prepare(BusinessActionContext actionContext, String payload) {
         String xid = actionContext.getXid();
         LogUtil.info(getClass(),"TccActionOne prepare, xid:" + xid + ", payload:" + payload);
         super.prepare(actionContext, payload);
-        return true;
     }
 
     @Override
@@ -28,7 +27,7 @@ public class TccActionOneImpl extends TccMessageProducerSupport<Object> implemen
         } catch (InterruptedException  e) {
         }
         ResultHolder.setActionOneResult(xid, "T");
-        super.commit(actionContext);
+//        super.commit(actionContext);
         return true;
     }
 
