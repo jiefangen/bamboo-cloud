@@ -14,11 +14,31 @@ spring:
         port: 8721 # 默认8719(当前服务，对sentinel提供的，调用端口号，用于监控服务访问数据)
         dashboard: localhost:9100
       enabled: true # 服务启动时直接建立心跳连接
+
+    stream:
+      rocketmq:
+        binder: # 配置rocketmq的nameserver地址
+          name-server: 127.0.0.1:9876
+          group: example-producer-group-dev
+        bindings:
+          # channel名称, 与spring.cloud.stream.bindings下的channel名称对应
+          topic-tag-input:
+            consumer:
+              # 订阅的tag类型，根据消费者实际情况进行配置（默认是订阅所有消息）
+              tags: TAG1
+      bindings:
+        output: # 定义name为output的binding
+          destination: example-topic
+          content-type: application/json
+        topic-tag-input: # 定义name为input的binding
+          destination: example-topic
+          content-type: application/json
+          group: example-consumer-group-dev
+
   config:
     import:
       - optional:nacos:${spring.application.name}-${spring.profiles.active}.yml?refreshEnabled=true
       - optional:nacos:common-config.properties
-
 seata:
   enabled: true
   application-id: ${spring.application.name}
