@@ -13,6 +13,7 @@
         <module>support-cloud-gateway</module>
         <module>support-cloud-example</module>
         <module>support-cloud-seata</module>
+        <module>support-cloud-rocketmq</module>
     </modules>
 
     <properties>

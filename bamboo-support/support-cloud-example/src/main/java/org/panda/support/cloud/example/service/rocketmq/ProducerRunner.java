@@ -19,7 +19,7 @@ import java.util.Map;
 public class ProducerRunner implements CommandLineRunner {
 
     @Autowired
-    private MessageChannel output; // 获取name为output的binding
+    private MessageChannel demoChannel; // 获取name为output的binding
 
     @Override
     public void run(String... args) throws Exception {
@@ -27,6 +27,6 @@ public class ProducerRunner implements CommandLineRunner {
         headers.put(MessageConst.PROPERTY_TAGS, "tag-example");
         String payload = "Hello RocketMQ Message";
         Message<String> message = MessageBuilder.createMessage(payload, new MessageHeaders(headers));
-        output.send(message);
+        demoChannel.send(message);
     }
 }

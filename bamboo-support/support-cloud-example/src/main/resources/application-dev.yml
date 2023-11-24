@@ -16,31 +16,36 @@ spring:
       enabled: true # 服务启动时直接建立心跳连接
 
     stream:
+      function:
+        definition: demoConsumer
       rocketmq:
-        binder: # 配置rocketmq的nameserver地址
+        binder:
           name-server: 127.0.0.1:9876
-          group: example-producer-group-dev
         bindings:
-          # channel名称, 与spring.cloud.stream.bindings下的channel名称对应
-          topic-tag-input:
+          demoChannel-out-0:
+            producer:
+              group: example-output-group
+          demoConsumer-in-0:
             consumer:
-              # 订阅的tag类型，根据消费者实际情况进行配置（默认是订阅所有消息）
-              tags: TAG1
+              # 消息模型：集群-CLUSTERING；广播-BROADCASTING
+              messageModel: CLUSTERING
       bindings:
-        output: # 定义name为output的binding
-          destination: example-topic
+        # 新版本固定格式：函数名-{out/in}-{index}
+        demoChannel-out-0:
+          destination: example-stream-topic
           content-type: application/json
-        topic-tag-input: # 定义name为input的binding
-          destination: example-topic
+        # 定义name为demoConsumer-in-0的binding
+        demoConsumer-in-0:
+          destination: example-stream-topic
           content-type: application/json
-          group: example-consumer-group-dev
+          group: example-input-group
 
   config:
     import:
       - optional:nacos:${spring.application.name}-${spring.profiles.active}.yml?refreshEnabled=true
       - optional:nacos:common-config.properties
 seata:
-  enabled: true
+  enabled: false
   application-id: ${spring.application.name}
 #  tx-service-group: ${spring.application.name}-tx-group
   config:
