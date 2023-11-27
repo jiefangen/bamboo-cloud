@@ -17,7 +17,7 @@ spring:
 
     stream:
       function:
-        definition: demoConsumer
+        definition: demoConsumer;consumer
       rocketmq:
         binder:
           name-server: 127.0.0.1:9876
