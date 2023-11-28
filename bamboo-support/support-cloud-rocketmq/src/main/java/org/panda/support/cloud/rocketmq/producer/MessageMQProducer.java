@@ -19,6 +19,27 @@ public interface MessageMQProducer<T> extends MessageAction {
     SendResult sendGeneralSync(String topic, T payload, String tags, String keys);
 
     /**
+     * 普通消息异步发送
+     *
+     * @param topic 消息主题【必】
+     * @param payload 消息数据【必】
+     * @param tags 消息标签【选】
+     * @param keys 消息业务关键词【选】
+     * @param retryTimes 失败重试次数【选】
+     */
+    void sendGeneralAsync(String topic, T payload, String tags, String keys, int retryTimes);
+
+    /**
+     * 普通消息单向发送
+     *
+     * @param topic 消息主题【必】
+     * @param payload 消息数据【必】
+     * @param tags 消息标签【选】
+     * @param keys 消息业务关键词【选】
+     */
+    void sendGeneralOneway(String topic, T payload, String tags, String keys);
+
+    /**
      * 顺序消息发送
      *
      * @param name 消息渠道名称
