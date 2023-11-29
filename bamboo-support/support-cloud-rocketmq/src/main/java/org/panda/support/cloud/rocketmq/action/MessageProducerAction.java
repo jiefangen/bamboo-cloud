@@ -5,12 +5,12 @@ import org.apache.rocketmq.client.producer.DefaultMQProducer;
 import java.util.Map;
 
 /**
- * 消息动作
+ * 消息生产者动作
  */
-public interface MessageAction {
+public interface MessageProducerAction {
 
     /**
-     * Bridge简单消息发送
+     * 简单消息发送
      *
      * @param name 消息渠道名称
      *             - 绑定消息主题Topic
@@ -20,8 +20,8 @@ public interface MessageAction {
     void sendBridge(String name, Map<String, Object> headers, Object body);
 
     /**
-     * 构建MQ生成者
+     * 构建普通消息MQ生成者
      */
-    DefaultMQProducer getMQProducer();
+    DefaultMQProducer buildCommonMQProducer();
 
 }

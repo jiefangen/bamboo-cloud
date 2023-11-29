@@ -1,7 +1,7 @@
 package org.panda.support.cloud.rocketmq.action;
 
-import com.alibaba.cloud.stream.binder.rocketmq.properties.RocketMQBinderConfigurationProperties;
 import org.apache.rocketmq.client.producer.DefaultMQProducer;
+import org.panda.support.cloud.rocketmq.MessageMQProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.messaging.Message;
@@ -10,14 +10,15 @@ import org.springframework.messaging.support.GenericMessage;
 import java.util.Map;
 
 /**
- * 消息操作支持
+ * 消息生产者操作支持
  */
-public abstract class MessageActionSupport implements MessageAction {
+public abstract class MessageProducerActionSupport implements MessageProducerAction {
+
+    @Autowired
+    private MessageMQProperties messageMQProperties;
 
     @Autowired
     private StreamBridge streamBridge;
-    @Autowired
-    private RocketMQBinderConfigurationProperties configurationProperties;
 
     @Override
     public void sendBridge(String bindingName, Map<String, Object> headers, Object body) {
@@ -26,9 +27,9 @@ public abstract class MessageActionSupport implements MessageAction {
     }
 
     @Override
-    public DefaultMQProducer getMQProducer() {
-        DefaultMQProducer producer = new DefaultMQProducer(configurationProperties.getGroup());
-        producer.setNamesrvAddr(configurationProperties.getNameServer());
+    public DefaultMQProducer buildCommonMQProducer() {
+        DefaultMQProducer producer = new DefaultMQProducer(messageMQProperties.getProducerGroup());
+        producer.setNamesrvAddr(messageMQProperties.getNameServer());
         return producer;
     }
 

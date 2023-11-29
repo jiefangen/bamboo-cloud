@@ -1,12 +1,12 @@
 package org.panda.support.cloud.rocketmq.producer;
 
 import org.apache.rocketmq.client.producer.SendResult;
-import org.panda.support.cloud.rocketmq.action.MessageAction;
+import org.panda.support.cloud.rocketmq.action.MessageProducerAction;
 
 /**
  * MQ消息生产者
  **/
-public interface MessageMQProducer<T> extends MessageAction {
+public interface MessageMQProducer<T> extends MessageProducerAction {
 
     /**
      * 普通消息同步发送

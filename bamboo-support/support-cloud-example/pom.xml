@@ -60,8 +60,9 @@
         </dependency>
         <!-- 消息队列rocketmq -->
         <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-stream-rocketmq</artifactId>
+            <groupId>org.panda.support</groupId>
+            <artifactId>support-cloud-rocketmq</artifactId>
+            <version>${support.version}</version>
         </dependency>
 
         <dependency>

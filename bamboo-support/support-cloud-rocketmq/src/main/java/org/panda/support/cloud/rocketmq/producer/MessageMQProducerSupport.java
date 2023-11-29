@@ -6,7 +6,7 @@ import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.common.message.Message;
 import org.apache.rocketmq.remoting.common.RemotingHelper;
 import org.panda.bamboo.common.util.LogUtil;
-import org.panda.support.cloud.rocketmq.action.MessageActionSupport;
+import org.panda.support.cloud.rocketmq.action.MessageProducerActionSupport;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -16,12 +16,13 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * MQ生产消息抽象支持
+ * <T> 消息类型
  **/
-public abstract class MessageMQProducerSupport<T> extends MessageActionSupport implements MessageMQProducer<T> {
+public abstract class MessageMQProducerSupport<T> extends MessageProducerActionSupport implements MessageMQProducer<T> {
 
     @Override
     public SendResult sendGeneralSync(String topic, T payload, String tags, String keys) {
-        DefaultMQProducer producer = super.getMQProducer();
+        DefaultMQProducer producer = super.buildCommonMQProducer();
         try {
             producer.start();
             byte[] body = String.valueOf(payload).getBytes(RemotingHelper.DEFAULT_CHARSET);
@@ -40,11 +41,11 @@ public abstract class MessageMQProducerSupport<T> extends MessageActionSupport i
      *
      * @param sendResult 回调结果
      */
-    protected abstract void sendSuccessCallback(SendResult sendResult);
+    protected void sendSuccessCallback(SendResult sendResult) {}
 
     @Override
     public void sendGeneralAsync(String topic, T payload, String tags, String keys, int retryTimes) {
-        DefaultMQProducer producer = super.getMQProducer();
+        DefaultMQProducer producer = super.buildCommonMQProducer();
         List<Object> payloads = new ArrayList<>();
         int messageCount = 1;
         if (payload instanceof List) {
@@ -89,7 +90,7 @@ public abstract class MessageMQProducerSupport<T> extends MessageActionSupport i
 
     @Override
     public void sendGeneralOneway(String topic, T payload, String tags, String keys) {
-        DefaultMQProducer producer = super.getMQProducer();
+        DefaultMQProducer producer = super.buildCommonMQProducer();
         List<Object> payloads = new LinkedList<>();
         if (payload instanceof List) {
             payloads.addAll((List<Object>) payload);

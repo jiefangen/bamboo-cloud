@@ -33,7 +33,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Setter
-@ConfigurationProperties(prefix = "swagger.config")
+@ConfigurationProperties(prefix = "bamboo.swagger.config")
 @EnableSwagger2WebMvc
 @Configuration
 public class SwaggerConfig implements WebMvcConfigurer {
