@@ -15,11 +15,26 @@ import java.util.function.Consumer;
 public class ConsumerListener {
 
     @Bean
-    public Consumer<String> demoConsumer() {
+    public Consumer<Object> generalConsumer() {
         return message -> {
-            LogUtil.info(getClass(),"demoConsumer接到消息：{}", message);
+            LogUtil.info(getClass(),"generalConsumer接到消息：{}", message);
             // do something
+        };
+    }
 
+    @Bean
+    public Consumer<Object> seqConsumer() {
+        return message -> {
+            LogUtil.info(getClass(),"seqConsumer接到消息：{}", message);
+            // do something
+        };
+    }
+
+    @Bean
+    public Consumer<Object> delayConsumer() {
+        return message -> {
+            LogUtil.info(getClass(),"delayConsumer接到消息：{}", message);
+            // do something
         };
     }
 

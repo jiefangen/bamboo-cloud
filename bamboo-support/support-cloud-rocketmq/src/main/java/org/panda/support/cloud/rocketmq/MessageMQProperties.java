@@ -10,12 +10,17 @@ import org.springframework.core.env.Environment;
 @Configuration
 @ConfigurationProperties("bamboo.message.mq")
 public class MessageMQProperties {
+
+    // 默认生产者组
+    public static final String DEFAULT_PRODUCER = "default-producer";
+
     /**
      * 服务地址
      */
     private String nameServer;
     /**
      * 生产者组
+     * 释义：用于标识属于同一个逻辑生产者组的多个生产者实例，在集群应用中应有较好区分
      */
     private String producerGroup;
 
@@ -40,6 +45,10 @@ public class MessageMQProperties {
     }
 
     public String getProducerGroup() {
+        if (StringUtils.isEmpty(producerGroup)) {
+            // 未配置则使用默认生产者组
+            setProducerGroup(DEFAULT_PRODUCER);
+        }
         return producerGroup;
     }
 

@@ -15,10 +15,9 @@ import java.util.Map;
 public abstract class MessageProducerActionSupport implements MessageProducerAction {
 
     @Autowired
-    private MessageMQProperties messageMQProperties;
-
-    @Autowired
     private StreamBridge streamBridge;
+    @Autowired
+    private MessageMQProperties messageMQProperties;
 
     @Override
     public void sendBridge(String bindingName, Map<String, Object> headers, Object body) {

@@ -1,14 +1,15 @@
 package org.panda.support.cloud.rocketmq.producer;
 
 import org.apache.rocketmq.client.producer.DefaultMQProducer;
+import org.apache.rocketmq.client.producer.MessageQueueSelector;
 import org.apache.rocketmq.client.producer.SendCallback;
 import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.common.message.Message;
+import org.apache.rocketmq.common.message.MessageQueue;
 import org.apache.rocketmq.remoting.common.RemotingHelper;
 import org.panda.bamboo.common.util.LogUtil;
 import org.panda.support.cloud.rocketmq.action.MessageProducerActionSupport;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
@@ -41,19 +42,23 @@ public abstract class MessageMQProducerSupport<T> extends MessageProducerActionS
      *
      * @param sendResult 回调结果
      */
-    protected void sendSuccessCallback(SendResult sendResult) {}
+    protected void sendResultCallback(SendResult sendResult) {}
+
+    private List<Object> getPayloads(T payload) {
+        List<Object> payloads = new LinkedList<>();
+        if (payload instanceof List) {
+            payloads.addAll((List<Object>) payload);
+        } else {
+            payloads.add(payload);
+        }
+        return payloads;
+    }
 
     @Override
     public void sendGeneralAsync(String topic, T payload, String tags, String keys, int retryTimes) {
         DefaultMQProducer producer = super.buildCommonMQProducer();
-        List<Object> payloads = new ArrayList<>();
-        int messageCount = 1;
-        if (payload instanceof List) {
-            payloads.addAll((List<Object>) payload);
-            messageCount = payloads.size();
-        } else {
-            payloads.add(payload);
-        }
+        List<Object> payloads = getPayloads(payload);
+        int messageCount = payloads.size();
         CountDownLatch countDownLatch = new CountDownLatch(messageCount);
         try {
             producer.start();
@@ -66,9 +71,9 @@ public abstract class MessageMQProducerSupport<T> extends MessageProducerActionS
                 producer.send(msg, new SendCallback() {
                     @Override
                     public void onSuccess(SendResult sendResult) {
-                        sendSuccessCallback(sendResult);
-                        LogUtil.debug(getClass(), "Asynchronous sending successful, msgId: {}",
-                                sendResult.getMsgId());
+                        // 消息发送结果回调处理
+                        sendResultCallback(sendResult);
+                        LogUtil.debug(getClass(), "Async sending successful, msgId: {}", sendResult.getMsgId());
                         countDownLatch.countDown();
                     }
                     @Override
@@ -91,12 +96,7 @@ public abstract class MessageMQProducerSupport<T> extends MessageProducerActionS
     @Override
     public void sendGeneralOneway(String topic, T payload, String tags, String keys) {
         DefaultMQProducer producer = super.buildCommonMQProducer();
-        List<Object> payloads = new LinkedList<>();
-        if (payload instanceof List) {
-            payloads.addAll((List<Object>) payload);
-        } else {
-            payloads.add(payload);
-        }
+        List<Object> payloads = getPayloads(payload);
         try {
             producer.start();
             for (Object message : payloads) {
@@ -112,13 +112,53 @@ public abstract class MessageMQProducerSupport<T> extends MessageProducerActionS
     }
 
     @Override
-    public void sendSeq(String name, T payload) {
-
+    public void sendSeq(String topic, T payload, String tags, String keys, int partitionId) {
+        DefaultMQProducer producer = super.buildCommonMQProducer();
+        List<Object> payloads = getPayloads(payload);
+        try {
+            producer.start();
+            for (int i = 0; i < payloads.size(); i++) {
+                Object message = payloads.get(i);
+                byte[] body = String.valueOf(message).getBytes(RemotingHelper.DEFAULT_CHARSET);
+                Message msg = new Message(topic, tags, keys, body);
+                SendResult sendResult = producer.send(msg, new MessageQueueSelector() {
+                    @Override
+                    public MessageQueue select(List<MessageQueue> mqs, Message msg, Object arg) {
+                        Integer id = (Integer) arg;
+                        int index = id % mqs.size();
+                        return mqs.get(index);
+                    }
+                }, partitionId);
+                // 消息发送结果回调处理
+                sendResultCallback(sendResult);
+            }
+        } catch (Exception e) {
+            LogUtil.error(getClass(), e);
+        } finally {
+            producer.shutdown();
+        }
     }
 
     @Override
-    public void sendDelay(String name, T payload) {
-
+    public void sendDelay(String topic, T payload, String tags, String keys, int delayTimeLevel) {
+        DefaultMQProducer producer = super.buildCommonMQProducer();
+        List<Object> payloads = getPayloads(payload);
+        try {
+            producer.start();
+            for (int i = 0; i < payloads.size(); i++) {
+                Object message = payloads.get(i);
+                byte[] body = String.valueOf(message).getBytes(RemotingHelper.DEFAULT_CHARSET);
+                Message msg = new Message(topic, tags, keys, body);
+                msg.setDelayTimeLevel(delayTimeLevel);
+                SendResult sendResult = producer.send(msg);
+                // 消息发送结果回调处理
+                sendResultCallback(sendResult);
+            }
+        } catch (Exception e) {
+            LogUtil.error(getClass(), e);
+        } finally {
+            producer.shutdown();
+        }
     }
 
 }

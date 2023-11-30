@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -37,12 +39,12 @@ public class ProducerController {
         headers.put(MessageConst.PROPERTY_KEYS, 1);
         headers.put(MessageConst.PROPERTY_ORIGIN_MESSAGE_ID, 123);
         Message<String> msg = new GenericMessage<>(message, headers);
-        rocketMQProducer.sendBridge("demoChannel-out-0", headers, msg);
+        rocketMQProducer.sendBridge("exampleProducer-out-0", headers, msg);
     }
 
     @GetMapping("/sendGeneralSync")
     public RestfulResult sendGeneralSync() {
-        String topic = "example-stream-topic";
+        String topic = "example-general-topic";
         String message = "Hello RocketMQ!";
         JSONObject msgJson = new JSONObject();
         msgJson.put("message", message);
@@ -53,6 +55,70 @@ public class ProducerController {
             return RestfulResult.failure();
         }
         return RestfulResult.success(sendResult);
+    }
+
+    @GetMapping("/sendGeneralAsync")
+    public RestfulResult sendGeneralAsync() {
+        String topic = "example-general-topic";
+        String message = "Hello RocketMQ!";
+        List<JSONObject> msgList = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            JSONObject msgJson = new JSONObject();
+            msgJson.put("message", message + " index: " + i);
+            msgList.add(msgJson);
+        }
+        String tags = "async-msg";
+        String keys = UUIDUtil.randomUUID32();
+        rocketMQProducer.sendGeneralAsync(topic, msgList, tags, keys, 0);
+        return RestfulResult.success();
+    }
+
+    @GetMapping("/sendGeneralOneway")
+    public RestfulResult sendGeneralOneway() {
+        String topic = "example-general-topic";
+        String message = "Hello RocketMQ!";
+        List<JSONObject> msgList = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            JSONObject msgJson = new JSONObject();
+            msgJson.put("message", message + " index: " + i);
+            msgList.add(msgJson);
+        }
+        String tags = "oneway-msg";
+        String keys = UUIDUtil.randomUUID32();
+        rocketMQProducer.sendGeneralOneway(topic, msgList, tags, keys);
+        return RestfulResult.success();
+    }
+
+    @GetMapping("/sendSeq")
+    public RestfulResult sendSeq() {
+        String topic = "example-seq-topic";
+        String message = "Hello RocketMQ!";
+        List<JSONObject> msgList = new ArrayList<>();
+        for (int i = 0; i < 6; i++) {
+            JSONObject msgJson = new JSONObject();
+            msgJson.put("message", message + " index: " + i);
+            msgList.add(msgJson);
+        }
+        String tags = "seq-msg";
+        String keys = UUIDUtil.randomUUID32();
+        rocketMQProducer.sendSeq(topic, msgList, tags, keys, 1000);
+        return RestfulResult.success();
+    }
+
+    @GetMapping("/sendDelay")
+    public RestfulResult sendDelay() {
+        String topic = "example-delay-topic";
+        String message = "Hello RocketMQ!";
+        List<JSONObject> msgList = new ArrayList<>();
+        for (int i = 0; i < 6; i++) {
+            JSONObject msgJson = new JSONObject();
+            msgJson.put("message", message + " index: " + i);
+            msgList.add(msgJson);
+        }
+        String tags = "delay-msg";
+        String keys = UUIDUtil.randomUUID32();
+        rocketMQProducer.sendDelay(topic, msgList, tags, keys, 2);
+        return RestfulResult.success();
     }
 
 }

@@ -16,7 +16,8 @@ management:
       exposure:
         include: '*'
 logging:
-  org.panda.support.discovery.example: debug
+  level:
+    org.panda.support.cloud.example: debug
 feign:
   httpclient:
     enabled: true # 开启feign对HttpClient的支持

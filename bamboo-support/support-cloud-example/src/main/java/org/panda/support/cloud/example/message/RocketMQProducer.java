@@ -1,9 +1,7 @@
 package org.panda.support.cloud.example.message;
 
-import com.alibaba.fastjson2.JSONObject;
 import org.apache.rocketmq.client.producer.SendResult;
 import org.panda.bamboo.common.util.LogUtil;
-import org.panda.bamboo.common.util.jackson.JsonUtil;
 import org.panda.support.cloud.rocketmq.producer.MessageMQProducerSupport;
 import org.springframework.stereotype.Service;
 
@@ -13,11 +11,11 @@ import org.springframework.stereotype.Service;
  * @author fangen
  **/
 @Service
-public class RocketMQProducer extends MessageMQProducerSupport<JSONObject> {
+public class RocketMQProducer extends MessageMQProducerSupport<Object> {
 
     @Override
-    protected void sendSuccessCallback(SendResult sendResult) {
-        LogUtil.info(getClass(), JsonUtil.toJson(sendResult));
+    protected void sendResultCallback(SendResult sendResult) {
+        LogUtil.info(getClass(), "Send result callback result: {}", sendResult.getMsgId());
     }
 
 }

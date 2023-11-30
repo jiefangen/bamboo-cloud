@@ -17,28 +17,40 @@ spring:
 
     stream:
       function:
-        definition: demoConsumer;consumer
+        definition: generalConsumer;seqConsumer;delayConsumer
       rocketmq:
         binder:
           name-server: 127.0.0.1:9876
         bindings:
-          demoChannel-out-0:
-            producer:
-              group: example-output-group
-          demoConsumer-in-0:
+#          exampleProducer-out-0:
+#            producer:
+#              group: default-producer
+          generalConsumer-in-0:
             consumer:
               # 消息模型：集群-CLUSTERING；广播-BROADCASTING
               messageModel: CLUSTERING
+          seqConsumer-in-0:
+            consumer:
+              messageModel: CLUSTERING
+          delayConsumer-in-0:
+            consumer:
+              messageModel: CLUSTERING
       bindings:
-        # 新版本固定格式：函数名-{out/in}-{index}
-        demoChannel-out-0:
-          destination: example-stream-topic
-          content-type: application/json
+#        # 新版本固定格式：函数名-{out/in}-{index}
+#        exampleProducer-out-0:
+#          destination: example-general-topic
+#          content-type: application/json
         # 定义name为demoConsumer-in-0的binding
-        demoConsumer-in-0:
-          destination: example-stream-topic
+        generalConsumer-in-0:
+          destination: example-general-topic
           content-type: application/json
-          group: example-input-group
+          group: general-consumer
+        seqConsumer-in-0:
+          destination: example-seq-topic
+          group: seq-consumer
+        delayConsumer-in-0:
+          destination: example-delay-topic
+          group: delay-consumer
 
   config:
     import:
@@ -66,4 +78,6 @@ seata:
       group: SEATA_GROUP
       namespace: f2b00b45-b5a5-46e4-a2ad-67e83b2058b7
 
-
+logging:
+  level:
+    org.panda.support: debug
