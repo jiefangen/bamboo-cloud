@@ -66,20 +66,13 @@ public interface MessageMQProducer<T> extends MessageProducerAction {
 
     /**
      * 批量消息发送
+     * 批量消息的大小不能超过1MiB（否则需要自行分割）
      *
-     * @param name 消息渠道名称
-     * @param payload 消息数据
+     * @param topic 消息主题【必】
+     * @param payload 消息数据【必】
+     * @param tags 消息标签【选】
+     * @param keys 消息业务关键词【选】
      */
-    default void sendBatch(String name, T payload) {
-    }
-
-    /**
-     * 事务消息发送
-     *
-     * @param name 消息渠道名称
-     * @param payload 消息数据
-     */
-    default void sendTransaction(String name, T payload) {
-    }
+    void sendBatch(String topic, T payload, String tags, String keys);
 
 }

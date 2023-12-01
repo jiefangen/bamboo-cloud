@@ -3,9 +3,11 @@ package org.panda.support.cloud.example.controller.rocketmq;
 import com.alibaba.fastjson2.JSONObject;
 import io.swagger.annotations.Api;
 import org.apache.rocketmq.client.producer.SendResult;
+import org.apache.rocketmq.client.producer.TransactionSendResult;
 import org.apache.rocketmq.common.message.MessageConst;
 import org.panda.bamboo.common.util.lang.UUIDUtil;
 import org.panda.support.cloud.example.message.RocketMQProducer;
+import org.panda.support.cloud.example.message.RocketTransactionMQProducer;
 import org.panda.tech.core.web.restful.RestfulResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.Message;
@@ -32,6 +34,9 @@ public class ProducerController {
 
     @Autowired
     private RocketMQProducer rocketMQProducer;
+
+    @Autowired
+    private RocketTransactionMQProducer rocketTransactionMQProducer;
 
     @GetMapping("/sendBridge")
     public void sendBridge(@RequestParam String message) {
@@ -119,6 +124,37 @@ public class ProducerController {
         String keys = UUIDUtil.randomUUID32();
         rocketMQProducer.sendDelay(topic, msgList, tags, keys, 2);
         return RestfulResult.success();
+    }
+
+    @GetMapping("/sendTransaction")
+    public RestfulResult sendTransaction() {
+        String topic = "example-transaction-topic";
+        String message = "Hello RocketMQ!";
+        JSONObject msgJson = new JSONObject();
+        msgJson.put("message", message);
+        String tags = "transaction-msg";
+        String keys = UUIDUtil.randomUUID32();
+        TransactionSendResult sendResult = rocketTransactionMQProducer.send(topic, msgJson, tags, keys, "mock");
+        if (sendResult == null) {
+            return RestfulResult.failure();
+        }
+        return RestfulResult.success(sendResult);
+    }
+
+    @GetMapping("/sendTransaction1")
+    public RestfulResult sendTransaction1() {
+        String topic = "example-transaction-topic";
+        String message = "Hello RocketMQ!";
+        JSONObject msgJson = new JSONObject();
+        msgJson.put("message", message);
+        String tags = "transaction-msg";
+        String keys = UUIDUtil.randomUUID32();
+        TransactionSendResult sendResult = rocketTransactionMQProducer.send(topic, msgJson, tags, keys, "mock",
+                "transaction-producer-1");
+        if (sendResult == null) {
+            return RestfulResult.failure();
+        }
+        return RestfulResult.success(sendResult);
     }
 
 }

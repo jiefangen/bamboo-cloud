@@ -22,6 +22,6 @@ public interface MessageProducerAction {
     /**
      * 构建普通消息MQ生成者
      */
-    DefaultMQProducer buildCommonMQProducer();
+    DefaultMQProducer buildDefaultMQProducer();
 
 }

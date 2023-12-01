@@ -17,7 +17,7 @@ spring:
 
     stream:
       function:
-        definition: generalConsumer;seqConsumer;delayConsumer
+        definition: generalConsumer;seqConsumer;delayConsumer;transactionConsumer
       rocketmq:
         binder:
           name-server: 127.0.0.1:9876
@@ -33,6 +33,9 @@ spring:
             consumer:
               messageModel: CLUSTERING
           delayConsumer-in-0:
+            consumer:
+              messageModel: CLUSTERING
+          transactionConsumer-in-0:
             consumer:
               messageModel: CLUSTERING
       bindings:
@@ -51,6 +54,9 @@ spring:
         delayConsumer-in-0:
           destination: example-delay-topic
           group: delay-consumer
+        transactionConsumer-in-0:
+          destination: example-transaction-topic
+          group: transaction-consumer
 
   config:
     import:

@@ -7,12 +7,17 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Configuration
 @ConfigurationProperties("bamboo.message.mq")
 public class MessageMQProperties {
 
     // 默认生产者组
     public static final String DEFAULT_PRODUCER = "default-producer";
+    // 默认事务消息生产者组
+    public static final String DEFAULT_TRANSACTION_PRODUCER = "default-transaction-producer";
 
     /**
      * 服务地址
@@ -23,6 +28,12 @@ public class MessageMQProperties {
      * 释义：用于标识属于同一个逻辑生产者组的多个生产者实例，在集群应用中应有较好区分
      */
     private String producerGroup;
+
+    /**
+     * 事务消息生产者组
+     */
+    private List<String> transactionProducerGroups;
+
 
     public String getNameServer() {
         if (StringUtils.isEmpty(nameServer)) {
@@ -54,6 +65,20 @@ public class MessageMQProperties {
 
     public void setProducerGroup(String producerGroup) {
         this.producerGroup = producerGroup;
+    }
+
+    public List<String> getTransactionProducerGroups() {
+        if (transactionProducerGroups == null) {
+            transactionProducerGroups = new ArrayList<>();
+        }
+        if (!transactionProducerGroups.contains(DEFAULT_TRANSACTION_PRODUCER)) {
+            transactionProducerGroups.add(DEFAULT_TRANSACTION_PRODUCER);
+        }
+        return transactionProducerGroups;
+    }
+
+    public void setTransactionProducerGroups(List<String> transactionProducerGroups) {
+        this.transactionProducerGroups = transactionProducerGroups;
     }
 
 }

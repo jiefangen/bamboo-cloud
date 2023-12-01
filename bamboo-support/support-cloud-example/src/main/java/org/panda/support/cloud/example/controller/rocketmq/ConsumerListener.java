@@ -38,4 +38,12 @@ public class ConsumerListener {
         };
     }
 
+    @Bean
+    public Consumer<Object> transactionConsumer() {
+        return message -> {
+            LogUtil.info(getClass(),"transactionConsumer接到消息：{}", message);
+            // do something
+        };
+    }
+
 }

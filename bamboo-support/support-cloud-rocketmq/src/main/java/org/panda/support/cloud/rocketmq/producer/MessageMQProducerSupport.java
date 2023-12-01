@@ -10,6 +10,7 @@ import org.apache.rocketmq.remoting.common.RemotingHelper;
 import org.panda.bamboo.common.util.LogUtil;
 import org.panda.support.cloud.rocketmq.action.MessageProducerActionSupport;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
@@ -23,7 +24,7 @@ public abstract class MessageMQProducerSupport<T> extends MessageProducerActionS
 
     @Override
     public SendResult sendGeneralSync(String topic, T payload, String tags, String keys) {
-        DefaultMQProducer producer = super.buildCommonMQProducer();
+        DefaultMQProducer producer = super.buildDefaultMQProducer();
         try {
             producer.start();
             byte[] body = String.valueOf(payload).getBytes(RemotingHelper.DEFAULT_CHARSET);
@@ -56,7 +57,7 @@ public abstract class MessageMQProducerSupport<T> extends MessageProducerActionS
 
     @Override
     public void sendGeneralAsync(String topic, T payload, String tags, String keys, int retryTimes) {
-        DefaultMQProducer producer = super.buildCommonMQProducer();
+        DefaultMQProducer producer = super.buildDefaultMQProducer();
         List<Object> payloads = getPayloads(payload);
         int messageCount = payloads.size();
         CountDownLatch countDownLatch = new CountDownLatch(messageCount);
@@ -95,7 +96,7 @@ public abstract class MessageMQProducerSupport<T> extends MessageProducerActionS
 
     @Override
     public void sendGeneralOneway(String topic, T payload, String tags, String keys) {
-        DefaultMQProducer producer = super.buildCommonMQProducer();
+        DefaultMQProducer producer = super.buildDefaultMQProducer();
         List<Object> payloads = getPayloads(payload);
         try {
             producer.start();
@@ -113,7 +114,7 @@ public abstract class MessageMQProducerSupport<T> extends MessageProducerActionS
 
     @Override
     public void sendSeq(String topic, T payload, String tags, String keys, int partitionId) {
-        DefaultMQProducer producer = super.buildCommonMQProducer();
+        DefaultMQProducer producer = super.buildDefaultMQProducer();
         List<Object> payloads = getPayloads(payload);
         try {
             producer.start();
@@ -129,7 +130,6 @@ public abstract class MessageMQProducerSupport<T> extends MessageProducerActionS
                         return mqs.get(index);
                     }
                 }, partitionId);
-                // 消息发送结果回调处理
                 sendResultCallback(sendResult);
             }
         } catch (Exception e) {
@@ -141,7 +141,7 @@ public abstract class MessageMQProducerSupport<T> extends MessageProducerActionS
 
     @Override
     public void sendDelay(String topic, T payload, String tags, String keys, int delayTimeLevel) {
-        DefaultMQProducer producer = super.buildCommonMQProducer();
+        DefaultMQProducer producer = super.buildDefaultMQProducer();
         List<Object> payloads = getPayloads(payload);
         try {
             producer.start();
@@ -151,9 +151,27 @@ public abstract class MessageMQProducerSupport<T> extends MessageProducerActionS
                 Message msg = new Message(topic, tags, keys, body);
                 msg.setDelayTimeLevel(delayTimeLevel);
                 SendResult sendResult = producer.send(msg);
-                // 消息发送结果回调处理
                 sendResultCallback(sendResult);
             }
+        } catch (Exception e) {
+            LogUtil.error(getClass(), e);
+        } finally {
+            producer.shutdown();
+        }
+    }
+
+    @Override
+    public void sendBatch(String topic, T payload, String tags, String keys) {
+        DefaultMQProducer producer = super.buildDefaultMQProducer();
+        List<Object> payloads = getPayloads(payload);
+        List<Message> messages = new ArrayList<>();
+        try {
+            for (Object message: payloads) {
+                byte[] body = String.valueOf(message).getBytes(RemotingHelper.DEFAULT_CHARSET);
+                messages.add(new Message(topic, tags, keys, body));
+            }
+            SendResult sendResult = producer.send(messages);
+            sendResultCallback(sendResult);
         } catch (Exception e) {
             LogUtil.error(getClass(), e);
         } finally {
