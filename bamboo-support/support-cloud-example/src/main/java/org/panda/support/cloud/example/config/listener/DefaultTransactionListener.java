@@ -3,7 +3,7 @@ package org.panda.support.cloud.example.config.listener;
 import org.apache.rocketmq.client.producer.LocalTransactionState;
 import org.apache.rocketmq.common.message.Message;
 import org.panda.bamboo.common.util.LogUtil;
-import org.panda.support.cloud.rocketmq.producer.AbstractTransactionListener;
+import org.panda.support.cloud.rocketmq.producer.transaction.AbstractTransactionListener;
 import org.springframework.stereotype.Component;
 
 /**

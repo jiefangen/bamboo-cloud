@@ -64,7 +64,7 @@ public class ProducerController {
 
     @GetMapping("/sendGeneralAsync")
     public RestfulResult sendGeneralAsync() {
-        String topic = "customize-general-topic";
+        String topic = "customize-pull-general-topic";
         String message = "Hello RocketMQ!";
         List<JSONObject> msgList = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
@@ -97,9 +97,10 @@ public class ProducerController {
     @GetMapping("/sendSeq")
     public RestfulResult sendSeq() {
         String topic = "example-seq-topic";
+//        String topic = "customize-pull-seq-topic";
         String message = "Hello RocketMQ!";
         List<JSONObject> msgList = new ArrayList<>();
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < 20; i++) {
             JSONObject msgJson = new JSONObject();
             msgJson.put("message", message + " index: " + i);
             msgList.add(msgJson);

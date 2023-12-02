@@ -63,8 +63,8 @@ CREATE TABLE `sys_menu` (
                             `redirect` VARCHAR(255) COMMENT '跳转路径',
                             `title` VARCHAR(100) COMMENT '标题',
                             `icon` VARCHAR(100) COMMENT '图标',
-                            `hidden` BIT(1) default(0) COMMENT '隐藏',
-                            `sort` INT default(0) COMMENT '排序',
+                            `hidden` BIT(1) DEFAULT 0 NOT NULL COMMENT '隐藏',
+                            `sort` INT DEFAULT 0 NOT NULL COMMENT '排序',
                             PRIMARY KEY (`id`) USING BTREE,
                             KEY `IDX_PARENT_ID` (`parent_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1000 CHARACTER SET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='系统菜单' ROW_FORMAT=Compact;
@@ -182,7 +182,7 @@ CREATE TABLE `sys_dictionary_data` (
                                   `status` INT DEFAULT 1 NOT NULL COMMENT '状态：0-停用；1-正常；',
                                   `is_default` CHAR(1) COMMENT '是否默认：Y-是；N-否；',
                                   `remark` VARCHAR(1000) COMMENT '备注',
-                                  `sort` INT default(0) COMMENT '排序',
+                                  `sort` INT DEFAULT 0 NOT NULL COMMENT '排序',
                                   `echo_class` VARCHAR(50) COMMENT '数据回显样式',
                                   `style_attribute` VARCHAR(1000) COMMENT '数据样式属性',
                                   `creator` VARCHAR(100) COMMENT '创建者',

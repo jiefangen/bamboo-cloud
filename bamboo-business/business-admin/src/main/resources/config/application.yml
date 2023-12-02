@@ -2,7 +2,7 @@ spring:
   application:
     name: admin
   profiles:
-    active: dev
+    active: prod
 server:
   port: 10001
 

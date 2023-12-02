@@ -1,6 +1,6 @@
 package org.panda.support.cloud.example.message;
 
-import org.panda.support.cloud.rocketmq.producer.MessageTransactionMQProducerSupport;
+import org.panda.support.cloud.rocketmq.producer.transaction.MessageTransactionMQProducerSupport;
 import org.springframework.stereotype.Service;
 
 /**

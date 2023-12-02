@@ -10,4 +10,15 @@ import org.springframework.stereotype.Component;
  **/
 @Component
 public class MessageMQConsumer extends MessageMQConsumerSupport {
+
+    @Override
+    protected int getMaxReconsumeTimes() {
+        return super.getMaxReconsumeTimes();
+    }
+
+    @Override
+    protected long getRetryInterval() {
+        return super.getRetryInterval();
+    }
+
 }

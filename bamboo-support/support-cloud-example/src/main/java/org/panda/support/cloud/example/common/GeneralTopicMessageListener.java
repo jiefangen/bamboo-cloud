@@ -3,14 +3,14 @@ package org.panda.support.cloud.example.common;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyStatus;
 import org.apache.rocketmq.common.message.MessageExt;
 import org.panda.bamboo.common.util.LogUtil;
-import org.panda.support.cloud.rocketmq.consumer.AbstractMessageListener;
+import org.panda.support.cloud.rocketmq.consumer.listener.MessageListenerSupport;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @Component
-public class GeneralTopicMessageListener extends AbstractMessageListener {
+public class GeneralTopicMessageListener extends MessageListenerSupport {
 
     @Override
     public String getTopic() {

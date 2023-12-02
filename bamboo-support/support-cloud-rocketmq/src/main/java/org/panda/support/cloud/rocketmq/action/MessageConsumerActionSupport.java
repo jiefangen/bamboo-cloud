@@ -2,12 +2,12 @@ package org.panda.support.cloud.rocketmq.action;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
-import org.apache.rocketmq.client.consumer.listener.MessageListenerConcurrently;
 import org.apache.rocketmq.common.protocol.heartbeat.MessageModel;
 import org.panda.bamboo.common.constant.basic.Strings;
 import org.panda.bamboo.core.beans.ContextInitializedBean;
 import org.panda.support.cloud.rocketmq.MessageMQProperties;
-import org.panda.support.cloud.rocketmq.consumer.AbstractMessageListener;
+import org.panda.support.cloud.rocketmq.consumer.listener.MessageListenerOrderlySupport;
+import org.panda.support.cloud.rocketmq.consumer.listener.MessageListenerSupport;
 import org.panda.tech.core.exception.business.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -22,8 +22,10 @@ public abstract class MessageConsumerActionSupport implements MessageConsumerAct
 
     // 消息消费者组容器
     private final Map<String, DefaultMQPushConsumer> consumerContainer = new HashMap<>();
-    // 消费者监听器
-    protected final Map<String, MessageListenerConcurrently> messageListenerContainer = new HashMap<>();
+    // 普通消息监听器
+    protected final Map<String, MessageListenerSupport> messageListenerContainer = new HashMap<>();
+    // 顺序消息监听器
+    protected final Map<String, MessageListenerOrderlySupport> messageListenerOrderlyContainer = new HashMap<>();
 
     @Autowired
     private MessageMQProperties messageMQProperties;
@@ -45,10 +47,16 @@ public abstract class MessageConsumerActionSupport implements MessageConsumerAct
                 this.consumerContainer.put(consumerGroup, consumer);
             }
         });
-        context.getBeansOfType(AbstractMessageListener.class).forEach((id, messageListener) -> {
+        context.getBeansOfType(MessageListenerSupport.class).forEach((id, messageListener) -> {
             String topic = messageListener.getTopic();
             if (StringUtils.isNotEmpty(topic) && !messageListenerContainer.containsKey(topic)) {
                 messageListenerContainer.put(messageListener.getTopic(), messageListener);
+            }
+        });
+        context.getBeansOfType(MessageListenerOrderlySupport.class).forEach((id, messageListener) -> {
+            String topic = messageListener.getTopic();
+            if (StringUtils.isNotEmpty(topic) && !messageListenerOrderlyContainer.containsKey(topic)) {
+                messageListenerOrderlyContainer.put(messageListener.getTopic(), messageListener);
             }
         });
     }

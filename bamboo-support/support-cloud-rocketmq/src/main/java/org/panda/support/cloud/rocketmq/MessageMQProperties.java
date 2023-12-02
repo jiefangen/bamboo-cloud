@@ -20,6 +20,8 @@ public class MessageMQProperties {
     public static final String DEFAULT_TRANSACTION_PRODUCER = "default-transaction-producer";
     // 默认消费者组
     public static final String DEFAULT_CONSUMER = "default-consumer";
+    // 默认Pull消费者组
+    public static final String DEFAULT_PULL_CONSUMER = "default-pull-consumer";
 
     /**
      * 服务地址
@@ -39,6 +41,10 @@ public class MessageMQProperties {
      * 消息消费者组
      */
     private List<String> consumerGroups;
+    /**
+     * 消息拉取消费者组
+     */
+    private List<String> pullConsumerGroups;
 
     public String getNameServer() {
         if (StringUtils.isEmpty(nameServer)) {
@@ -100,4 +106,17 @@ public class MessageMQProperties {
         this.consumerGroups = consumerGroups;
     }
 
+    public List<String> getPullConsumerGroups() {
+        if (pullConsumerGroups == null) {
+            pullConsumerGroups = new ArrayList<>();
+        }
+        if (!pullConsumerGroups.contains(DEFAULT_PULL_CONSUMER)) {
+            pullConsumerGroups.add(DEFAULT_PULL_CONSUMER);
+        }
+        return pullConsumerGroups;
+    }
+
+    public void setPullConsumerGroups(List<String> pullConsumerGroups) {
+        this.pullConsumerGroups = pullConsumerGroups;
+    }
 }
