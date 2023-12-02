@@ -49,7 +49,7 @@ public class ProducerController {
 
     @GetMapping("/sendGeneralSync")
     public RestfulResult sendGeneralSync() {
-        String topic = "example-general-topic";
+        String topic = "customize-general-topic";
         String message = "Hello RocketMQ!";
         JSONObject msgJson = new JSONObject();
         msgJson.put("message", message);
@@ -64,7 +64,7 @@ public class ProducerController {
 
     @GetMapping("/sendGeneralAsync")
     public RestfulResult sendGeneralAsync() {
-        String topic = "example-general-topic";
+        String topic = "customize-general-topic";
         String message = "Hello RocketMQ!";
         List<JSONObject> msgList = new ArrayList<>();
         for (int i = 0; i < 10; i++) {

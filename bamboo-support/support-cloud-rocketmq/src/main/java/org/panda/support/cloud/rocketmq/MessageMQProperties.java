@@ -18,6 +18,8 @@ public class MessageMQProperties {
     public static final String DEFAULT_PRODUCER = "default-producer";
     // 默认事务消息生产者组
     public static final String DEFAULT_TRANSACTION_PRODUCER = "default-transaction-producer";
+    // 默认消费者组
+    public static final String DEFAULT_CONSUMER = "default-consumer";
 
     /**
      * 服务地址
@@ -28,12 +30,15 @@ public class MessageMQProperties {
      * 释义：用于标识属于同一个逻辑生产者组的多个生产者实例，在集群应用中应有较好区分
      */
     private String producerGroup;
-
     /**
      * 事务消息生产者组
      */
     private List<String> transactionProducerGroups;
 
+    /**
+     * 消息消费者组
+     */
+    private List<String> consumerGroups;
 
     public String getNameServer() {
         if (StringUtils.isEmpty(nameServer)) {
@@ -79,6 +84,20 @@ public class MessageMQProperties {
 
     public void setTransactionProducerGroups(List<String> transactionProducerGroups) {
         this.transactionProducerGroups = transactionProducerGroups;
+    }
+
+    public List<String> getConsumerGroups() {
+        if (consumerGroups == null) {
+            consumerGroups = new ArrayList<>();
+        }
+        if (!consumerGroups.contains(DEFAULT_CONSUMER)) {
+            consumerGroups.add(DEFAULT_CONSUMER);
+        }
+        return consumerGroups;
+    }
+
+    public void setConsumerGroups(List<String> consumerGroups) {
+        this.consumerGroups = consumerGroups;
     }
 
 }
