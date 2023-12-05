@@ -62,8 +62,7 @@ public class AuthorityController {
     @GetMapping("/accessSystemPer")
     @ConfigAuthorities({
             @ConfigAuthority(permission = Authority.ROLE_SYSTEM),
-            @ConfigAuthority(permission = Authority.ROLE_USER),
-            @ConfigAuthority(permission = Authority.ROLE_CUSTOMER)
+            @ConfigAuthority(permission = Authority.ROLE_USER)
     })
     public RestfulResult accessSystemPer() {
         return RestfulResult.success(true);

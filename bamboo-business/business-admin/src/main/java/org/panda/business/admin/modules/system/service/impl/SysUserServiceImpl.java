@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.panda.bamboo.common.constant.Commons;
+import org.panda.bamboo.common.constant.basic.Strings;
 import org.panda.tech.core.exception.business.BusinessException;
 import org.panda.bamboo.common.util.LogUtil;
 import org.panda.business.admin.application.resolver.MessageSourceResolver;
@@ -34,10 +35,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -107,6 +105,11 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
                     userVO.setRoleCodes(roleCodes);
                     userVO.setRoles(roles);
                 }
+                Set<String> roleCodeAndIds = new HashSet<>();
+                for (SysRole role : roles) {
+                    roleCodeAndIds.add(role.getRoleCode() + Strings.VERTICAL_BAR + role.getId());
+                }
+                userVO.setRoleCodeAndIds(roleCodeAndIds);
                 userVOList.add(userVO);
             });
         }
@@ -224,7 +227,15 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Override
     public void updateUserRole(UpdateUserRoleParam userRoleParam) {
-        this.baseMapper.updateUserRole(userRoleParam.getId(), userRoleParam.getRoleCodes());
+        Set<String> roleCodeAndIds = userRoleParam.getRoleCodeAndIds();
+        Set<String> roleIds = new HashSet<>();
+        for (String roleCodeAndId : roleCodeAndIds) {
+            if (roleCodeAndId.contains(Strings.VERTICAL_BAR)) {
+                String roleId = roleCodeAndId.split("\\|")[1];
+                roleIds.add(roleId);
+            }
+        }
+        this.baseMapper.updateUserRole(userRoleParam.getId(), roleIds);
     }
 
     @Override

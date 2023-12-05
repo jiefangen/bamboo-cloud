@@ -1,3 +1,6 @@
+server:
+  servlet:
+    context-path: /biz-admin
 spring:
   cloud:
     nacos:

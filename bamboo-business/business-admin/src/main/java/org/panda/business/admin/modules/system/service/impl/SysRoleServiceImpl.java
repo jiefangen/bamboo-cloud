@@ -2,8 +2,8 @@ package org.panda.business.admin.modules.system.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.panda.bamboo.common.constant.Commons;
-import org.panda.tech.core.exception.business.BusinessException;
 import org.panda.business.admin.application.resolver.MessageSourceResolver;
 import org.panda.business.admin.common.constant.enums.RoleCode;
 import org.panda.business.admin.modules.system.api.vo.MenuVO;
@@ -12,6 +12,7 @@ import org.panda.business.admin.modules.system.service.dto.SysRoleDto;
 import org.panda.business.admin.modules.system.service.entity.SysRole;
 import org.panda.business.admin.modules.system.service.repository.SysMenuMapper;
 import org.panda.business.admin.modules.system.service.repository.SysRoleMapper;
+import org.panda.tech.core.exception.business.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -59,8 +60,15 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         if (sysRole != null) {
             return messageSourceResolver.findI18nMessage("admin.system.role.error_add");
         }
-        // 默认roleType
-        role.setRoleCode(RoleCode.CUSTOMER.name());
+        String roleCode = role.getRoleCode();
+        if (StringUtils.isEmpty(roleCode)) {
+            // 默认roleType
+            role.setRoleCode(RoleCode.CUSTOMER.name());
+        } else {
+            if (!RoleCode.checkRoleCode(roleCode)) {
+                return messageSourceResolver.findI18nMessage("admin.system.role.error_add.1");
+            }
+        }
         this.save(role);
         return Commons.RESULT_SUCCESS;
     }

@@ -77,7 +77,7 @@ public class AuthoritiesBizExecutorImpl implements AuthoritiesBizExecutor {
                     .collect(Collectors.toSet());
             if (CollectionUtils.isNotEmpty(systemPermissionList)) {
                 String apiUrl = authorityEntry.getKey();
-                if (systemRolePerList.isEmpty()) { // 系统角色未配置即所有角色都拥有此权限
+                if (systemRolePerList.isEmpty()) { // 系统角色未配置即所有角色都拥有此权限，一般是查询资源
                     List<SysRole> roles = roleService.list();
                     List<Integer> roleIds = roles.stream().map(role -> role.getId()).collect(Collectors.toList());
                     this.savePerRelationship(systemPermissionList, roleIds, apiUrl);
