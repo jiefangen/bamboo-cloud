@@ -54,16 +54,4 @@ public enum RoleCode {
         return getSysRoles().contains(roleCode);
     }
 
-    /**
-     * 检查角色合法性
-     *
-     * @param roleCode 角色Code
-     * @return true-是；false-否
-     */
-    public static boolean checkRoleCode(String roleCode) {
-        List<String> roleCodes = getTopRoles();
-        roleCodes.addAll(getSysRoles());
-        return roleCodes.contains(roleCode);
-    }
-
 }

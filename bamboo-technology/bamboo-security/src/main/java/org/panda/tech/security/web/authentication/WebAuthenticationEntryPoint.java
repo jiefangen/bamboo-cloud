@@ -28,7 +28,7 @@ import java.nio.charset.StandardCharsets;
  */
 public class WebAuthenticationEntryPoint extends LoginUrlAuthenticationEntryPoint {
 
-    private SecurityUrlProvider securityUrlProvider;
+    private final SecurityUrlProvider securityUrlProvider;
     @Autowired
     private RedirectStrategy redirectStrategy;
     @Autowired

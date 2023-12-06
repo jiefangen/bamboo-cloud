@@ -88,4 +88,4 @@ management:
 # 日志相关配置
 logging:
   level:
-    org.panda.business.admin: debug
+    org.panda.business.admin: info

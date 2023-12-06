@@ -41,7 +41,8 @@ CREATE TABLE `sys_role` (
                           `description` VARCHAR(200) COMMENT '描述',
                           `create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
                           `update_time` DATETIME ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-                          PRIMARY KEY (`id`) USING BTREE
+                          PRIMARY KEY (`id`) USING BTREE,
+                          UNIQUE KEY `UQ_ROLE_CODE` (`role_code`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1000 CHARACTER SET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='系统角色' ROW_FORMAT=Compact;
 
 

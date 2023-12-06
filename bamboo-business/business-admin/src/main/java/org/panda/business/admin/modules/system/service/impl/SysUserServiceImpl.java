@@ -6,15 +6,16 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.panda.bamboo.common.annotation.helper.EnumValueHelper;
 import org.panda.bamboo.common.constant.Commons;
 import org.panda.bamboo.common.constant.basic.Strings;
-import org.panda.tech.core.exception.business.BusinessException;
 import org.panda.bamboo.common.util.LogUtil;
 import org.panda.business.admin.application.resolver.MessageSourceResolver;
 import org.panda.business.admin.common.constant.SystemConstants;
 import org.panda.business.admin.common.constant.enums.RoleCode;
-import org.panda.business.admin.modules.common.manager.SettingsManager;
+import org.panda.business.admin.common.constant.enums.UserType;
 import org.panda.business.admin.modules.common.config.SettingsKeys;
+import org.panda.business.admin.modules.common.manager.SettingsManager;
 import org.panda.business.admin.modules.monitor.service.SysUserTokenService;
 import org.panda.business.admin.modules.system.api.param.*;
 import org.panda.business.admin.modules.system.api.vo.MenuVO;
@@ -26,6 +27,7 @@ import org.panda.business.admin.modules.system.service.entity.SysRole;
 import org.panda.business.admin.modules.system.service.entity.SysUser;
 import org.panda.business.admin.modules.system.service.repository.SysRoleMapper;
 import org.panda.business.admin.modules.system.service.repository.SysUserMapper;
+import org.panda.tech.core.exception.business.BusinessException;
 import org.panda.tech.data.model.query.QueryResult;
 import org.panda.tech.data.mybatis.util.QueryPageHelper;
 import org.panda.tech.security.user.UserSpecificDetails;
@@ -159,7 +161,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         String encodePassword = passwordEncoder.encode(password);
         SysUser user = new SysUser();
         if (StringUtils.isEmpty(userParam.getUserType())) {
-            userParam.setUserType("customer");
+            userParam.setUserType(EnumValueHelper.getValue(UserType.CUSTOMER));
         }
         user.setUserType(userParam.getUserType());
         user.setPassword(encodePassword);

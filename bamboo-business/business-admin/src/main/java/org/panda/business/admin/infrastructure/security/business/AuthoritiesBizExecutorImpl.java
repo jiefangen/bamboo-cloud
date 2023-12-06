@@ -68,28 +68,29 @@ public class AuthoritiesBizExecutorImpl implements AuthoritiesBizExecutor {
             Collection<UserConfigAuthority> userConfigAuthorities = authorityEntry.getValue();
             // 系统权限限定标识集
             Set<String> systemPermissionList = userConfigAuthorities.stream()
-                    .filter(userConfigAuthority -> !RoleCode.isSystemRole(userConfigAuthority.getPermission()))
-                    .map(userConfigAuthority -> userConfigAuthority.getPermission())
+                    .map(UserConfigAuthority::getPermission)
+                    .filter(permission -> !RoleCode.isSystemRole(permission))
                     .collect(Collectors.toSet());
             Set<String> systemRolePerList = userConfigAuthorities.stream()
-                    .filter(userConfigAuthority -> RoleCode.isSystemRole(userConfigAuthority.getPermission()))
-                    .map(userConfigAuthority -> userConfigAuthority.getPermission())
+                    .map(UserConfigAuthority::getPermission)
+                    .filter(RoleCode::isSystemRole)
                     .collect(Collectors.toSet());
             if (CollectionUtils.isNotEmpty(systemPermissionList)) {
                 String apiUrl = authorityEntry.getKey();
+                List<Integer> roleIds;
                 if (systemRolePerList.isEmpty()) { // 系统角色未配置即所有角色都拥有此权限，一般是查询资源
                     List<SysRole> roles = roleService.list();
-                    List<Integer> roleIds = roles.stream().map(role -> role.getId()).collect(Collectors.toList());
-                    this.savePerRelationship(systemPermissionList, roleIds, apiUrl);
+                    roleIds = roles.stream().map(SysRole::getId).collect(Collectors.toList());
                 } else { // 指定角色下的权限限定
                     LambdaQueryWrapper<SysRole> roleQueryWrapper = new LambdaQueryWrapper<>();
                     // admin角色默认拥有所有权限
                     systemRolePerList.add(Authority.ROLE_ADMIN);
                     roleQueryWrapper.in(SysRole::getRoleCode, systemRolePerList);
                     List<SysRole> roles = roleService.list(roleQueryWrapper);
-                    List<Integer> roleIds = roles.stream().map(role -> role.getId()).collect(Collectors.toList());
-                    this.savePerRelationship(systemPermissionList, roleIds, apiUrl);
+                    roleIds = roles.stream().map(SysRole::getId).collect(Collectors.toList());
                 }
+                // 权限关系保存
+                this.savePerRelationship(systemPermissionList, roleIds, apiUrl);
             }
         }
         LogUtil.info(getClass(), "Admin system permissions loading completed");

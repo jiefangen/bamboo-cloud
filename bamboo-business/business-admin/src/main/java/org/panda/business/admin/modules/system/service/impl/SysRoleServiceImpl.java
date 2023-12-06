@@ -2,10 +2,8 @@ package org.panda.business.admin.modules.system.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.panda.bamboo.common.constant.Commons;
 import org.panda.business.admin.application.resolver.MessageSourceResolver;
-import org.panda.business.admin.common.constant.enums.RoleCode;
 import org.panda.business.admin.modules.system.api.vo.MenuVO;
 import org.panda.business.admin.modules.system.service.SysRoleService;
 import org.panda.business.admin.modules.system.service.dto.SysRoleDto;
@@ -56,21 +54,15 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     @Override
     public String addRole(SysRole role) {
         String roleName = role.getRoleName();
-        SysRole sysRole = this.baseMapper.findByRoleName(roleName);
+        String roleCode = role.getRoleCode();
+        SysRole sysRole = this.baseMapper.findByRoleNameCode(roleName, roleCode);
         if (sysRole != null) {
             return messageSourceResolver.findI18nMessage("admin.system.role.error_add");
         }
-        String roleCode = role.getRoleCode();
-        if (StringUtils.isEmpty(roleCode)) {
-            // 默认roleType
-            role.setRoleCode(RoleCode.CUSTOMER.name());
-        } else {
-            if (!RoleCode.checkRoleCode(roleCode)) {
-                return messageSourceResolver.findI18nMessage("admin.system.role.error_add.1");
-            }
+        if (this.save(role)) {
+            return Commons.RESULT_SUCCESS;
         }
-        this.save(role);
-        return Commons.RESULT_SUCCESS;
+        return Commons.RESULT_FAILURE;
     }
 
     @Override
