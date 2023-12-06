@@ -3,6 +3,7 @@ package org.panda.business.admin.infrastructure.security.business;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.panda.bamboo.common.constant.basic.Strings;
 import org.panda.bamboo.common.util.AtomicCounter;
 import org.panda.bamboo.common.util.LogUtil;
 import org.panda.bamboo.common.util.jackson.JsonUtil;
@@ -59,6 +60,7 @@ public class AuthoritiesBizExecutorImpl implements AuthoritiesBizExecutor {
     @Override
     @Transactional
     public void execute() {
+        LogUtil.info(getClass(), "System permissions set loading...");
         if (this.apiConfigAuthoritiesMapping.isEmpty()) {
             return;
         }
@@ -83,17 +85,16 @@ public class AuthoritiesBizExecutorImpl implements AuthoritiesBizExecutor {
                     roleIds = roles.stream().map(SysRole::getId).collect(Collectors.toList());
                 } else { // 指定角色下的权限限定
                     LambdaQueryWrapper<SysRole> roleQueryWrapper = new LambdaQueryWrapper<>();
-                    // admin角色默认拥有所有权限
-                    systemRolePerList.add(Authority.ROLE_ADMIN);
+                    // 动态加载配置拥有所有权限的角色
+                    systemRolePerList.addAll(getAllPerRoles());
                     roleQueryWrapper.in(SysRole::getRoleCode, systemRolePerList);
                     List<SysRole> roles = roleService.list(roleQueryWrapper);
                     roleIds = roles.stream().map(SysRole::getId).collect(Collectors.toList());
                 }
-                // 权限关系保存
                 this.savePerRelationship(systemPermissionList, roleIds, apiUrl);
             }
         }
-        LogUtil.info(getClass(), "Admin system permissions loading completed");
+        LogUtil.info(getClass(), "System permissions loading completed.");
     }
 
     /**
@@ -156,11 +157,29 @@ public class AuthoritiesBizExecutorImpl implements AuthoritiesBizExecutor {
     @Override
     public String[] getUrlPatterns() {
         Optional<String> authUrlPatternsOptional = settingsManager.getParamValue(SettingsKeys.AUTH_URL_PATTERNS, appName);
-        String[] urlPatterns = new String[]{"/system/**,/monitor/**,/settings/**"};
+        String urlPatterns = "/system/**,/monitor/**,/settings/**,/common/**";
+        Set<String> urlPatternsSet = new HashSet<>();
         if (authUrlPatternsOptional.isPresent()) {
+            String commaRegex = Strings.BACKSLASH + Strings.COMMA;
+            urlPatternsSet.addAll(Arrays.asList(urlPatterns.split(commaRegex)));
             String authUrlPatterns = authUrlPatternsOptional.get();
-            urlPatterns = authUrlPatterns.split("\\,");
+            urlPatternsSet.addAll(Arrays.asList(authUrlPatterns.split(commaRegex)));
+        } else { // 参数配置未配置，直接使用默认规则以提升初始化效率
+            return new String[]{urlPatterns};
         }
-        return urlPatterns;
+        return urlPatternsSet.toArray(new String[0]);
     }
+
+    private Set<String> getAllPerRoles() {
+        Optional<String> allPerRolesOptional = settingsManager.getParamValue(SettingsKeys.AUTH_ALL_PER_ROLES, appName);
+        Set<String> allPerRoleSet = new HashSet<>();
+        // admin角色默认拥有所有权限
+        allPerRoleSet.add(Authority.ROLE_ADMIN);
+        if (allPerRolesOptional.isPresent()) {
+            String allPerRoles = allPerRolesOptional.get();
+            allPerRoleSet.addAll(new HashSet<>(Arrays.asList(allPerRoles.split("\\,"))));
+        }
+        return allPerRoleSet;
+    }
+
 }
