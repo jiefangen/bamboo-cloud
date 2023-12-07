@@ -7,8 +7,8 @@ import org.panda.tech.security.config.annotation.ConfigAnonymous;
 import org.panda.tech.security.config.annotation.ConfigAuthorities;
 import org.panda.tech.security.config.annotation.ConfigAuthority;
 import org.panda.tech.security.config.annotation.ConfigPermission;
+import org.panda.tech.security.web.endpoint.AuthenticationControllerSupport;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -18,8 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
  **/
 @Api(tags = "权限验证模版控制器")
 @RestController
-@RequestMapping("/authority")
-public class AuthorityController {
+public class AuthenticationController extends AuthenticationControllerSupport {
     /**
      * 匿名即可访问
      */

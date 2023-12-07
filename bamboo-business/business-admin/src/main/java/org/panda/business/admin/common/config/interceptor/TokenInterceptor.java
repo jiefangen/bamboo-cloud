@@ -3,7 +3,7 @@ package org.panda.business.admin.common.config.interceptor;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.panda.tech.core.exception.ExceptionEnum;
 import org.panda.bamboo.common.util.lang.StringUtil;
-import org.panda.business.admin.common.constant.SystemConstants;
+import org.panda.business.admin.common.constant.AuthConstants;
 import org.panda.business.admin.modules.monitor.service.SysUserTokenService;
 import org.panda.business.admin.modules.monitor.service.entity.SysUserToken;
 import org.panda.tech.core.web.config.WebConstants;
@@ -83,7 +83,7 @@ public class TokenInterceptor implements HandlerInterceptor {
                         userToken.setStatus(1);
                         interceptPass = true;
                     } else if (status == 4) { // 登出
-                        failureResult = RestfulResult.failure(SystemConstants.LOGGED_OUT, SystemConstants.LOGGED_OUT_REASON);
+                        failureResult = RestfulResult.failure(AuthConstants.LOGGED_OUT, AuthConstants.LOGGED_OUT_REASON);
                     }
                 }
                 if (interceptPass) { // 实时刷新用户token在线时间

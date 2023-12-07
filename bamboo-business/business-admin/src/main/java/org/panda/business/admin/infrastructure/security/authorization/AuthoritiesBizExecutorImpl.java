@@ -1,4 +1,4 @@
-package org.panda.business.admin.infrastructure.security.business;
+package org.panda.business.admin.infrastructure.security.authorization;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.apache.commons.collections4.CollectionUtils;

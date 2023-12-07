@@ -37,17 +37,17 @@ import java.util.List;
 
 @Setter
 @Configuration
-@ConfigurationProperties(prefix="swagger.config")
+@ConfigurationProperties(prefix="bamboo.swagger.config")
 @EnableSwagger2WebMvc
 public class SwaggerConfig {
 
     @Value(AppConstants.EL_SPRING_PROFILES_ACTIVE)
     private String env;
 
-    private String title;
     private boolean enabled;
     private String version;
     private String basePackage;
+    private String title;
 
     @Bean
     public Docket defaultApi2() {

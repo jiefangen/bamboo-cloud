@@ -46,7 +46,7 @@ public abstract class HomeControllerSupport {
     }
 
     protected String getApplicationDesc() {
-        String appDescSuffix = Strings.SPACE + "Microservice";
+        String appDescSuffix = Strings.SPACE + "Service";
         if (name.contains(Strings.MINUS)) {
             String appName = name.split(Strings.MINUS)[1];
             return StringUtil.firstToUpperCase(appName) + appDescSuffix;

@@ -11,7 +11,7 @@ import org.panda.bamboo.common.constant.Commons;
 import org.panda.bamboo.common.constant.basic.Strings;
 import org.panda.bamboo.common.util.LogUtil;
 import org.panda.business.admin.application.resolver.MessageSourceResolver;
-import org.panda.business.admin.common.constant.SystemConstants;
+import org.panda.business.admin.common.constant.AuthConstants;
 import org.panda.business.admin.common.constant.enums.RoleCode;
 import org.panda.business.admin.common.constant.enums.UserType;
 import org.panda.business.admin.modules.common.config.SettingsKeys;
@@ -250,7 +250,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         if (!sysUser.getUsername().equals(principalUsername)) {
             // 顶级用户角色才可以更新
             if (!this.checkTopRoles()) {
-                return SystemConstants.ROLE_NOT_CHANGE_PASS;
+                return AuthConstants.ROLE_NOT_CHANGE_PASS;
             }
         }
         if (StringUtils.isEmpty(resetPassParam.getNewPassword())) {
@@ -281,11 +281,11 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         SysUser sysUser = this.getById(id);
         // 用户本人才可以修改自己的密码
         if (!principalUsername.equals(sysUser.getUsername())) {
-            return SystemConstants.ROLE_NOT_CHANGE_PASS;
+            return AuthConstants.ROLE_NOT_CHANGE_PASS;
         }
         // 判断旧密码是否正确
         if (!passwordEncoder.matches(updatePassParam.getOldPassword(), sysUser.getPassword())) {
-            return SystemConstants.PWD_WRONG;
+            return AuthConstants.PWD_WRONG;
         }
         // 校验通过更新密码
         SysUser updateUser = new SysUser();

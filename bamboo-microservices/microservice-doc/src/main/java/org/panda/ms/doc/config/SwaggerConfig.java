@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.ParameterBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -29,9 +28,7 @@ import java.util.List;
 @ConfigurationProperties(prefix = "bamboo.swagger.config")
 @EnableSwagger2WebMvc
 @Configuration
-public class SwaggerConfig implements WebMvcConfigurer {
-
-    private static final String SWAGGER_DESC = "文档微服务，致力于传统Office套件文件解析、转换、存储等服务";
+public class SwaggerConfig {
 
     private boolean enabled;
     private String version;
@@ -60,7 +57,7 @@ public class SwaggerConfig implements WebMvcConfigurer {
         this.title += "【" + env + "】";
         return new ApiInfoBuilder()
                 .title(this.title)
-                .description(SWAGGER_DESC)
+                .description("文档微服务，致力于传统Office套件文件解析、转换、存储等服务")
                 .version(this.version)
                 .contact(new Contact(Framework.OWNER, "", Framework.EMAIL))
                 .license("Apache 2.0")

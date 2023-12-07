@@ -8,6 +8,8 @@ import org.panda.business.official.modules.system.service.entity.SysRole;
 import org.panda.business.official.modules.system.service.entity.SysUser;
 import org.panda.business.official.modules.system.service.entity.SysUserRole;
 import org.panda.business.official.modules.system.service.repository.SysUserRoleMapper;
+import org.panda.tech.data.annotation.DataSourceSwitch;
+import org.panda.tech.data.common.DataCommons;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,6 +28,7 @@ import java.util.stream.Collectors;
 public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUserRole> implements ISysUserRoleService {
 
     @Override
+    @DataSourceSwitch(DataCommons.DATASOURCE_SECONDARY)
     public SysUserDto getUserAndRoles(String username) {
         SysUser userParam = new SysUser();
         userParam.setUsername(username);
@@ -35,7 +38,7 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
         }
         List<SysRole> roles = sysUserDto.getRoles();
         if(CollectionUtils.isNotEmpty(roles)) {
-            Set<String> roleCodes = roles.stream().map(role -> role.getRoleCode()).collect(Collectors.toSet());
+            Set<String> roleCodes = roles.stream().map(SysRole::getRoleCode).collect(Collectors.toSet());
             sysUserDto.setRoleCodes(roleCodes);
         }
         return sysUserDto;

@@ -1,17 +1,13 @@
 package org.panda.business.official.common.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.mybatis.spring.SqlSessionFactoryBean;
 import org.panda.tech.data.common.DataCommons;
-import org.panda.tech.data.datasource.DynamicDataSource;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.panda.tech.data.mybatis.support.DynamicDataSourceSupport;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import javax.sql.DataSource;
 import java.util.HashMap;
@@ -23,40 +19,31 @@ import java.util.Map;
  * @author fangen
  **/
 @Configuration
-public class DynamicDataSourceConfig {
+public class DynamicDataSourceConfig extends DynamicDataSourceSupport {
 
-    @Bean(name = "primaryDataSource")
+    @Bean(name = DATASOURCE_PRIMARY_NAME)
     @Primary
     @ConfigurationProperties(prefix = "spring.datasource.primary")
-    public DruidDataSource primaryDataSource() {
+    public DataSource primaryDataSource() {
         return new DruidDataSource();
     }
 
-    @Bean(name = "secondaryDataSource")
+    @Bean(name = DATASOURCE_SECONDARY_NAME)
     @ConfigurationProperties(prefix = "spring.datasource.secondary")
     public DataSource secondaryDataSource() {
         return DataSourceBuilder.create().build();
     }
 
-    @Bean(name = "dynamicDataSource")
-    public DynamicDataSource DataSource(@Qualifier("primaryDataSource") DruidDataSource primaryDataSource,
-                                        @Qualifier("secondaryDataSource") DataSource secondaryDataSource) {
-        Map<Object, Object> targetDataSource = new HashMap<>();
-        targetDataSource.put(DataCommons.DATASOURCE_PRIMARY, primaryDataSource);
-        targetDataSource.put(DataCommons.DATASOURCE_SECONDARY, secondaryDataSource);
-        DynamicDataSource dataSource = new DynamicDataSource();
-        dataSource.setTargetDataSources(targetDataSource);
-        dataSource.setDefaultTargetDataSource(primaryDataSource);
-        return dataSource;
+    @Bean(name = DATASOURCE_TERTIARY_NAME)
+    @ConfigurationProperties(prefix = "spring.datasource.tertiary")
+    public DataSource tertiaryDataSource() {
+        return DataSourceBuilder.create().build();
     }
 
-    @Bean(name = "SqlSessionFactory")
-    public SqlSessionFactory SqlSessionFactory(@Qualifier("dynamicDataSource") DataSource dynamicDataSource)
-            throws Exception {
-        SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
-        bean.setDataSource(dynamicDataSource);
-        bean.setMapperLocations(
-                new PathMatchingResourcePatternResolver().getResources("classpath*:mapper/*.xml"));
-        return bean.getObject();
+    @Override
+    protected Map<Object, Object> getTargetDataSource() {
+        Map<Object, Object> targetDataSource = new HashMap<>();
+        targetDataSource.put(DataCommons.DATASOURCE_TERTIARY, tertiaryDataSource());
+        return targetDataSource;
     }
 }
