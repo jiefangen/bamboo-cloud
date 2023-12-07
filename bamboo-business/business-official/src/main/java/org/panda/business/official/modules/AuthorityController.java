@@ -5,6 +5,7 @@ import org.panda.business.official.common.constant.Authority;
 import org.panda.tech.core.web.restful.RestfulResult;
 import org.panda.tech.security.config.annotation.ConfigAnonymous;
 import org.panda.tech.security.config.annotation.ConfigAuthority;
+import org.panda.tech.security.config.annotation.ConfigPermission;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -49,7 +50,7 @@ public class AuthorityController {
      * 需要拥有SYSTEM角色权限才可以访问
      */
     @GetMapping("/accessSystemPer")
-    @ConfigAuthority(permission = Authority.PER_SYSTEM)
+    @ConfigAuthority(permission = Authority.ROLE_SYSTEM)
     public RestfulResult accessSystemPer() {
         return RestfulResult.success(true);
     }
@@ -67,8 +68,17 @@ public class AuthorityController {
      * 需要同时拥有指定的所有权限才可以访问
      */
     @GetMapping("/accessAllPermission")
-    @ConfigAuthority(type = Authority.TYPE_MANAGER, rank = Authority.RANK_0, permission = Authority.PER_ACTUATOR)
+    @ConfigAuthority(type = Authority.TYPE_MANAGER, rank = Authority.RANK_0, permission = Authority.ROLE_ACTUATOR)
     public RestfulResult accessAllPermission() {
+        return RestfulResult.success(true);
+    }
+
+    /**
+     * 需要登录才有权限访问
+     */
+    @GetMapping("/accessPermission")
+    @ConfigPermission
+    public RestfulResult accessPermission() {
         return RestfulResult.success(true);
     }
 

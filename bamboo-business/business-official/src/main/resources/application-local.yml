@@ -1,9 +1,8 @@
+server:
+  port: 10002
+  servlet:
+    context-path: /biz-official
 spring:
-  cloud:
-    nacos:
-      config:
-        import-check:
-          enabled: false
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/official_system?useUnicode=true&characterEncoding=utf8&useSSL=true&serverTimezone=GMT%2B8&allowMultiQueries=true
     username: root
@@ -71,7 +70,6 @@ spring:
             delete-allow: true                                                 #允许删除数据操作
             multi-statement-allow: true                                        #允许一次执行多条sql
 
-
 # Actuator监控配置,开启监控所有端点
 management:
   endpoints:
@@ -81,3 +79,7 @@ management:
   endpoint:
     health:
       show-details: always
+
+logging:
+  level:
+    org.panda.business.official: debug

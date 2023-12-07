@@ -21,6 +21,8 @@
         <module>bamboo-data-mybatis</module>
         <!-- 服务安全支持模块-为上层服务提供鉴权标准 -->
         <module>bamboo-security</module>
+        <!-- 消息队列模块-为上层服务提供Rocketmq使用准则 -->
+        <module>bamboo-mq-rocketmq</module>
     </modules>
 
     <properties>
