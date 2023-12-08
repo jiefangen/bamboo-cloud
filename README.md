@@ -18,7 +18,12 @@
     3.bamboo-data-mybatis（对上层服务提供简易mybatis使用能力）
 
 ## 三、框架能力展示
-#### 设计中，敬请期待。
+#### 请移步本技术框架最佳实践，BAMBOO后台管理系统。
+- 演示地址：http://47.116.33.28/#/dashboard
+- 演示账号密码：demo/123456
+- 前端项目地址：[admin-vue](https://github.com/jiefangen/frontend-vue/tree/main/admin-vue)
+- 分布式框架项目地址：[bamboo](https://github.com/jiefangen/bamboo)
+- 微服务框架项目地址：[bamboo-cloud](https://github.com/jiefangen/bamboo-cloud)
 
 ## 四、架构设计指导
 ### 架构设计风格
