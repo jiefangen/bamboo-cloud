@@ -5,17 +5,27 @@
 
 ## 二、框架模块简介
 ### bamboo-business（具体业务架构应用层）
-    1.business-admin（后台管理系统业务）
+    1.business-admin（后台管理系统业务服务）
+    2.business-official（技术官网系统业务服务）
 ### bamboo-microservices（微服务架构服务提供层）
-    1.microservices-sms（短信微服务）
-    2.microservices-doc（文档微服务）
+    1.microservices-auth（服务认证鉴权中心服务）
+    2.microservices-notice（通知路由服务）
+    3.microservices-payment（支付网关服务）
+    4.microservices-doc（文档解析转换服务）
 ### bamboo-support（微服务治理框架支撑层）
-    1.support-config（微服务配置中心）
-    2.support-regiester（微服务注册中心）
+    1.support-cloud-core（微服务架构核心模块-服务注册发现统一配置管理）
+    2.support-cloud-gateway（微服务架构统一网关路由服务）
+    3.support-cloud-seata（微服务架构-分布式事务支持）
+    4.support-cloud-rocketmq（微服务架构-消息队列RocketMQ支持）
 ### bamboo-technology（技术框架基础支撑层）
-    1.bamboo-core（对上层服务架构提供统一化核心标准支持）
-    2.bamboo-data-jpa（对上层服务提供简易jpa使用能力）
-    3.bamboo-data-mybatis（对上层服务提供简易mybatis使用能力）
+    1.bamboo-common（通用模块-为本技术框架提供支持【不可对外依赖】）
+    2.bamboo-core（核心模块-为上层框架或服务提供核心支持）
+    3.bamboo-data（数据模块-为本技术框架提供数据相关支持【不可对外依赖】）
+    4.bamboo-data-jpa（jpa支持模块-为上层服务提供jpa访问框架支持）
+    5.bamboo-data-mybatis（mybatis支持模块-为上层服务提供mybatis访问框架支持）
+    6.bamboo-data-redis（redis支持模块-为上层服务提供Redis访问使用支持）
+    7.bamboo-security（服务安全支持模块-为上层服务提供鉴权标准）
+    8.bamboo-mq-rocketmq（消息队列模块-为上层服务提供RocketMQ使用准则）
 
 ## 三、框架能力展示
 #### 请移步本技术框架最佳实践，BAMBOO后台管理系统。
