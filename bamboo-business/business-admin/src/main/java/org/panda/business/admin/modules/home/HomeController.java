@@ -1,4 +1,4 @@
-package org.panda.business.admin.modules;
+package org.panda.business.admin.modules.home;
 
 import io.swagger.annotations.Api;
 import org.panda.tech.core.web.controller.HomeControllerSupport;

@@ -1,9 +1,10 @@
-package org.panda.business.official.modules;
+package org.panda.business.admin.modules.home;
 
 import io.swagger.annotations.Api;
-import org.panda.business.official.common.constant.Authority;
+import org.panda.business.admin.common.constant.Authority;
 import org.panda.tech.core.web.restful.RestfulResult;
 import org.panda.tech.security.config.annotation.ConfigAnonymous;
+import org.panda.tech.security.config.annotation.ConfigAuthorities;
 import org.panda.tech.security.config.annotation.ConfigAuthority;
 import org.panda.tech.security.config.annotation.ConfigPermission;
 import org.panda.tech.security.web.endpoint.AuthenticationControllerSupport;
@@ -28,10 +29,19 @@ public class AuthenticationController extends AuthenticationControllerSupport {
     }
 
     /**
+     * 只要认证成功即可访问
+     */
+    @GetMapping("/accessAuthSucceed")
+    @ConfigPermission
+    public RestfulResult accessAuthSucceed() {
+        return RestfulResult.success(true);
+    }
+
+    /**
      * 需要拥有manager用户类型才可以访问
      */
     @GetMapping("/accessManagerType")
-    @ConfigAuthority(type = Authority.TYPE_MANAGER)
+    @ConfigPermission(type = Authority.TYPE_MANAGER)
     public RestfulResult accessManagerType() {
         return RestfulResult.success(true);
     }
@@ -40,7 +50,7 @@ public class AuthenticationController extends AuthenticationControllerSupport {
      * 需要达到用户等级1才可以访问
      */
     @GetMapping("/accessRank1")
-    @ConfigAuthority(rank = Authority.RANK_1)
+    @ConfigPermission(rank = Authority.RANK_1)
     public RestfulResult accessRank1() {
         return RestfulResult.success(true);
     }
@@ -49,17 +59,11 @@ public class AuthenticationController extends AuthenticationControllerSupport {
      * 需要拥有SYSTEM角色权限才可以访问
      */
     @GetMapping("/accessSystemPer")
-    @ConfigAuthority(permission = Authority.ROLE_SYSTEM)
+    @ConfigAuthorities({
+            @ConfigAuthority(permission = Authority.ROLE_SYSTEM),
+            @ConfigAuthority(permission = Authority.ROLE_USER)
+    })
     public RestfulResult accessSystemPer() {
-        return RestfulResult.success(true);
-    }
-
-    /**
-     * 只要认证成功即可访问
-     */
-    @GetMapping("/accessAuthSucceed")
-    @ConfigAuthority
-    public RestfulResult accessAuthSucceed() {
         return RestfulResult.success(true);
     }
 
@@ -73,19 +77,11 @@ public class AuthenticationController extends AuthenticationControllerSupport {
     }
 
     /**
-     * 只需要登录就有权限访问
-     */
-    @GetMapping("/accessPermission")
-    @ConfigPermission
-    public RestfulResult accessPermission() {
-        return RestfulResult.success(true);
-    }
-
-    /**
      * 拒绝所有权限访问
      */
     @GetMapping("/accessDenyAll")
     public RestfulResult accessDenyAll() {
         return RestfulResult.success(true);
     }
+
 }

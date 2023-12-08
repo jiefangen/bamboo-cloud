@@ -1,7 +1,7 @@
 package org.panda.business.official.common.constant;
 
 /**
- * 系统全局权限限定常量
+ * 系统权限限定常量
  *
  * @author fangen
  **/

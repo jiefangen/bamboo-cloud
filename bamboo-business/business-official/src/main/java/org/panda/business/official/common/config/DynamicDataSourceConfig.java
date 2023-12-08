@@ -3,6 +3,7 @@ package org.panda.business.official.common.config;
 import com.alibaba.druid.pool.DruidDataSource;
 import org.panda.tech.data.common.DataCommons;
 import org.panda.tech.data.mybatis.support.DynamicDataSourceSupport;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
@@ -20,6 +21,9 @@ import java.util.Map;
  **/
 @Configuration
 public class DynamicDataSourceConfig extends DynamicDataSourceSupport {
+
+    @Value("${mybatis.mapper-locations}")
+    private String mapperLocationPattern;
 
     @Bean(name = DATASOURCE_PRIMARY_NAME)
     @Primary
@@ -41,9 +45,15 @@ public class DynamicDataSourceConfig extends DynamicDataSourceSupport {
     }
 
     @Override
+    protected String getMapperLocationPattern() {
+        return mapperLocationPattern;
+    }
+
+    @Override
     protected Map<Object, Object> getTargetDataSource() {
         Map<Object, Object> targetDataSource = new HashMap<>();
         targetDataSource.put(DataCommons.DATASOURCE_TERTIARY, tertiaryDataSource());
         return targetDataSource;
     }
+
 }

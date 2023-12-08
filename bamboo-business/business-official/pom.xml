@@ -53,6 +53,13 @@
             <artifactId>knife4j-openapi2-spring-boot-starter</artifactId>
             <version>${knife4j-openapi2.version}</version>
         </dependency>
+
+        <!-- 消息队列rocketmq -->
+        <dependency>
+            <groupId>org.panda.tech</groupId>
+            <artifactId>bamboo-mq-rocketmq</artifactId>
+            <version>${technology.version}</version>
+        </dependency>
     </dependencies>
 
 </project>

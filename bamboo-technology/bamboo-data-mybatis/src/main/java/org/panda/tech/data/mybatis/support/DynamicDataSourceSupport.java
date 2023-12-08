@@ -45,9 +45,11 @@ public abstract class DynamicDataSourceSupport {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(dynamicDataSource);
         bean.setMapperLocations(
-                new PathMatchingResourcePatternResolver().getResources("classpath*:mapper/*.xml"));
+                new PathMatchingResourcePatternResolver().getResources(getMapperLocationPattern()));
         return bean.getObject();
     }
+
+    protected abstract String getMapperLocationPattern();
 
     protected Map<Object, Object> getTargetDataSource() {
         return null;
