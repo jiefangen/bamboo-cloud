@@ -1,5 +1,7 @@
 package org.panda.tech.data.cache;
 
+import java.util.List;
+
 /**
  * 缓存数据访问仓库
  *
@@ -13,6 +15,10 @@ public interface CacheRepo<T, K> {
     void delete(T object);
 
     T deleteByKey(K key);
+
+    void deleteAll();
+
+    List<T> findAll();
 
     T find(K key);
 
