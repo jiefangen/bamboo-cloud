@@ -4,6 +4,7 @@ import io.swagger.annotations.Api;
 import org.panda.business.official.modules.system.service.ISysUserRoleService;
 import org.panda.business.official.modules.system.service.dto.SysUserDto;
 import org.panda.tech.core.web.restful.RestfulResult;
+import org.panda.tech.data.redis.template.RedisStaticTemplate;
 import org.panda.tech.security.config.annotation.ConfigAnonymous;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,6 +32,7 @@ public class UserController {
     @ConfigAnonymous
     public RestfulResult getUserDetails(@RequestParam String username) {
         SysUserDto sysUserDto = userRoleService.getUserAndRoles(username);
+        RedisStaticTemplate.set(username, sysUserDto);
         return RestfulResult.success(sysUserDto);
     }
 

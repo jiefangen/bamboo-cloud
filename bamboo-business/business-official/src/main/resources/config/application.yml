@@ -4,5 +4,12 @@ spring:
   profiles:
     active: local
 
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password:
+    timeout: 3000
+    database: 0
+
 mybatis:
   mapper-locations: classpath:mapper/*.xml
