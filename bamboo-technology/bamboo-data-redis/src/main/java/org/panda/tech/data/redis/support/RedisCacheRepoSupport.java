@@ -4,7 +4,7 @@ import org.panda.bamboo.common.util.clazz.ClassUtil;
 import org.panda.tech.data.cache.CacheRepo;
 
 /**
- * Redis缓存仓库支持
+ * Redis缓存数据支持
  *
  * @param <V> 值类型
  */

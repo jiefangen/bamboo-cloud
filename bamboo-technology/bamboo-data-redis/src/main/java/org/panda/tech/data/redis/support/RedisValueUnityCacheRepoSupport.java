@@ -6,7 +6,7 @@ import org.panda.tech.data.cache.UnityCacheRepo;
 import java.io.Serializable;
 
 /**
- * ForValue方式存储单体的Redis缓存仓库支持
+ * ForValue方式存储单体的Redis缓存数据支持
  *
  * @param <T> 单体类型
  * @param <K> 单体标识类型

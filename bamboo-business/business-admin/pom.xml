@@ -24,13 +24,13 @@
             <artifactId>support-cloud-core</artifactId>
             <version>${support.version}</version>
         </dependency>
-
         <!-- 技术框架核心组件依赖 -->
 <!--        <dependency>-->
 <!--            <groupId>org.panda.tech</groupId>-->
 <!--            <artifactId>bamboo-core</artifactId>-->
 <!--            <version>${technology.version}</version>-->
 <!--        </dependency>-->
+
         <!-- 技术框架security安全框架支持 -->
         <dependency>
             <groupId>org.panda.tech</groupId>

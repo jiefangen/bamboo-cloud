@@ -28,6 +28,8 @@ public class BaseTypeJackson2JsonRedisSerializer<T> implements RedisSerializer<T
         } else {
             this.objectMapper = JacksonUtil.DEFAULT_MAPPER;
         }
+        // 禁止生成类名信息
+        this.objectMapper.deactivateDefaultTyping();
     }
 
     @Override

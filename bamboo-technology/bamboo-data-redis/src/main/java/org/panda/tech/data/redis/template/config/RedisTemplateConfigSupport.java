@@ -11,7 +11,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 import java.io.Serializable;
 
 /**
- * Redis模版配置支持，使用建议通用访问模版建议加载使用
+ * Redis模版配置支持，通用访问模版建议加载使用
  *
  * @author fangen
  **/

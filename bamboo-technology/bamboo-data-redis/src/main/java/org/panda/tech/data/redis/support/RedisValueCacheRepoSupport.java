@@ -8,7 +8,7 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import java.util.List;
 
 /**
- * ForValue方式的Redis缓存仓库支持
+ * ForValue方式的Redis缓存数据支持
  *
  * @param <V> 实体类型
  */

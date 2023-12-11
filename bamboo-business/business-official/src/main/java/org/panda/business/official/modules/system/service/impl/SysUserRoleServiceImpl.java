@@ -7,11 +7,13 @@ import org.panda.business.official.modules.system.service.dto.SysUserDto;
 import org.panda.business.official.modules.system.service.entity.SysRole;
 import org.panda.business.official.modules.system.service.entity.SysUser;
 import org.panda.business.official.modules.system.service.entity.SysUserRole;
+import org.panda.business.official.modules.system.service.repository.SysUserCacheRepo;
 import org.panda.business.official.modules.system.service.repository.SysUserRoleMapper;
 import org.panda.tech.data.annotation.DataSourceSwitch;
 import org.panda.tech.data.common.DataCommons;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -27,9 +29,15 @@ import java.util.stream.Collectors;
 @Service
 public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUserRole> implements ISysUserRoleService {
 
+    @Resource
+    private SysUserCacheRepo sysUserCacheRepo;
+
     @Override
     @DataSourceSwitch(DataCommons.DATASOURCE_SECONDARY)
     public SysUserDto getUserAndRoles(String username) {
+        if (sysUserCacheRepo.exists(username)) {
+            return sysUserCacheRepo.find(username);
+        }
         SysUser userParam = new SysUser();
         userParam.setUsername(username);
         SysUserDto sysUserDto = this.baseMapper.findUserAndRoles(userParam);
@@ -41,6 +49,8 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
             Set<String> roleCodes = roles.stream().map(SysRole::getRoleCode).collect(Collectors.toSet());
             sysUserDto.setRoleCodes(roleCodes);
         }
+        // 用户数据单体缓存
+        sysUserCacheRepo.save(sysUserDto);
         return sysUserDto;
     }
 
