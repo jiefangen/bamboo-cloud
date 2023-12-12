@@ -26,9 +26,9 @@ public class DocUtil {
     private static final Properties ERROR = new Properties();
 
     static {
-        Resource messageResource = IOUtil.findI18nResource("classpath:message/document-message",
+        Resource messageResource = IOUtil.findI18nResource("classpath:META-INF/message/info",
                 Locale.getDefault(), FileExtensions.PROPERTIES);
-        Resource errorResource = IOUtil.findI18nResource("classpath:message/document-error",
+        Resource errorResource = IOUtil.findI18nResource("classpath:META-INF/message/error",
                 Locale.getDefault(), FileExtensions.PROPERTIES);
         if (messageResource != null && errorResource != null) {
             try {

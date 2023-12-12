@@ -12,7 +12,7 @@ import org.panda.business.official.modules.system.service.entity.SysUserRole;
  * @author bamboo-code-generator
  * @since 2023-06-07
  */
-public interface ISysUserRoleService extends IService<SysUserRole> {
+public interface SysUserRoleService extends IService<SysUserRole> {
 
     SysUserDto getUserAndRoles(String username);
 

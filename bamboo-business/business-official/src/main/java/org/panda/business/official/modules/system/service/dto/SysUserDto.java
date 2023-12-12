@@ -15,7 +15,7 @@ import java.util.Set;
 @Getter
 public class SysUserDto implements Unity<String>, Serializable {
 
-    private static final long serialVersionUID = -4934171750565309043L;
+    private static final long serialVersionUID = 4474923711505213534L;
 
     private Integer userId;
     private SysUser user;

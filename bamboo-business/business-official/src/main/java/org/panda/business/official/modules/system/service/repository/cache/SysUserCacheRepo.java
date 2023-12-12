@@ -1,4 +1,4 @@
-package org.panda.business.official.modules.system.service.repository;
+package org.panda.business.official.modules.system.service.repository.cache;
 
 
 import org.panda.business.official.modules.system.service.dto.SysUserDto;
@@ -12,6 +12,6 @@ public class SysUserCacheRepo extends RedisValueUnityCacheRepoSupport<SysUserDto
     public void deleteById(String id) {
         SysUserDto sysUserDto = deleteByKey(id);
         // do something
-        
+
     }
 }

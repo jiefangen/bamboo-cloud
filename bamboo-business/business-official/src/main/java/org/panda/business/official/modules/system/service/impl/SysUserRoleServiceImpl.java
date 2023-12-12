@@ -2,15 +2,13 @@ package org.panda.business.official.modules.system.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.collections4.CollectionUtils;
-import org.panda.business.official.modules.system.service.ISysUserRoleService;
+import org.panda.business.official.modules.system.service.SysUserRoleService;
 import org.panda.business.official.modules.system.service.dto.SysUserDto;
 import org.panda.business.official.modules.system.service.entity.SysRole;
 import org.panda.business.official.modules.system.service.entity.SysUser;
 import org.panda.business.official.modules.system.service.entity.SysUserRole;
-import org.panda.business.official.modules.system.service.repository.SysUserCacheRepo;
+import org.panda.business.official.modules.system.service.repository.cache.SysUserCacheRepo;
 import org.panda.business.official.modules.system.service.repository.SysUserRoleMapper;
-import org.panda.tech.data.annotation.DataSourceSwitch;
-import org.panda.tech.data.common.DataCommons;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -27,13 +25,13 @@ import java.util.stream.Collectors;
  * @since 2023-06-07
  */
 @Service
-public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUserRole> implements ISysUserRoleService {
+public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUserRole> implements SysUserRoleService {
 
     @Resource
     private SysUserCacheRepo sysUserCacheRepo;
 
     @Override
-    @DataSourceSwitch(DataCommons.DATASOURCE_SECONDARY)
+//    @DataSourceSwitch(DataCommons.DATASOURCE_SECONDARY)
     public SysUserDto getUserAndRoles(String username) {
         if (sysUserCacheRepo.exists(username)) {
             return sysUserCacheRepo.find(username);

@@ -5,7 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.panda.bamboo.common.constant.basic.Strings;
 import org.panda.business.official.infrastructure.cache.RedisCacheService;
 import org.panda.business.official.modules.system.service.dto.SysUserDto;
-import org.panda.business.official.modules.system.service.repository.SysUserCacheRepo;
+import org.panda.business.official.modules.system.service.repository.cache.SysUserCacheRepo;
 import org.panda.tech.core.web.restful.RestfulResult;
 import org.panda.tech.data.redis.template.RedisStaticTemplate;
 import org.panda.tech.security.config.annotation.ConfigAnonymous;
