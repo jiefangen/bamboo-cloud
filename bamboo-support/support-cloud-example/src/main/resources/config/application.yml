@@ -1,6 +1,6 @@
 spring:
   application:
-    name: spt-example
+    name: example-cloud-service
   profiles:
     active: dev
 server:

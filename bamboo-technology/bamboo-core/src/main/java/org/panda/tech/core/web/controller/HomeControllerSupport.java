@@ -46,12 +46,11 @@ public abstract class HomeControllerSupport {
     }
 
     protected String getApplicationDesc() {
-        String appDescSuffix = Strings.SPACE + "Service";
         if (name.contains(Strings.MINUS)) {
-            String appName = name.split(Strings.MINUS)[1];
-            return StringUtil.firstToUpperCase(appName) + appDescSuffix;
+            String[] names = name.split(Strings.MINUS);
+            return StringUtil.firstToUpperCase(names[0]) + Strings.SPACE + StringUtil.firstToUpperCase(names[1]);
         }
-        return StringUtil.firstToUpperCase(name) + appDescSuffix;
+        return StringUtil.firstToUpperCase(name);
     }
 
     protected String getIndexViewName() {

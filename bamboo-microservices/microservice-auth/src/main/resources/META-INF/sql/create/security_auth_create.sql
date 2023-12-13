@@ -43,7 +43,7 @@ CREATE TABLE `auth_role` (
                           `create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
                           `update_time` DATETIME ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
                           PRIMARY KEY (`id`) USING BTREE,
-                          UNIQUE KEY `UQ_ROLE_CODE` (`role_code`),
+                          UNIQUE KEY `UQ_ROLE_CODE` (`role_code`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1000 CHARACTER SET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='应用认证角色' ROW_FORMAT=Compact;
 
 
@@ -67,7 +67,7 @@ CREATE TABLE `auth_permission` (
                                 `scope` VARCHAR(100) COMMENT '权限范围',
                                 `description` VARCHAR(200) COMMENT '描述',
                                 PRIMARY KEY (`id`) USING BTREE,
-                                UNIQUE KEY `UQ_PERMISSION_CODE` (`permission_code`),
+                                UNIQUE KEY `UQ_PERMISSION_CODE` (`permission_code`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1000 CHARACTER SET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='应用资源权限' ROW_FORMAT=Compact;
 
 ALTER TABLE `auth_account_role` ADD CONSTRAINT fk_auth_account_role_user_id_user FOREIGN KEY (`account_id`) REFERENCES auth_account (`id`);
@@ -87,5 +87,5 @@ CREATE TABLE `app_server` (
                            `status` INT NOT NULL COMMENT '状态：0-停用；1-正常；2-维护中；4-故障',
                            `scope` VARCHAR(100) COMMENT '应用服务范围',
                            PRIMARY KEY (`id`) USING BTREE,
-                           UNIQUE KEY `UQ_APP_CODE` (`app_code`),
+                           UNIQUE KEY `UQ_APP_CODE` (`app_code`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1000 CHARACTER SET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='应用服务' ROW_FORMAT=Compact;

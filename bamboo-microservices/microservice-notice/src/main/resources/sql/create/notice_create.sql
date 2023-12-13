@@ -1,7 +1,7 @@
-/* ms_notice通知服务表创建脚本 */
-DROP DATABASE IF EXISTS `ms_notice`;
-CREATE DATABASE IF NOT EXISTS `ms_notice` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `ms_notice`;
+/* notice通知服务表创建脚本 */
+DROP DATABASE IF EXISTS `service_notice`;
+CREATE DATABASE IF NOT EXISTS `service_notice` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `service_notice`;
 
 SET NAMES utf8mb4;
 SET GLOBAL FOREIGN_KEY_CHECKS = 0;

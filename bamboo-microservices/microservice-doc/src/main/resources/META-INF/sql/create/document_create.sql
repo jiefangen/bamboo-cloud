@@ -1,7 +1,7 @@
-/* ms_document文档服务表创建脚本 */
-DROP DATABASE IF EXISTS `ms_document`;
-CREATE DATABASE IF NOT EXISTS `ms_document` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `ms_document`;
+/* document文档服务表创建脚本 */
+DROP DATABASE IF EXISTS `service_document`;
+CREATE DATABASE IF NOT EXISTS `service_document` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `service_document`;
 
 SET NAMES utf8mb4;
 SET GLOBAL FOREIGN_KEY_CHECKS = 0;

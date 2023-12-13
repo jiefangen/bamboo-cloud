@@ -2,7 +2,7 @@ server:
   port: 12001
 spring:
   application:
-    name: spt-gateway
+    name: gateway-cloud-service
   profiles:
     active: dev
   main:

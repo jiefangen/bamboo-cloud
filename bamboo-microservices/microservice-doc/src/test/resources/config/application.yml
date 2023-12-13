@@ -1,12 +1,12 @@
 spring:
   application:
-    name: document
+    name: document-service
   profiles:
     active: junit
 server:
   port: 11101
   servlet:
-    context-path: /service-document
+    context-path: /document-service
     encoding:
       charset: UTF-8
       force: true
