@@ -115,13 +115,13 @@
   3. 【强制】一个典型的maven工程，由一个pom类型的顶级父工程，和多个子工程组成。
 对于分布式微服务架构的工程，这些子工程为微服务子工程，也是pom类型的maven工程，其下包含各层级的子工程。
 
-    层级子工程|命名方式|范例|说明
-    ---|---|---|---
-    api|[顶级工程名]-[微服务名]-api|tnxsample-admin-api|微服务对外提供服务的接口定义模块
-    model|[顶级工程名]-[微服务名]-model|tnxsample-admin-model|微服务的领域模型定义模块
-    repo|[顶级工程名]-[微服务名]-repo|tnxsample-admin-repo|微服务内部的数据持久化模块
-    service|[顶级工程名]-[微服务名]-service|tnxsample-admin-service|微服务内部的业务接口定义和逻辑实现模块
-    web|[顶级工程名]-[微服务名]-web|tnxsample-admin-web|微服务的视图模块
+    层级子工程|命名方式| 范例                      |说明
+    ---|---|-------------------------|---
+    api|[顶级工程名]-[微服务名]-api| bamboo-admin-api        |微服务对外提供服务的接口定义模块
+    model|[顶级工程名]-[微服务名]-model| bamboo-admin-model   |微服务的领域模型定义模块
+    repo|[顶级工程名]-[微服务名]-repo| bamboo-admin-repo    |微服务内部的数据持久化模块
+    service|[顶级工程名]-[微服务名]-service| bamboo-admin-service |微服务内部的业务接口定义和逻辑实现模块
+    web|[顶级工程名]-[微服务名]-web| bamboo-admin-web     |微服务的视图模块
     
   > 说明：层级子工程之间的依赖关系详见样例工程 []()
 - 包
@@ -276,7 +276,7 @@
 1. 【强制】使用Spring Boot的配置方式，传统Spring的xml配置文件不再使用，*.yaml、*.yml、*.properties配置文件遵循Spring Boot的规范。
 2. 【推荐】其它配置文件，如果没有特殊要求，默认均位于maven工程的src/main/resources源代码目录中的META-INF目录下。
 3. 【强制】每个微服务都有自己的sql脚本文件，位于微服务级maven工程repo模块的src/main/resources源代码目录中的META-INF/sql目录下，以v开头，后接版本号，通过flyway执行脚本。
-  > 例如：[tnxsample-admin]/tnxsapmle-admin-repo/src/main/resources/META-INF/sql/v2.2.1.sql
+  > 例如：[tnxsample-admin]/bamboo-admin-repo/src/main/resources/META-INF/sql/v2.2.1.sql
 4. 【强制】所有sql文件中的sql脚本均使用小写字母，更多数据库相关规约见[《数据库开发设计规约》](./database.md)。
 5. 【强制】JPA配置均通过实体映射（entity-mappings）文件进行配置，不在实体类中使用JPA注解。
   > 说明：我们采用贫血模型，实体类仅仅用于表示业务领域实体，不关心自身如何被持久化，持久化由repo模块负责。

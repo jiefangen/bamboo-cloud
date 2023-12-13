@@ -7,7 +7,6 @@ import org.panda.business.official.infrastructure.cache.RedisCacheService;
 import org.panda.business.official.modules.system.service.dto.SysUserDto;
 import org.panda.business.official.modules.system.service.repository.cache.SysUserCacheRepo;
 import org.panda.tech.core.web.restful.RestfulResult;
-import org.panda.tech.data.redis.template.RedisStaticTemplate;
 import org.panda.tech.security.config.annotation.ConfigAnonymous;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +28,15 @@ public class RedisCacheController {
     @Resource
     private SysUserCacheRepo sysUserCacheRepo;
 
+
+    @GetMapping("/set")
+    @ConfigAnonymous
+    public RestfulResult<?> set(@RequestParam String key) {
+        String value = "Hello World!";
+        redisCacheService.set(key, value, 60);
+        return RestfulResult.success();
+    }
+
     @GetMapping("/getKeys")
     @ConfigAnonymous
     public RestfulResult<?> getKeys(@RequestParam(required = false) String pattern) {
@@ -44,7 +52,7 @@ public class RedisCacheController {
     @GetMapping("/getValueByKey")
     @ConfigAnonymous
     public RestfulResult<?> getValueByKey(@RequestParam String key) {
-        Object res = RedisStaticTemplate.get(key);
+        Object res = redisCacheService.get(key);
         if (res == null) {
             return RestfulResult.failure();
         }
