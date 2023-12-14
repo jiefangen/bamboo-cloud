@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
- * MQ消费者消息拉取抽象支持
+ * MQ消费者消息主动拉取抽象支持
  **/
 public abstract class MessageMQPullConsumerSupport extends MessagePullConsumerActionSupport {
 

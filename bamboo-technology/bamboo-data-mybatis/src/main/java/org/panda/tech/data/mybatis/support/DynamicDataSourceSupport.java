@@ -22,6 +22,7 @@ public abstract class DynamicDataSourceSupport {
     // 动态数据源名称
     protected static final String DATASOURCE_PRIMARY_NAME = "primaryDataSource";
     protected static final String DATASOURCE_SECONDARY_NAME = "secondaryDataSource";
+    // 扩展第三方数据源
     protected static final String DATASOURCE_TERTIARY_NAME = "tertiaryDataSource";
 
     @Bean

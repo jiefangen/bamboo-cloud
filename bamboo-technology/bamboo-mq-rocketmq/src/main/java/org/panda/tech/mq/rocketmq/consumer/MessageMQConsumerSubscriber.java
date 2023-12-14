@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * 消费者订阅器
+ * 初始化顺序受限，暂不推荐使用
  **/
 public class MessageMQConsumerSubscriber {
 

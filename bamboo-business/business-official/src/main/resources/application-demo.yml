@@ -26,9 +26,9 @@ spring:
 #        max-idle: 10 # 连接池中的最大空闲连接 默认 8
 #        min-idle: 10 # 连接池中的最小空闲连接 默认 0
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/official_system?useUnicode=true&characterEncoding=utf8&useSSL=true&serverTimezone=GMT%2B8&allowMultiQueries=true
+    url: jdbc:mysql://198.19.249.243:3312/official_system?useUnicode=true&characterEncoding=utf8&useSSL=true&serverTimezone=GMT%2B8&allowMultiQueries=true
     username: root
-    password: root123456
+    password: P@ssw0rd123!
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
     druid:

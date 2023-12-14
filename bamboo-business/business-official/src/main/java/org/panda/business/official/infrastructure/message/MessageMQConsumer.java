@@ -1,14 +1,13 @@
 package org.panda.business.official.infrastructure.message;
 
 import org.panda.tech.mq.rocketmq.consumer.MessageMQConsumerSupport;
-import org.springframework.stereotype.Component;
 
 /**
  * 消息队列消费者
  *
  * @author fangen
  **/
-@Component
+//@Component
 public class MessageMQConsumer extends MessageMQConsumerSupport {
 
     @Override

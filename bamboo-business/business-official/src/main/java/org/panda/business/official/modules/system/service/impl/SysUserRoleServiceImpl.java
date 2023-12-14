@@ -48,7 +48,7 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
             sysUserDto.setRoleCodes(roleCodes);
         }
         // 用户数据单体缓存
-        sysUserCacheRepo.save(sysUserDto);
+//        sysUserCacheRepo.save(sysUserDto);
         return sysUserDto;
     }
 
