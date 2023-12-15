@@ -3,10 +3,13 @@ package org.panda.business.official.modules.home;
 import io.swagger.annotations.Api;
 import org.apache.commons.lang3.StringUtils;
 import org.panda.bamboo.common.constant.basic.Strings;
+import org.panda.bamboo.common.util.LogUtil;
+import org.panda.bamboo.common.util.date.DateUtil;
 import org.panda.business.official.infrastructure.cache.RedisCacheService;
 import org.panda.business.official.modules.system.service.dto.SysUserDto;
 import org.panda.business.official.modules.system.service.repository.cache.SysUserCacheRepo;
 import org.panda.tech.core.web.restful.RestfulResult;
+import org.panda.tech.data.redis.lock.RedisDistributedLock;
 import org.panda.tech.security.config.annotation.ConfigAnonymous;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -27,7 +31,28 @@ public class RedisCacheController {
     private RedisCacheService redisCacheService;
     @Resource
     private SysUserCacheRepo sysUserCacheRepo;
+    @Autowired
+    private RedisDistributedLock redisDistributedLock;
 
+    @GetMapping("/lock")
+    @ConfigAnonymous
+    public RestfulResult<?> lock(@RequestParam("key") String key) {
+        for (int i = 0; i < 10; i++) {
+            int finalI = i;
+            new Thread(() -> {
+                LogUtil.info(getClass(), "Running serial number：{}", finalI);
+                redisDistributedLock.lock(key);
+                try {
+                    Thread.sleep(3000L);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                LogUtil.info(getClass(), DateUtil.formatLong(new Date()));
+                redisDistributedLock.unlock(key);
+            }).start();
+        }
+        return RestfulResult.success();
+    }
 
     @GetMapping("/set")
     @ConfigAnonymous

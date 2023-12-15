@@ -1,4 +1,4 @@
-package org.panda.tech.data.redis.template.config;
+package org.panda.tech.data.redis.config;
 
 import org.panda.bamboo.common.util.jackson.JacksonUtil;
 import org.springframework.context.annotation.Bean;
@@ -40,7 +40,7 @@ public abstract class RedisTemplateConfigSupport {
      * 6.GenericJackson2JsonRedisSerializer：基本和上面的Jackson2JsonRedisSerializer功能差不多 - 推荐
      */
     protected RedisSerializer<Object> getValueSerializer() {
-        // 使用GenericJackson2JsonRedisSerializer替换默认序列化(默认采用的是JDK序列化)
+        // 使用GenericJackson2JsonRedisSerializer替换默认序列化（默认采用的是JDK序列化）
         return new GenericJackson2JsonRedisSerializer(JacksonUtil.DEFAULT_MAPPER);
     }
 
