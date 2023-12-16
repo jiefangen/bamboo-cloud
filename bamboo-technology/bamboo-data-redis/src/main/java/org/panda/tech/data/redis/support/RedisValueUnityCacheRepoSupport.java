@@ -1,6 +1,6 @@
 package org.panda.tech.data.redis.support;
 
-import org.panda.bamboo.common.model.entity.Unity;
+import org.panda.tech.data.model.entity.unity.Unity;
 import org.panda.tech.data.cache.UnityCacheRepo;
 
 import java.io.Serializable;

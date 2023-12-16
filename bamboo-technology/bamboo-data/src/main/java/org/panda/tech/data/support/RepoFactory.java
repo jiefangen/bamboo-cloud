@@ -1,7 +1,7 @@
 package org.panda.tech.data.support;
 
 import org.panda.tech.data.Repox;
-import org.panda.bamboo.common.model.entity.Entity;
+import org.panda.tech.data.model.entity.Entity;
 import org.springframework.data.repository.CrudRepository;
 
 /**

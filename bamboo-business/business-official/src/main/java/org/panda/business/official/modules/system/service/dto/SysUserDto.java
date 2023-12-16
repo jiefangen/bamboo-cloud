@@ -2,7 +2,7 @@ package org.panda.business.official.modules.system.service.dto;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.panda.bamboo.common.model.entity.Unity;
+import org.panda.tech.data.model.entity.unity.Unity;
 import org.panda.business.official.modules.system.service.entity.SysRole;
 import org.panda.business.official.modules.system.service.entity.SysUser;
 

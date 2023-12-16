@@ -5,7 +5,7 @@ import org.hibernate.mapping.Column;
 import org.hibernate.mapping.PersistentClass;
 import org.hibernate.mapping.Property;
 import org.panda.tech.data.jpa.util.OqlUtil;
-import org.panda.bamboo.common.model.entity.Entity;
+import org.panda.tech.data.model.entity.Entity;
 import org.panda.tech.data.model.query.FieldOrder;
 import org.panda.tech.data.model.query.Paged;
 import org.panda.tech.data.model.query.QueryResult;

@@ -1,4 +1,6 @@
-package org.panda.bamboo.common.model.entity;
+package org.panda.tech.data.model.entity.unity;
+
+import org.panda.tech.data.model.entity.Entity;
 
 import java.io.Serializable;
 

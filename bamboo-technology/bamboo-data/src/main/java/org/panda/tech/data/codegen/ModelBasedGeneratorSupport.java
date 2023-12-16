@@ -3,7 +3,7 @@ package org.panda.tech.data.codegen;
 import org.apache.commons.lang3.ArrayUtils;
 import org.panda.bamboo.common.constant.basic.Strings;
 import org.panda.bamboo.common.util.clazz.ClassUtil;
-import org.panda.bamboo.common.model.entity.Entity;
+import org.panda.tech.data.model.entity.Entity;
 
 import java.util.Collection;
 import java.util.function.BiConsumer;

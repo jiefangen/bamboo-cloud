@@ -1,6 +1,6 @@
 package org.panda.ms.cas.server.core.cas.entity;
 
-import org.panda.bamboo.common.model.entity.Unity;
+import org.panda.tech.data.model.entity.unity.Unity;
 import org.panda.tech.security.user.UserSpecificDetails;
 
 import java.util.Date;

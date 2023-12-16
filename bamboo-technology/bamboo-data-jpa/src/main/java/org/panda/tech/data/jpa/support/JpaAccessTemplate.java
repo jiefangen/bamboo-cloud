@@ -4,7 +4,7 @@ import org.hibernate.boot.Metadata;
 import org.hibernate.mapping.PersistentClass;
 import org.panda.bamboo.common.util.lang.CollectionUtil;
 import org.panda.tech.data.jpa.hibernate.MetadataProvider;
-import org.panda.bamboo.common.model.entity.Entity;
+import org.panda.tech.data.model.entity.Entity;
 import org.panda.tech.data.support.DataAccessTemplate;
 import org.springframework.orm.jpa.EntityManagerFactoryUtils;
 import org.springframework.util.Assert;

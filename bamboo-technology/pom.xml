@@ -21,6 +21,8 @@
         <module>bamboo-data-mybatis</module>
         <!-- redis支持模块-为上层服务提供Redis访问使用支持 -->
         <module>bamboo-data-redis</module>
+        <!-- mongodb支持模块-为上层服务提供Mongodb访问使用支持 -->
+        <module>bamboo-data-mongo</module>
         <!-- 服务安全支持模块-为上层服务提供鉴权标准 -->
         <module>bamboo-security</module>
         <!-- 消息队列模块-为上层服务提供Rocketmq使用准则 -->
