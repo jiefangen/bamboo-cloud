@@ -20,8 +20,16 @@ public class MongoQueryUtil {
      * @return Query对象
      */
     public static Query buildQuery(List<Criteria> criteriaList) {
+        if (criteriaList == null || criteriaList.isEmpty()) {
+            return new Query(new Criteria());
+        }
         Criteria[] array = criteriaList.toArray(new Criteria[0]);
         return new Query(new Criteria().andOperator(array));
+    }
+
+    public static Query buildOrQuery(List<Criteria> criteriaList) {
+        Criteria[] array = criteriaList.toArray(new Criteria[0]);
+        return new Query(new Criteria().orOperator(array));
     }
 
 }

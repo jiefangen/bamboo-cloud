@@ -12,6 +12,5 @@ public class SysUserCacheRepo extends RedisValueUnityCacheRepoSupport<SysUserDto
     public void deleteById(String id) {
         SysUserDto sysUserDto = deleteByKey(id);
         // do something
-
     }
 }

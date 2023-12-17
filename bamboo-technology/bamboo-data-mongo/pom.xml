@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>bamboo-data-mongodb</artifactId>
+    <artifactId>bamboo-data-mongo</artifactId>
     <version>${technology.version}</version>
 
     <properties>

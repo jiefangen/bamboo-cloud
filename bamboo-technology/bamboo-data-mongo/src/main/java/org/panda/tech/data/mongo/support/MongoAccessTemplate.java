@@ -20,7 +20,7 @@ import java.util.Map;
 public class MongoAccessTemplate implements DataAccessTemplate {
 
     private String schema = RepoUtil.DEFAULT_SCHEMA_NAME;
-    private MongoOperations mongoOperations;
+    private final MongoOperations mongoOperations;
 
     public MongoAccessTemplate(MongoOperations mongoOperations) {
         this.mongoOperations = mongoOperations;

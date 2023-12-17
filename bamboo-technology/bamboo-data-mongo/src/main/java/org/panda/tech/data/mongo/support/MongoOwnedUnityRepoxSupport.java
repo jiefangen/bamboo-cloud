@@ -9,6 +9,7 @@ import java.io.Serializable;
 
 /**
  * MongoDB从属单体的数据访问扩展仓库
+ * 复杂关联关系等特殊场景使用，一般场景使用{@link MongoUnityRepoxSupport}即可满足
  */
 public abstract class MongoOwnedUnityRepoxSupport<T extends OwnedUnity<K, O>, K extends Serializable, O extends Serializable>
         extends MongoUnityRepoxSupport<T, K> implements OwnedUnityRepox<T, K, O> {
