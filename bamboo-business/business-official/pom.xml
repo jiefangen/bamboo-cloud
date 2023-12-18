@@ -66,7 +66,7 @@
             <artifactId>bamboo-data-redis</artifactId>
             <version>${technology.version}</version>
         </dependency>
-        <!-- NoSql数据库mongodb -->
+        <!-- 非结构化数据库mongodb -->
         <dependency>
             <groupId>org.panda.tech</groupId>
             <artifactId>bamboo-data-mongo</artifactId>
