@@ -242,16 +242,19 @@ public class RedisValueTemplate<K, T> {
         return false;
     }
 
-    public long count(Predicate<T> predicate) {
-        long[] counts = {0};
-        Set<String> internalKeys = getInternalKeys(null);
+    public long count(String keyPattern, Predicate<T> predicate) {
+        Set<String> internalKeys = getInternalKeys(keyPattern);
+        if (predicate == null) {
+            return internalKeys.size();
+        }
+        long total = 0;
         for (String internalKey : internalKeys) {
             T value = ops().get(internalKey);
             if (predicate.test(value)) {
-                counts[0] += 1;
+                total += 1;
             }
         }
-        return counts[0];
+        return total;
     }
 
     @SuppressWarnings({"rawtypes", "unchecked"})

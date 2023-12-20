@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
-@ConfigurationProperties("bamboo.message.mq")
+@ConfigurationProperties("bamboo.message.rocketmq")
 public class MessageMQProperties {
 
     // 默认生产者组
