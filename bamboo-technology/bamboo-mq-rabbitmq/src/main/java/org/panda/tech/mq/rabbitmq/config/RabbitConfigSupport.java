@@ -17,7 +17,7 @@ public abstract class RabbitConfigSupport {
     private MessageMQProperties messageMQProperties;
 
     @Bean
-    public List<Queue> queues(){
+    public List<Queue> queues() {
         List<String> queueNames = messageMQProperties.getQueueNames();
         List<Queue> queues = new ArrayList<>();
         for (String queueName : queueNames) {

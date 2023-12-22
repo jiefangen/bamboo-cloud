@@ -32,9 +32,15 @@ public abstract class MessageTransactionProducerActionSupport<T> implements Mess
     private MessageMQProperties messageMQProperties;
 
     private TransactionMQProducer buildTransactionMQProducer(String transactionProducerGroup) {
-        TransactionMQProducer producer = new TransactionMQProducer(transactionProducerGroup);
+        TransactionMQProducer producer = buildProducer();
+        producer.setProducerGroup(transactionProducerGroup);
         producer.setNamesrvAddr(messageMQProperties.getNameServer());
         return producer;
+    }
+
+    @Override
+    public TransactionMQProducer buildProducer() {
+        return new TransactionMQProducer();
     }
 
     @Override

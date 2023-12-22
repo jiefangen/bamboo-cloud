@@ -27,6 +27,7 @@
     7.bamboo-data-mongo（mongodb支持模块-为上层服务提供Mongodb访问使用支持）
     8.bamboo-security（服务安全支持模块-为上层服务提供鉴权标准）
     9.bamboo-mq-rocketmq（消息队列模块-为上层服务提供RocketMQ使用准则）
+    10.bamboo-mq-rabbitmq（消息队列模块-为上层服务提供RabbitMQ使用准则）
 
 ## 三、框架能力展示
 #### 请移步本技术框架最佳实践，BAMBOO后台管理系统。

@@ -13,7 +13,7 @@ public abstract class MessageProducerActionSupport implements MessageProducerAct
     private MessageMQProperties messageMQProperties;
 
     @Override
-    public DefaultMQProducer buildDefaultMQProducer() {
+    public DefaultMQProducer buildProducer() {
         DefaultMQProducer producer = new DefaultMQProducer(messageMQProperties.getProducerGroup());
         producer.setNamesrvAddr(messageMQProperties.getNameServer());
         return producer;
