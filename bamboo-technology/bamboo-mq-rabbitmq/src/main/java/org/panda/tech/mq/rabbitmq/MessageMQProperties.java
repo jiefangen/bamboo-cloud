@@ -41,6 +41,7 @@ public class MessageMQProperties {
 
     /**
      * 队列名称集
+     * 默认直连交换机转发队列
      */
     private List<String> queueNames;
 

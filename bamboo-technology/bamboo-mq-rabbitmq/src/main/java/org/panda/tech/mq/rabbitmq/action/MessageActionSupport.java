@@ -7,12 +7,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.panda.bamboo.common.constant.basic.Strings;
 import org.panda.bamboo.common.util.LogUtil;
 import org.panda.tech.mq.rabbitmq.MessageMQProperties;
+import org.panda.tech.mq.rabbitmq.RabbitMQContext;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -20,17 +19,14 @@ import java.util.Optional;
  */
 public abstract class MessageActionSupport implements MessageAction, InitializingBean {
 
-    // 消息客户端连接
-    private Connection connection = null;
-    // 消息通道容器
-    protected final Map<String, Channel> channelContainer = new HashMap<>();
+    protected final RabbitMQContext rabbitMQContext = new RabbitMQContext();
 
     @Autowired
     private MessageMQProperties messageMQProperties;
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        if (this.connection == null) {
+        if (rabbitMQContext.getConnection() == null) {
             ConnectionFactory factory = new ConnectionFactory();
             if (StringUtils.isEmpty(messageMQProperties.getUri())) {
                 factory.setUsername(messageMQProperties.getUsername());
@@ -41,36 +37,21 @@ public abstract class MessageActionSupport implements MessageAction, Initializin
             } else { // URI方式连接
                 factory.setUri(messageMQProperties.getUri());
             }
-            this.connection = factory.newConnection(messageMQProperties.getConnectionName());
+            rabbitMQContext.setConnection(factory.newConnection(messageMQProperties.getConnectionName()));
+            // 初始化连接通道
         }
     }
 
     @Override
     public Connection getConnection() {
-        return this.connection;
-    }
-
-    protected void close() {
-        try {
-            // 关闭该连接下的所有通道
-            for (Map.Entry<String, Channel> entry : this.channelContainer.entrySet()) {
-                Channel channel = entry.getValue();
-                channel.close();
-            }
-            // 关闭连接
-            this.connection.close();
-        } catch (Exception e) {
-            // do nothing
-        }
+        return rabbitMQContext.getConnection();
     }
 
     protected Channel channelDeclare(String exchangeName, String exchangeType, String queueName, String routingKey) {
-        StringBuffer channelKeyBuffer = new StringBuffer(exchangeName).append(Strings.VERTICAL_BAR)
-                .append(exchangeType).append(Strings.VERTICAL_BAR).append(queueName)
-                .append(Strings.VERTICAL_BAR).append(routingKey);
-        String channelKey = channelKeyBuffer.toString();
-        if (this.channelContainer.get(channelKey) != null) {
-            return this.channelContainer.get(channelKey);
+        String channelKey = exchangeName + Strings.VERTICAL_BAR + exchangeType + Strings.VERTICAL_BAR + queueName +
+                Strings.VERTICAL_BAR + routingKey;
+        if (rabbitMQContext.getChannelContext().get(channelKey) != null) {
+            return rabbitMQContext.getChannelContext().get(channelKey);
         }
         try {
             Optional<Channel> channelOptional = getConnection().openChannel();
@@ -83,8 +64,8 @@ public abstract class MessageActionSupport implements MessageAction, Initializin
                     channel.queueDeclare(queueName, true, false, false, null);
                 }
                 channel.queueBind(queueName, exchangeName, routingKey);
-                // 加入到连接通道容器，实现复用
-                this.channelContainer.put(channelKey, channel);
+                // 存入消息上下文连接通道容器，实现复用
+                rabbitMQContext.put(channelKey, channel);
                 return channel;
             }
         } catch (IOException e) {

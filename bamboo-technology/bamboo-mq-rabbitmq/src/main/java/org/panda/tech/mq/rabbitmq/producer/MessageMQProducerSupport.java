@@ -2,8 +2,10 @@ package org.panda.tech.mq.rabbitmq.producer;
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.MessageProperties;
+import org.panda.bamboo.common.annotation.helper.EnumValueHelper;
 import org.panda.bamboo.common.util.LogUtil;
 import org.panda.tech.mq.rabbitmq.action.MessageActionSupport;
+import org.panda.tech.mq.rabbitmq.config.ExchangeEnum;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -13,8 +15,6 @@ import java.nio.charset.StandardCharsets;
  * <T> 消息类型
  **/
 public abstract class MessageMQProducerSupport<T> extends MessageActionSupport implements MessageMQProducer<T> {
-
-    protected static final String EXCHANGE_DIRECT = "direct";
 
     @Override
     public void send(T payload, String exchangeName, String exchangeType, String queueName, String routingKey) {
@@ -31,7 +31,7 @@ public abstract class MessageMQProducerSupport<T> extends MessageActionSupport i
 
     @Override
     public void sendDirect(T payload, String exchangeName, String queueName, String routingKey) {
-        send(payload, exchangeName, EXCHANGE_DIRECT, queueName, routingKey);
+        send(payload, exchangeName, EnumValueHelper.getValue(ExchangeEnum.DIRECT), queueName, routingKey);
     }
 
 }
