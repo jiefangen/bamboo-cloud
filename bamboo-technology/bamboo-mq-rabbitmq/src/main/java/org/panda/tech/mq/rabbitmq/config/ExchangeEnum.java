@@ -12,4 +12,16 @@ public enum ExchangeEnum {
     @EnumValue("direct")
     DIRECT,
 
+    @Caption("主题模式")
+    @EnumValue("topic")
+    TOPIC,
+
+    @Caption("头模式")
+    @EnumValue("headers")
+    HEADERS,
+
+    @Caption("广播模式")
+    @EnumValue("fanout")
+    FANOUT
+
 }

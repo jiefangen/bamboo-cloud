@@ -48,8 +48,7 @@ public abstract class MessageActionSupport implements MessageAction, Initializin
     }
 
     protected Channel channelDeclare(String exchangeName, String exchangeType, String queueName, String routingKey) {
-        String channelKey = exchangeName + Strings.VERTICAL_BAR + exchangeType + Strings.VERTICAL_BAR + queueName +
-                Strings.VERTICAL_BAR + routingKey;
+        String channelKey = buildChannelKey(exchangeName, exchangeType, queueName, routingKey);
         if (rabbitMQContext.getChannelContext().get(channelKey) != null) {
             return rabbitMQContext.getChannelContext().get(channelKey);
         }
@@ -57,10 +56,13 @@ public abstract class MessageActionSupport implements MessageAction, Initializin
             Optional<Channel> channelOptional = getConnection().openChannel();
             if (channelOptional.isPresent()) {
                 Channel channel = channelOptional.get();
+                // 持久化、非自动删除的交换机
                 channel.exchangeDeclare(exchangeName, exchangeType, true);
                 if (StringUtils.isEmpty(queueName)) { // 单客户端消费，可以使用默认队列名称
+                    // 具有系统生成的名称的，非持久化、独占、自动删除的队列
                     queueName = channel.queueDeclare().getQueue();
                 } else { // 多客户端消费建议指定名称队列
+                    // 拥有既定名称的，持久化、非独占、非自动删除的队列
                     channel.queueDeclare(queueName, true, false, false, null);
                 }
                 channel.queueBind(queueName, exchangeName, routingKey);
@@ -72,6 +74,17 @@ public abstract class MessageActionSupport implements MessageAction, Initializin
             LogUtil.error(getClass(), e);
         }
         return null;
+    }
+
+    private String buildChannelKey(String exchangeName, String exchangeType, String queueName, String routingKey) {
+        String channelKey = exchangeName + Strings.VERTICAL_BAR + exchangeType;
+        if (StringUtils.isNotEmpty(queueName)) {
+            channelKey += Strings.VERTICAL_BAR + queueName;
+        }
+        if (StringUtils.isNotEmpty(routingKey)) {
+            channelKey += Strings.VERTICAL_BAR + routingKey;
+        }
+        return channelKey;
     }
 
 }
