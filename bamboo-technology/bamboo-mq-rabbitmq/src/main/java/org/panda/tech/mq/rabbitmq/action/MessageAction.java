@@ -10,4 +10,5 @@ public interface MessageAction {
      * 获取消息MQ连接
      */
     Connection getConnection();
+
 }

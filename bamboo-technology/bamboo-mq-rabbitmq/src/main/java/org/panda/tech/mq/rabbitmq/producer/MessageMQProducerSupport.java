@@ -1,5 +1,6 @@
 package org.panda.tech.mq.rabbitmq.producer;
 
+import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.MessageProperties;
 import org.panda.bamboo.common.annotation.helper.EnumValueHelper;
@@ -9,6 +10,7 @@ import org.panda.tech.mq.rabbitmq.config.ExchangeEnum;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.Objects;
 
 /**
  * MQ生产消息抽象支持
@@ -17,18 +19,31 @@ import java.nio.charset.StandardCharsets;
 public abstract class MessageMQProducerSupport<T> extends MessageActionSupport implements MessageMQProducer<T> {
 
     @Override
-    public void send(T payload, String exchangeName, String exchangeType, String queueName, String routingKey) {
+    public void send(T payload, String exchangeName, String exchangeType, String queueName, String routingKey,
+                     AMQP.BasicProperties properties) {
         Channel channel = channelDeclare(exchangeName, exchangeType, queueName, routingKey);
         if (channel != null) {
             try {
                 byte[] body = String.valueOf(payload).getBytes(StandardCharsets.UTF_8);
-                channel.basicPublish(exchangeName, routingKey, MessageProperties.PERSISTENT_TEXT_PLAIN, body);
+                channel.basicPublish(exchangeName, routingKey,
+                        Objects.requireNonNullElse(properties, MessageProperties.PERSISTENT_TEXT_PLAIN), body);
             } catch (IOException e) {
                 LogUtil.error(getClass(), e);
             }
         } else {
             LogUtil.warn(getClass(), "Failed to obtain send channel");
         }
+    }
+
+    @Override
+    public void sendDirect(T payload, String exchangeName, String queueName, String routingKey,
+                           AMQP.BasicProperties properties) {
+        send(payload, exchangeName, EnumValueHelper.getValue(ExchangeEnum.DIRECT), queueName, routingKey, properties);
+    }
+
+    @Override
+    public void sendDirect(T payload, String exchangeName, String queueName, String routingKey) {
+        sendDirect(payload, exchangeName, queueName, routingKey, null);
     }
 
     /**
@@ -66,11 +81,6 @@ public abstract class MessageMQProducerSupport<T> extends MessageActionSupport i
                 // do nothing
             }
         }
-    }
-
-    @Override
-    public void sendDirect(T payload, String exchangeName, String queueName, String routingKey) {
-        send(payload, exchangeName, EnumValueHelper.getValue(ExchangeEnum.DIRECT), queueName, routingKey);
     }
 
 }

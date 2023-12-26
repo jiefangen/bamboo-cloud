@@ -13,7 +13,7 @@ public class RabbitMQContext {
 
     private Connection connection = null;
 
-    private Map<String, Channel> channelContext = new Hashtable<>();
+    private final Map<String, Channel> channelContext = new Hashtable<>();
 
     public Connection getConnection() {
         return connection;
@@ -45,7 +45,7 @@ public class RabbitMQContext {
         try {
             // 关闭该连接下的所有通道
             for (Map.Entry<String, Channel> entry : this.channelContext.entrySet()) {
-                Channel channel = entry.getValue();
+                Channel channel = channelContext.remove(entry.getKey());
                 channel.close();
             }
             // 关闭连接

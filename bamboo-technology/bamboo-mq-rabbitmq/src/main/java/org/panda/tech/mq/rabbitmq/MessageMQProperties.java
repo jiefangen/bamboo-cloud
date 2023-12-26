@@ -3,8 +3,6 @@ package org.panda.tech.mq.rabbitmq;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.List;
-
 @Configuration
 @ConfigurationProperties("bamboo.message.rabbitmq")
 public class MessageMQProperties {
@@ -38,12 +36,6 @@ public class MessageMQProperties {
      * 便于不通服务连接区分
      */
     private String connectionName;
-
-    /**
-     * 队列名称集
-     * 默认直连交换机转发队列
-     */
-    private List<String> queueNames;
 
     public String getUri() {
         return uri;
@@ -101,11 +93,4 @@ public class MessageMQProperties {
         this.connectionName = connectionName;
     }
 
-    public List<String> getQueueNames() {
-        return queueNames;
-    }
-
-    public void setQueueNames(List<String> queueNames) {
-        this.queueNames = queueNames;
-    }
 }

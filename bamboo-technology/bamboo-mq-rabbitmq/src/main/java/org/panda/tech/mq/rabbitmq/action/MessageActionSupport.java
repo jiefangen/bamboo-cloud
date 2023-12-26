@@ -3,6 +3,7 @@ package org.panda.tech.mq.rabbitmq.action;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
+import com.rabbitmq.client.ExceptionHandler;
 import org.apache.commons.lang3.StringUtils;
 import org.panda.bamboo.common.constant.basic.Strings;
 import org.panda.bamboo.common.util.LogUtil;
@@ -23,6 +24,8 @@ public abstract class MessageActionSupport implements MessageAction, Initializin
 
     @Autowired
     private MessageMQProperties messageMQProperties;
+    @Autowired(required = false)
+    private ExceptionHandler exceptionHandler;
 
     @Override
     public void afterPropertiesSet() throws Exception {
@@ -36,6 +39,9 @@ public abstract class MessageActionSupport implements MessageAction, Initializin
                 factory.setPort(messageMQProperties.getPort());
             } else { // URI方式连接
                 factory.setUri(messageMQProperties.getUri());
+            }
+            if (exceptionHandler != null) {
+                factory.setExceptionHandler(exceptionHandler);
             }
             rabbitMQContext.setConnection(factory.newConnection(messageMQProperties.getConnectionName()));
             // 初始化连接通道
@@ -66,7 +72,7 @@ public abstract class MessageActionSupport implements MessageAction, Initializin
                     channel.queueDeclare(queueName, true, false, false, null);
                 }
                 channel.queueBind(queueName, exchangeName, routingKey);
-                // 存入消息上下文连接通道容器，实现复用
+                // 存入消息上下文连接通道容器
                 rabbitMQContext.put(channelKey, channel);
                 return channel;
             }
