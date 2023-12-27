@@ -8,10 +8,10 @@ import org.apache.rocketmq.common.message.Message;
 import org.apache.rocketmq.common.message.MessageQueue;
 import org.apache.rocketmq.remoting.common.RemotingHelper;
 import org.panda.bamboo.common.util.LogUtil;
+import org.panda.tech.core.util.CommonUtil;
 import org.panda.tech.mq.rocketmq.action.MessageProducerActionSupport;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -45,20 +45,10 @@ public abstract class MessageMQProducerSupport<T> extends MessageProducerActionS
      */
     protected void sendResultCallback(SendResult sendResult) {}
 
-    private List<Object> getPayloads(T payload) {
-        List<Object> payloads = new LinkedList<>();
-        if (payload instanceof List) {
-            payloads.addAll((List<Object>) payload);
-        } else {
-            payloads.add(payload);
-        }
-        return payloads;
-    }
-
     @Override
     public void sendGeneralAsync(String topic, T payload, String tags, String keys, int retryTimes) {
         DefaultMQProducer producer = buildProducer();
-        List<Object> payloads = getPayloads(payload);
+        List<Object> payloads = CommonUtil.getPayloads(payload);
         int messageCount = payloads.size();
         CountDownLatch countDownLatch = new CountDownLatch(messageCount);
         try {
@@ -97,7 +87,7 @@ public abstract class MessageMQProducerSupport<T> extends MessageProducerActionS
     @Override
     public void sendGeneralOneway(String topic, T payload, String tags, String keys) {
         DefaultMQProducer producer = buildProducer();
-        List<Object> payloads = getPayloads(payload);
+        List<Object> payloads = CommonUtil.getPayloads(payload);
         try {
             producer.start();
             for (Object message : payloads) {
@@ -115,7 +105,7 @@ public abstract class MessageMQProducerSupport<T> extends MessageProducerActionS
     @Override
     public void sendSeq(String topic, T payload, String tags, String keys, int partitionId) {
         DefaultMQProducer producer = buildProducer();
-        List<Object> payloads = getPayloads(payload);
+        List<Object> payloads = CommonUtil.getPayloads(payload);
         try {
             producer.start();
             for (int i = 0; i < payloads.size(); i++) {
@@ -142,7 +132,7 @@ public abstract class MessageMQProducerSupport<T> extends MessageProducerActionS
     @Override
     public void sendDelay(String topic, T payload, String tags, String keys, int delayTimeLevel) {
         DefaultMQProducer producer = buildProducer();
-        List<Object> payloads = getPayloads(payload);
+        List<Object> payloads = CommonUtil.getPayloads(payload);
         try {
             producer.start();
             for (int i = 0; i < payloads.size(); i++) {
@@ -163,7 +153,7 @@ public abstract class MessageMQProducerSupport<T> extends MessageProducerActionS
     @Override
     public void sendBatch(String topic, T payload, String tags, String keys) {
         DefaultMQProducer producer = buildProducer();
-        List<Object> payloads = getPayloads(payload);
+        List<Object> payloads = CommonUtil.getPayloads(payload);
         List<Message> messages = new ArrayList<>();
         try {
             for (Object message: payloads) {

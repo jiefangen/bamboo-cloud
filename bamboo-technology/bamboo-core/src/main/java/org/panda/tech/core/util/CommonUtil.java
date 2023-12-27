@@ -3,6 +3,8 @@ package org.panda.tech.core.util;
 import org.apache.commons.lang3.StringUtils;
 import org.panda.bamboo.common.constant.basic.Strings;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -55,6 +57,19 @@ public class CommonUtil {
             count++;
         }
         return count;
+    }
+
+    /**
+     * 获取负载因子集
+     */
+    public static List<Object> getPayloads(Object payload) {
+        List<Object> payloads = new LinkedList<>();
+        if (payload instanceof List) {
+            payloads.addAll((List<Object>) payload);
+        } else {
+            payloads.add(payload);
+        }
+        return payloads;
     }
 
 }

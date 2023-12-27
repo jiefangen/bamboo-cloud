@@ -4,15 +4,19 @@ import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.ExceptionHandler;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.panda.bamboo.common.constant.basic.Strings;
 import org.panda.bamboo.common.util.LogUtil;
 import org.panda.tech.mq.rabbitmq.MessageMQProperties;
 import org.panda.tech.mq.rabbitmq.RabbitMQContext;
+import org.panda.tech.mq.rabbitmq.config.ChannelDefinition;
+import org.panda.tech.mq.rabbitmq.config.QueueDefinition;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -53,8 +57,8 @@ public abstract class MessageActionSupport implements MessageAction, Initializin
         return rabbitMQContext.getConnection();
     }
 
-    protected Channel channelDeclare(String exchangeName, String exchangeType, String queueName, String routingKey) {
-        String channelKey = buildChannelKey(exchangeName, exchangeType, queueName, routingKey);
+    protected Channel channelDeclare(ChannelDefinition definition, List<QueueDefinition> queues) {
+        String channelKey = buildChannelKey(definition);
         if (rabbitMQContext.getChannelContext().get(channelKey) != null) {
             return rabbitMQContext.getChannelContext().get(channelKey);
         }
@@ -62,16 +66,29 @@ public abstract class MessageActionSupport implements MessageAction, Initializin
             Optional<Channel> channelOptional = getConnection().openChannel();
             if (channelOptional.isPresent()) {
                 Channel channel = channelOptional.get();
-                // 持久化、非自动删除的交换机
-                channel.exchangeDeclare(exchangeName, exchangeType, true);
+                String exchangeName = definition.getExchangeName();
+                String exchangeType = definition.getExchangeType();
+                String routingKey = definition.getRoutingKey();
+                String queueName = definition.getQueueName();
                 if (StringUtils.isEmpty(queueName)) { // 单客户端消费，可以使用默认队列名称
+                    channel.exchangeDeclare(exchangeName, exchangeType);
                     // 具有系统生成的名称的，非持久化、独占、自动删除的队列
                     queueName = channel.queueDeclare().getQueue();
+                    channel.queueBind(queueName, exchangeName, routingKey);
                 } else { // 多客户端消费建议指定名称队列
-                    // 拥有既定名称的，持久化、非独占、非自动删除的队列
-                    channel.queueDeclare(queueName, true, false, false, null);
+                    // 持久化、非自动删除的交换机
+                    channel.exchangeDeclare(exchangeName, exchangeType, true);
+                    if (CollectionUtils.isEmpty(queues)) {
+                        // 拥有既定名称的，持久化、非独占、非自动删除的队列
+                        channel.queueDeclare(queueName, true, false, false, definition.getHeaders());
+                        channel.queueBind(queueName, exchangeName, routingKey, definition.getHeaders());
+                    } else {
+                        for (QueueDefinition queue : queues) {
+                            channel.queueDeclare(queue.getQueueName(), true, false, false, queue.getHeaders());
+                            channel.queueBind(queue.getQueueName(), exchangeName, routingKey, queue.getHeaders());
+                        }
+                    }
                 }
-                channel.queueBind(queueName, exchangeName, routingKey);
                 // 存入消息上下文连接通道容器
                 rabbitMQContext.put(channelKey, channel);
                 return channel;
@@ -82,13 +99,20 @@ public abstract class MessageActionSupport implements MessageAction, Initializin
         return null;
     }
 
-    private String buildChannelKey(String exchangeName, String exchangeType, String queueName, String routingKey) {
-        String channelKey = exchangeName + Strings.VERTICAL_BAR + exchangeType;
-        if (StringUtils.isNotEmpty(queueName)) {
-            channelKey += Strings.VERTICAL_BAR + queueName;
+    protected Channel channelDeclare(ChannelDefinition definition) {
+        return channelDeclare(definition, null);
+    }
+
+    private String buildChannelKey(ChannelDefinition definition) {
+        String channelKey = definition.getExchangeName() + Strings.VERTICAL_BAR + definition.getExchangeType();
+        if (StringUtils.isNotEmpty(definition.getRoutingKey())) {
+            channelKey += Strings.VERTICAL_BAR + definition.getRoutingKey();
         }
-        if (StringUtils.isNotEmpty(routingKey)) {
-            channelKey += Strings.VERTICAL_BAR + routingKey;
+        if (StringUtils.isNotEmpty(definition.getQueueName())) {
+            channelKey += Strings.VERTICAL_BAR + definition.getRoutingKey();
+        }
+        if (StringUtils.isNotEmpty(definition.getChannelTag())) {
+            channelKey += Strings.VERTICAL_BAR + definition.getChannelTag();
         }
         return channelKey;
     }
