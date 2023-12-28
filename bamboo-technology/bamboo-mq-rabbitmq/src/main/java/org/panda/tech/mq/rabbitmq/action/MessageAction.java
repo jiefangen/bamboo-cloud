@@ -1,5 +1,6 @@
 package org.panda.tech.mq.rabbitmq.action;
 
+import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 
 /**
@@ -11,4 +12,8 @@ public interface MessageAction {
      */
     Connection getConnection();
 
+    /**
+     * 获取消息MQ通道
+     */
+    Channel getChannel();
 }

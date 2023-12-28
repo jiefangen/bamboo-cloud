@@ -57,10 +57,33 @@ public abstract class MessageActionSupport implements MessageAction, Initializin
         return rabbitMQContext.getConnection();
     }
 
-    protected Channel channelDeclare(ChannelDefinition definition, List<QueueDefinition> queues) {
+    @Override
+    public Channel getChannel() {
+        try {
+            Optional<Channel> channelOptional = getConnection().openChannel();
+            if (channelOptional.isPresent()) {
+                return channelOptional.get();
+            }
+        } catch (IOException e) {
+            // do nothing
+        }
+        return null;
+    }
+
+    /**
+     * 生产者通道声明
+     *
+     * @param definition 通道定义
+     * @param queues 队列
+     * @param channelReuse 通道复用
+     * @return 通道
+     */
+    protected Channel channelDeclare(ChannelDefinition definition, List<QueueDefinition> queues, boolean channelReuse) {
         String channelKey = buildChannelKey(definition);
-        if (rabbitMQContext.getChannelContext().get(channelKey) != null) {
-            return rabbitMQContext.getChannelContext().get(channelKey);
+        if (channelReuse) {
+            if (rabbitMQContext.getChannelContainer().get(channelKey) != null) {
+                return rabbitMQContext.getChannelContainer().get(channelKey);
+            }
         }
         try {
             Optional<Channel> channelOptional = getConnection().openChannel();
@@ -89,8 +112,10 @@ public abstract class MessageActionSupport implements MessageAction, Initializin
                         }
                     }
                 }
-                // 存入消息上下文连接通道容器
-                rabbitMQContext.put(channelKey, channel);
+                if (channelReuse) {
+                    // 存入消息上下文连接通道容器
+                    rabbitMQContext.put(channelKey, channel);
+                }
                 return channel;
             }
         } catch (IOException e) {
@@ -99,8 +124,15 @@ public abstract class MessageActionSupport implements MessageAction, Initializin
         return null;
     }
 
-    protected Channel channelDeclare(ChannelDefinition definition) {
-        return channelDeclare(definition, null);
+    /**
+     * 生产者通道声明
+     *
+     * @param definition 通道定义
+     * @param channelReuse 通道复用
+     * @return 通道
+     */
+    protected Channel channelDeclare(ChannelDefinition definition, boolean channelReuse) {
+        return channelDeclare(definition, null, channelReuse);
     }
 
     private String buildChannelKey(ChannelDefinition definition) {

@@ -1,22 +1,20 @@
 package org.panda.tech.mq.rabbitmq.producer;
 
-import com.rabbitmq.client.AMQP;
-import com.rabbitmq.client.BuiltinExchangeType;
-import com.rabbitmq.client.Channel;
-import com.rabbitmq.client.MessageProperties;
+import com.rabbitmq.client.*;
 import org.apache.commons.lang3.StringUtils;
 import org.panda.bamboo.common.annotation.helper.EnumValueHelper;
+import org.panda.bamboo.common.constant.basic.Strings;
 import org.panda.bamboo.common.util.LogUtil;
 import org.panda.tech.core.util.CommonUtil;
 import org.panda.tech.mq.rabbitmq.action.MessageActionSupport;
 import org.panda.tech.mq.rabbitmq.config.ChannelDefinition;
 import org.panda.tech.mq.rabbitmq.config.ExchangeEnum;
 import org.panda.tech.mq.rabbitmq.config.QueueDefinition;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * MQ生产消息抽象支持
@@ -24,59 +22,96 @@ import java.util.Objects;
  **/
 public abstract class MessageMQProducerSupport<T> extends MessageActionSupport implements MessageMQProducer<T> {
 
+    @Autowired(required = false)
+    private ConfirmListener confirmListener;
+    @Autowired(required = false)
+    private ReturnListener returnListener;
+
     @Override
-    public void send(ChannelDefinition definition, List<QueueDefinition> queues, AMQP.BasicProperties properties, T payload) {
-        Channel channel = channelDeclare(definition, queues);
+    public void send(Channel channel, String exchangeName, String routingKey, AMQP.BasicProperties properties, T payload,
+                     boolean channelReuse) {
         if (channel != null) {
             List<Object> payloads = CommonUtil.getPayloads(payload);
+            boolean isConfirm = confirmListener != null; // 是否异步消息确认
+            boolean isReturn = returnListener != null; // 是否处理分发失败消息返还
             try {
+                if (isConfirm) {
+                    channel.confirmSelect();
+                }
+                if (isReturn) {
+                    channel.addReturnListener(returnListener);
+                }
                 for (Object message : payloads) {
                     byte[] body = String.valueOf(message).getBytes(StandardCharsets.UTF_8);
-                    if (StringUtils.isEmpty(definition.getQueueName())) { // 默认临时队列
-                        channel.basicPublish(definition.getExchangeName(), definition.getRoutingKey(),
-                                Objects.requireNonNullElse(properties, null), body);
+                    if (isReturn) { // 监控交换机是否将消息分发到队列，未分发返还给生产者
+                        channel.basicPublish(exchangeName, routingKey, true, properties, body);
                     } else {
-                        channel.basicPublish(definition.getExchangeName(), definition.getRoutingKey(),
-                                Objects.requireNonNullElse(properties, MessageProperties.PERSISTENT_TEXT_PLAIN), body);
+                        channel.basicPublish(exchangeName, routingKey, properties, body);
                     }
+                }
+                if (isConfirm) {
+                    channel.addConfirmListener(confirmListener);
                 }
             } catch (IOException e) {
                 LogUtil.error(getClass(), e);
+            } finally {
+                if (!channelReuse) {
+                    try {
+                        channel.close();
+                    } catch (Exception e) {
+                        // do noting
+                    }
+                }
             }
-        } else {
-            LogUtil.warn(getClass(), "Failed to obtain send channel");
         }
     }
 
     @Override
-    public void sendDirect(ChannelDefinition definition, AMQP.BasicProperties properties, T payload) {
+    public void sendDirect(ChannelDefinition definition, String routingKey, AMQP.BasicProperties properties, T payload,
+                           boolean channelReuse) {
         definition.setExchangeType(BuiltinExchangeType.DIRECT.getType());
-        send(definition, null, properties, payload);
+        if (properties == null && StringUtils.isNotEmpty(definition.getQueueName())) {
+            properties = MessageProperties.PERSISTENT_TEXT_PLAIN;
+        }
+        Channel channel = channelDeclare(definition, channelReuse);
+        send(channel, definition.getExchangeName(), routingKey, properties, payload, channelReuse);
     }
 
     @Override
-    public void sendDirect(ChannelDefinition definition, T payload) {
-        sendDirect(definition, null, payload);
+    public void sendDirect(ChannelDefinition definition, String routingKey, T payload) {
+        sendDirect(definition, routingKey,null, payload, true);
     }
 
     @Override
-    public void sendTopic(ChannelDefinition definition, AMQP.BasicProperties properties, T payload) {
+    public void sendTopic(ChannelDefinition definition, List<QueueDefinition> queues, String routingKey,
+                          AMQP.BasicProperties properties,  T payload) {
         definition.setExchangeType(BuiltinExchangeType.TOPIC.getType());
-        send(definition, null, properties, payload);
+        boolean channelReuse = true; // 默认使用通道复用，以提供良好的性能
+        Channel channel = channelDeclare(definition, queues, channelReuse);
+        send(channel, definition.getExchangeName(), routingKey, properties, payload, channelReuse);
     }
 
     @Override
     public void sendHeaders(ChannelDefinition definition, List<QueueDefinition> queues, AMQP.BasicProperties properties,
                             T payload) {
         definition.setExchangeType(EnumValueHelper.getValue(ExchangeEnum.HEADERS));
-        properties.builder().headers(definition.getHeaders());
-        send(definition, queues, properties, payload);
+        boolean channelReuse = true;
+        Channel channel = channelDeclare(definition, queues, channelReuse);
+        if (properties == null) {
+            properties = new AMQP.BasicProperties.Builder().headers(definition.getHeaders()).build();
+        } else {
+            properties.builder().headers(definition.getHeaders());
+        }
+        send(channel, definition.getExchangeName(), Strings.EMPTY, properties, payload, channelReuse);
     }
 
     @Override
-    public void sendFanout(ChannelDefinition definition, AMQP.BasicProperties properties, T payload) {
+    public void sendFanout(ChannelDefinition definition, List<QueueDefinition> queues, AMQP.BasicProperties properties,
+                           T payload) {
         definition.setExchangeType(EnumValueHelper.getValue(ExchangeEnum.FANOUT));
-        send(definition, null, properties, payload);
+        boolean channelReuse = true;
+        Channel channel = channelDeclare(definition, queues, channelReuse);
+        send(channel, definition.getExchangeName(), Strings.EMPTY, properties, payload, channelReuse);
     }
 
     /**
@@ -89,7 +124,7 @@ public abstract class MessageMQProducerSupport<T> extends MessageActionSupport i
         if (definition == null || definition.getQueueName() == null) { // 队列名称为空时忽略处理
             return;
         }
-        Channel channel = channelDeclare(definition);
+        Channel channel = channelDeclare(definition, true);
         if (channel != null) {
             String queueName = definition.getQueueName();
             try {

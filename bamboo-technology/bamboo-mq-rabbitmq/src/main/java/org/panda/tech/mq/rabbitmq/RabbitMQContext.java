@@ -13,7 +13,7 @@ public class RabbitMQContext {
 
     private Connection connection = null;
 
-    private final Map<String, Channel> channelContext = new Hashtable<>();
+    private final Map<String, Channel> channelContainer = new Hashtable<>();
 
     public Connection getConnection() {
         return connection;
@@ -23,20 +23,20 @@ public class RabbitMQContext {
         this.connection = connection;
     }
 
-    public Map<String, Channel> getChannelContext() {
-        return channelContext;
+    public Map<String, Channel> getChannelContainer() {
+        return channelContainer;
     }
 
     public void put(String key, Channel channel) {
         if (key != null) {
-            this.channelContext.put(key, channel);
+            this.channelContainer.put(key, channel);
         }
     }
 
     @SuppressWarnings("unchecked")
     public <T> T remove(String key) {
         if (key != null) {
-            return (T) this.channelContext.remove(key);
+            return (T) this.channelContainer.remove(key);
         }
         return null;
     }
@@ -44,8 +44,8 @@ public class RabbitMQContext {
     public void close() {
         try {
             // 关闭该连接下的所有通道
-            for (Map.Entry<String, Channel> entry : this.channelContext.entrySet()) {
-                Channel channel = channelContext.remove(entry.getKey());
+            for (Map.Entry<String, Channel> entry : this.channelContainer.entrySet()) {
+                Channel channel = channelContainer.remove(entry.getKey());
                 channel.close();
             }
             // 关闭连接
