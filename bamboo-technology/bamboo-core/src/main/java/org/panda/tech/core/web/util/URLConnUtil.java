@@ -1,11 +1,10 @@
-package org.panda.tech.core.util;
+package org.panda.tech.core.web.util;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.panda.bamboo.common.constant.basic.Strings;
 import org.panda.bamboo.common.util.LogUtil;
 import org.panda.bamboo.common.util.io.IOUtil;
-import org.panda.tech.core.web.util.NetUtil;
 
 import java.io.*;
 import java.net.URL;
@@ -47,13 +46,13 @@ public class URLConnUtil {
             in = connection.getInputStream();
             result = IOUtils.toString(in, encoding);
         } catch (IOException e) {
-            LogUtil.error(NetUtil.class, e);
+            LogUtil.error(URLConnUtil.class, e);
         } finally {
             if (in != null) {
                 try {
                     in.close();
                 } catch (IOException e) {
-                    LogUtil.error(NetUtil.class, e);
+                    LogUtil.error(URLConnUtil.class, e);
                 }
             }
         }
@@ -86,20 +85,20 @@ public class URLConnUtil {
             in.read(b);
             response = new String(b, encoding);
         } catch (IOException e) {
-            LogUtil.error(NetUtil.class, e);
+            LogUtil.error(URLConnUtil.class, e);
         } finally {
             if (in != null) {
                 try {
                     in.close();
                 } catch (IOException e) {
-                    LogUtil.error(NetUtil.class, e);
+                    LogUtil.error(URLConnUtil.class, e);
                 }
             }
             if (out != null) {
                 try {
                     out.close();
                 } catch (Exception e) {
-                    LogUtil.error(NetUtil.class, e);
+                    LogUtil.error(URLConnUtil.class, e);
                 }
             }
         }
@@ -127,7 +126,7 @@ public class URLConnUtil {
             out.flush();
             out.close();
         } catch (IOException e) {
-            LogUtil.error(NetUtil.class, e);
+            LogUtil.error(URLConnUtil.class, e);
         } finally {
             try {
                 if (in != null) {
@@ -137,7 +136,7 @@ public class URLConnUtil {
                     out.close();
                 }
             } catch (IOException e) {
-                LogUtil.error(NetUtil.class, e);
+                LogUtil.error(URLConnUtil.class, e);
             }
         }
     }

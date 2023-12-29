@@ -33,6 +33,10 @@ public class RabbitMQContext {
         }
     }
 
+    public boolean existChannel(String channelKey) {
+        return this.channelContainer.containsKey(channelKey);
+    }
+
     @SuppressWarnings("unchecked")
     public <T> T remove(String key) {
         if (key != null) {

@@ -20,9 +20,12 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * 消息生产者操作支持
+ * 消息操作支持
  */
 public abstract class MessageActionSupport implements MessageAction, InitializingBean {
+
+    public static final String DLX_EXCHANGE_SUFFIX = "-dlx-exchange";
+    public static final String DLX_QUEUE_SUFFIX = "-dlx-queue";
 
     protected final RabbitMQContext rabbitMQContext = new RabbitMQContext();
 
@@ -81,7 +84,7 @@ public abstract class MessageActionSupport implements MessageAction, Initializin
     protected Channel channelDeclare(ChannelDefinition definition, List<QueueDefinition> queues, boolean channelReuse) {
         String channelKey = buildChannelKey(definition);
         if (channelReuse) {
-            if (rabbitMQContext.getChannelContainer().get(channelKey) != null) {
+            if (rabbitMQContext.existChannel(channelKey)) {
                 return rabbitMQContext.getChannelContainer().get(channelKey);
             }
         }
@@ -135,7 +138,7 @@ public abstract class MessageActionSupport implements MessageAction, Initializin
         return channelDeclare(definition, null, channelReuse);
     }
 
-    private String buildChannelKey(ChannelDefinition definition) {
+    protected String buildChannelKey(ChannelDefinition definition) {
         String channelKey = definition.getExchangeName() + Strings.VERTICAL_BAR + definition.getExchangeType();
         if (StringUtils.isNotEmpty(definition.getRoutingKey())) {
             channelKey += Strings.VERTICAL_BAR + definition.getRoutingKey();

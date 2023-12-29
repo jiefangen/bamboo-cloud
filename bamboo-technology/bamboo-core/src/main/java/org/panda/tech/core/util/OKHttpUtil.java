@@ -14,7 +14,6 @@ import java.util.concurrent.TimeUnit;
 /**
  * OKHttp3客户端工具类
  * 建议场景：具备高性能和并发，异步请求支持、自定义拦截机制
- * 根据实际需求再扩展
  */
 public class OKHttpUtil {
 

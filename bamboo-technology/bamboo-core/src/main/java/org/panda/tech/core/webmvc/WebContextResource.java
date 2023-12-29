@@ -1,4 +1,4 @@
-package org.panda.tech.core.io;
+package org.panda.tech.core.webmvc;
 
 import org.panda.bamboo.common.constant.basic.Strings;
 import org.springframework.core.io.ClassPathResource;
@@ -15,8 +15,6 @@ import java.net.URL;
 
 /**
  * 相对于Web项目根目录的上下文资源
- *
- * @author jianglei
  */
 public class WebContextResource implements ContextResource {
 

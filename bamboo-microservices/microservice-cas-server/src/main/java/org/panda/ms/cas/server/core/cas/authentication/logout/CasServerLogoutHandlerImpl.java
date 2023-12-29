@@ -4,7 +4,7 @@ import org.panda.ms.cas.server.core.cas.entity.AppTicket;
 import org.panda.ms.cas.server.core.cas.service.CasServiceManager;
 import org.panda.ms.cas.server.core.cas.ticket.CasTicketManager;
 import org.panda.tech.core.config.app.AppConstants;
-import org.panda.tech.core.util.URLConnUtil;
+import org.panda.tech.core.web.util.URLConnUtil;
 import org.panda.tech.core.web.util.WebHttpUtil;
 import org.panda.tech.security.cas.CasConstants;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -48,6 +48,16 @@ public interface MessageMQProducer<T> {
     void sendDirect(ChannelDefinition definition, String routingKey, T payload);
 
     /**
+     * 发送延时消息
+     *
+     * @param delayKey 延时消息业务标识
+     * @param expiration 延时时间，单位毫秒
+     * @param routingKey 路由键
+     * @param payload 消息
+     */
+    void sendDelayed(String delayKey, long expiration, String routingKey, T payload);
+
+    /**
      * 主题模式发送
      *
      * @param definition 通道定义

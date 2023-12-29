@@ -24,7 +24,7 @@ public class FileProcessMockController {
     private FileProcessService fileProcessService;
 
     @PostMapping(value = "/upload/import", consumes = "multipart/form-data")
-    public RestfulResult uploadImport(@RequestPart("file") MultipartFile file) throws IOException {
+    public RestfulResult<?> uploadImport(@RequestPart("file") MultipartFile file) throws IOException {
         String filename = file.getOriginalFilename();
         String fileExtension = DocUtil.getExtension(filename);
         InputStream inputStream = file.getInputStream();

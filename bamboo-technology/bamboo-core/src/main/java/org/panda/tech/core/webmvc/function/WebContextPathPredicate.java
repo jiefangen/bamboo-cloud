@@ -2,7 +2,7 @@ package org.panda.tech.core.webmvc.function;
 
 import org.apache.commons.lang3.StringUtils;
 import org.panda.bamboo.common.constant.basic.Strings;
-import org.panda.tech.core.io.WebContextResource;
+import org.panda.tech.core.webmvc.WebContextResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.servlet.WebMvcProperties;
 import org.springframework.stereotype.Component;

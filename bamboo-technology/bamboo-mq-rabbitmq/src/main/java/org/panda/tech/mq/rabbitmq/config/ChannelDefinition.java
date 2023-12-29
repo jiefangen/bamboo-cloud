@@ -1,5 +1,6 @@
 package org.panda.tech.mq.rabbitmq.config;
 
+import com.rabbitmq.client.BuiltinExchangeType;
 import lombok.Data;
 import org.panda.bamboo.common.model.DomainModel;
 
@@ -20,7 +21,7 @@ public class ChannelDefinition implements DomainModel {
      * 交换机类型
      * {@link ExchangeEnum}
      */
-    private String exchangeType;
+    private String exchangeType = BuiltinExchangeType.DIRECT.getType();
     /**
      * 路由键
      */
