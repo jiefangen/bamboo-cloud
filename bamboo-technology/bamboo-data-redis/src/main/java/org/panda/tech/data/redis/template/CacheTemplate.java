@@ -1,6 +1,6 @@
 package org.panda.tech.data.redis.template;
 
-import org.panda.bamboo.common.util.SpringUtil;
+import org.panda.bamboo.core.util.SpringUtil;
 import org.panda.bamboo.core.beans.ContextInitializedBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.data.redis.connection.DataType;

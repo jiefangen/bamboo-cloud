@@ -5,12 +5,11 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.ArrayUtils;
 import org.panda.bamboo.common.constant.basic.Strings;
+import org.panda.bamboo.common.util.LogUtil;
 import org.panda.bamboo.common.util.clazz.ClassUtil;
 import org.panda.bamboo.common.util.jackson.JacksonUtil;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.SerializationException;
-
-import java.io.IOException;
 
 public class BaseTypeJackson2JsonRedisSerializer<T> implements RedisSerializer<T> {
 
@@ -46,20 +45,20 @@ public class BaseTypeJackson2JsonRedisSerializer<T> implements RedisSerializer<T
 
     @Override
     public T deserialize(byte[] bytes) throws SerializationException {
-        if (ArrayUtils.isEmpty(bytes)) {
-            return null;
-        }
-        try {
-            String content = new String(bytes);
-            if (content.contains(CLASS_PROPERTY_KEY)) {
-                return this.objectMapper.readValue(content, new TypeReference<>() {
-                });
-            } else {
-                return this.objectMapper.readValue(content, this.baseType);
+        if (ArrayUtils.isNotEmpty(bytes)) {
+            try {
+                String content = new String(bytes);
+                if (content.contains(CLASS_PROPERTY_KEY)) {
+                    return this.objectMapper.readValue(content, new TypeReference<>() {
+                    });
+                } else {
+                    return this.objectMapper.readValue(content, this.baseType);
+                }
+            } catch (Exception e) {
+                LogUtil.error(getClass(), e);
             }
-        } catch (IOException ex) {
-            throw new SerializationException("Could not read JSON: " + ex.getMessage(), ex);
         }
+        return null;
     }
 
     @Override

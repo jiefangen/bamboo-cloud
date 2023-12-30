@@ -1,4 +1,4 @@
-package org.panda.bamboo.common.util;
+package org.panda.bamboo.common.exception;
 
 /**
  * 异常工具类

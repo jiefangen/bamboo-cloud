@@ -9,7 +9,7 @@ import com.alipay.api.request.AlipayTradePagePayRequest;
 import com.alipay.api.response.AlipayTradePagePayResponse;
 import org.panda.bamboo.common.constant.Commons;
 import org.panda.bamboo.common.constant.basic.Strings;
-import org.panda.bamboo.common.util.ExceptionUtil;
+import org.panda.bamboo.common.exception.ExceptionUtil;
 import org.panda.bamboo.common.util.LogUtil;
 import org.panda.bamboo.common.util.jackson.JsonUtil;
 import org.panda.bamboo.common.util.lang.CollectionUtil;
