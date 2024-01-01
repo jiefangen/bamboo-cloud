@@ -1,7 +1,7 @@
 package org.panda.tech.core.util.supplier;
 
 import org.panda.bamboo.common.constant.basic.Strings;
-import org.panda.bamboo.common.util.SpringUtil;
+import org.panda.bamboo.core.util.SpringUtil;
 import org.panda.tech.core.config.ProfileProperties;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -5,7 +5,7 @@ import org.apache.http.HttpStatus;
 import org.apache.http.util.EntityUtils;
 import org.panda.bamboo.common.constant.Commons;
 import org.panda.bamboo.common.constant.basic.Strings;
-import org.panda.bamboo.common.util.ExceptionUtil;
+import org.panda.bamboo.common.exception.ExceptionUtil;
 import org.panda.bamboo.common.util.jackson.JsonUtil;
 import org.panda.bamboo.common.util.lang.StringUtil;
 import org.panda.service.payment.core.domain.gateway.AbstractPaymentGateway;

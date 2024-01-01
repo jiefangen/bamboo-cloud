@@ -12,6 +12,7 @@ import org.panda.tech.mq.rabbitmq.MessageMQProperties;
 import org.panda.tech.mq.rabbitmq.RabbitMQContext;
 import org.panda.tech.mq.rabbitmq.config.ChannelDefinition;
 import org.panda.tech.mq.rabbitmq.config.QueueDefinition;
+import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -22,7 +23,7 @@ import java.util.Optional;
 /**
  * 消息操作支持
  */
-public abstract class MessageActionSupport implements MessageAction, InitializingBean {
+public abstract class MessageActionSupport implements MessageAction, InitializingBean, DisposableBean {
 
     public static final String DLX_EXCHANGE_SUFFIX = "-dlx-exchange";
     public static final String DLX_QUEUE_SUFFIX = "-dlx-queue";
@@ -150,6 +151,11 @@ public abstract class MessageActionSupport implements MessageAction, Initializin
             channelKey += Strings.VERTICAL_BAR + definition.getChannelTag();
         }
         return channelKey;
+    }
+
+    @Override
+    public void destroy() throws Exception {
+        rabbitMQContext.close();
     }
 
 }

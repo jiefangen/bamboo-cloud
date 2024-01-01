@@ -1,7 +1,7 @@
 package org.panda.support.cloud.rocketmq;
 
 import org.apache.commons.lang3.StringUtils;
-import org.panda.bamboo.core.context.ApplicationContextBean;
+import org.panda.bamboo.core.context.SpringContextHolder;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Configuration;
@@ -49,7 +49,7 @@ public class MessageMQProperties {
     public String getNameServer() {
         if (StringUtils.isEmpty(nameServer)) {
             // 尝试使用原生配置中获取
-            ApplicationContext applicationContext = ApplicationContextBean.getApplicationContext();
+            ApplicationContext applicationContext = SpringContextHolder.getApplicationContext();
             if (applicationContext != null) {
                 Environment environment = applicationContext.getEnvironment();
                 String nameServer = environment.getProperty("spring.cloud.stream.rocketmq.binder.nameServer");

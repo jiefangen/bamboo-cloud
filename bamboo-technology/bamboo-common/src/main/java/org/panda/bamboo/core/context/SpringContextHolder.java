@@ -1,13 +1,13 @@
 package org.panda.bamboo.core.context;
 
-import org.panda.bamboo.common.util.SpringUtil;
+import org.panda.bamboo.core.util.SpringUtil;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ApplicationContextBean implements ApplicationContextAware {
+public class SpringContextHolder implements ApplicationContextAware {
 
     public static ApplicationContext applicationContext;
 

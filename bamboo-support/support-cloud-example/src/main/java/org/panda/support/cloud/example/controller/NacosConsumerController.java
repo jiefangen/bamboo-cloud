@@ -3,7 +3,7 @@ package org.panda.support.cloud.example.controller;
 import io.swagger.annotations.Api;
 import org.panda.bamboo.common.util.LogUtil;
 import org.panda.bamboo.common.util.jackson.JsonUtil;
-import org.panda.bamboo.core.context.ApplicationContextBean;
+import org.panda.bamboo.core.context.SpringContextHolder;
 import org.panda.support.cloud.example.common.CommonConfigProperties;
 import org.panda.support.cloud.example.service.feign.ConfigFeignService;
 import org.panda.support.cloud.example.service.restlb.HomeRestLbService;
@@ -57,7 +57,7 @@ public class NacosConsumerController {
 
     @GetMapping("/getCommonConfig")
     public RestfulResult getCommonConfig() {
-        Environment environment = ApplicationContextBean.applicationContext.getEnvironment();
+        Environment environment = SpringContextHolder.applicationContext.getEnvironment();
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("useLocalCache", environment.getProperty("nacos.common.config.appLocalCache"));
         resultMap.put("configProperties", configProperties.toString());

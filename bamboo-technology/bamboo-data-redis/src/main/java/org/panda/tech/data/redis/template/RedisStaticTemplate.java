@@ -1,6 +1,6 @@
 package org.panda.tech.data.redis.template;
 
-import org.panda.bamboo.core.context.ApplicationContextBean;
+import org.panda.bamboo.core.context.SpringContextHolder;
 import org.panda.tech.data.redis.RedisConstants;
 import org.springframework.data.redis.connection.DataType;
 import org.springframework.data.redis.core.*;
@@ -24,7 +24,7 @@ public class RedisStaticTemplate {
      * 4.普通代码块的执行顺序和书写顺序一致
      */
     static {
-        redisTemplate = ApplicationContextBean.getBean(RedisConstants.DEFAULT_BEAN_NAME);
+        redisTemplate = SpringContextHolder.getBean(RedisConstants.DEFAULT_BEAN_NAME);
         if (redisTemplate == null) {
            throw new RuntimeException(RedisConstants.DEFAULT_BEAN_NAME + " bean is not configured to load");
         }

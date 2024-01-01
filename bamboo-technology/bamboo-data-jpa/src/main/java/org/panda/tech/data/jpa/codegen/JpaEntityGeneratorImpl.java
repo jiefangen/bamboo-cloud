@@ -6,7 +6,7 @@ import org.panda.bamboo.common.constant.Commons;
 import org.panda.bamboo.common.constant.basic.Strings;
 import org.panda.bamboo.common.util.LogUtil;
 import org.panda.bamboo.common.util.lang.StringUtil;
-import org.panda.bamboo.core.context.ApplicationContextBean;
+import org.panda.bamboo.core.context.SpringContextHolder;
 import org.panda.tech.data.codegen.ClassGeneratorSupport;
 import org.panda.tech.data.codegen.metadata.ColumnMetaData;
 import org.panda.tech.data.codegen.metadata.DatabaseTool;
@@ -74,7 +74,7 @@ public class JpaEntityGeneratorImpl extends ClassGeneratorSupport implements Jpa
     }
 
     private void generateEntity(String tableName, String entityName)  throws Exception{
-        DataSource dataSource = ApplicationContextBean.getBean(DataSource.class);
+        DataSource dataSource = SpringContextHolder.getBean(DataSource.class);
         Connection connection = DataSourceUtils.getConnection(dataSource);
         DatabaseMetaData metaData = connection.getMetaData();
         ResultSet rs = metaData.getTables(null, null, tableName, new String[]{ "TABLE" });
