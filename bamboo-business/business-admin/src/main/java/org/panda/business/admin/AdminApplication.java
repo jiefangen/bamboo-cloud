@@ -1,7 +1,7 @@
 package org.panda.business.admin;
 
 import org.mybatis.spring.annotation.MapperScan;
-import org.panda.support.cloud.core.CloudCoreModule;
+import org.panda.tech.core.CoreModule;
 import org.panda.tech.security.SecurityModule;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,8 +16,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * @author fangen
  */
 @EnableDiscoveryClient
-//@Import({CoreModule.class, SecurityModule.class})
-@Import({CloudCoreModule.class, SecurityModule.class})
+@Import({CoreModule.class, SecurityModule.class})
+//@Import({CloudCoreModule.class, SecurityModule.class})
 @EnableScheduling
 @EnableTransactionManagement
 @MapperScan("org.panda.business.admin.modules.*.service.repository")
