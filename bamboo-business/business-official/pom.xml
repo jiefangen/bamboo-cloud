@@ -60,6 +60,12 @@
             <artifactId>bamboo-mq-rocketmq</artifactId>
             <version>${technology.version}</version>
         </dependency>
+        <!-- 消息队列rabbitmq -->
+        <dependency>
+            <groupId>org.panda.tech</groupId>
+            <artifactId>bamboo-mq-rabbitmq</artifactId>
+            <version>${technology.version}</version>
+        </dependency>
         <!-- 缓存redis -->
         <dependency>
             <groupId>org.panda.tech</groupId>

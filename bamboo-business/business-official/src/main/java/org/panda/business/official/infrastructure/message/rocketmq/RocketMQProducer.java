@@ -1,4 +1,4 @@
-package org.panda.business.official.infrastructure.message;
+package org.panda.business.official.infrastructure.message.rocketmq;
 
 import org.apache.rocketmq.client.producer.SendResult;
 import org.panda.bamboo.common.util.LogUtil;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
  * @author fangen
  **/
 @Service
-public class MessageMQProducer extends MessageMQProducerSupport<Object> {
+public class RocketMQProducer extends MessageMQProducerSupport<Object> {
 
     @Override
     protected void sendResultCallback(SendResult sendResult) {

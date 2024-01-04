@@ -4,12 +4,13 @@ import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.ReturnListener;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 /**
  * 抽象消息发送返回监听器
  * 监控交换机是否将消息分发到队列
  **/
-public class AbstractReturnListener implements ReturnListener {
+public abstract class AbstractReturnListener implements ReturnListener {
 
     /**
      * 处理交换机分发消息到队列失败
@@ -25,7 +26,11 @@ public class AbstractReturnListener implements ReturnListener {
     @Override
     public void handleReturn(int replyCode, String replyText, String exchangeName, String routingKey,
                              AMQP.BasicProperties basicProperties, byte[] bytes) throws IOException {
-
+        String message = new String(bytes, StandardCharsets.UTF_8);
+        manualHandleReturn(replyCode, replyText, exchangeName, routingKey, basicProperties, message);
     }
+
+    protected abstract void manualHandleReturn(int replyCode, String replyText, String exchangeName, String routingKey,
+                                               AMQP.BasicProperties basicProperties, String message);
 
 }

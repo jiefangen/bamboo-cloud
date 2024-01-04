@@ -1,10 +1,9 @@
-package org.panda.business.official.infrastructure.message;
+package org.panda.business.official.infrastructure.message.rocketmq;
 
 /**
  * 消息队列规范常量
  */
-public class MessageMQConstants {
-
+public class RocketMQConstants {
     /**
      * 消费者组
      */
@@ -17,5 +16,4 @@ public class MessageMQConstants {
      * 生产者组
      */
     public static final String PRODUCER_GROUP = "official-producer";
-
 }

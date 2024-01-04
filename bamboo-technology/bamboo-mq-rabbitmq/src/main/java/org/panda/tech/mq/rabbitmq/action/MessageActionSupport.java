@@ -51,7 +51,11 @@ public abstract class MessageActionSupport implements MessageAction, Initializin
             if (exceptionHandler != null) {
                 factory.setExceptionHandler(exceptionHandler);
             }
-            rabbitMQContext.setConnection(factory.newConnection(messageMQProperties.getConnectionName()));
+            try {
+                rabbitMQContext.setConnection(factory.newConnection(messageMQProperties.getConnectionName()));
+            } catch (Exception e) {
+                LogUtil.error(getClass(), e);
+            }
             // 初始化连接通道
         }
     }

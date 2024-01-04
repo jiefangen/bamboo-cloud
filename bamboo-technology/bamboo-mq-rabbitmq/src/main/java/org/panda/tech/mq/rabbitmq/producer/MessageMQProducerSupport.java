@@ -17,6 +17,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * MQ生产消息抽象支持
@@ -29,11 +30,13 @@ public abstract class MessageMQProducerSupport<T> extends MessageActionSupport i
     @Autowired(required = false)
     private ReturnListener returnListener;
 
+    private final Map<Channel, ConfirmListener> channelConfirmListener = new ConcurrentHashMap<>();
+    private final Map<Channel, ReturnListener> channelReturnListener = new ConcurrentHashMap<>();
+
     @Override
     public void send(Channel channel, String exchangeName, String routingKey, AMQP.BasicProperties properties, T payload,
                      boolean channelReuse) {
         if (channel != null) {
-            List<Object> payloads = CommonUtil.getPayloads(payload);
             boolean isConfirm = confirmListener != null; // 是否异步消息确认
             boolean isReturn = returnListener != null; // 是否处理分发失败消息返还
             try {
@@ -41,8 +44,12 @@ public abstract class MessageMQProducerSupport<T> extends MessageActionSupport i
                     channel.confirmSelect();
                 }
                 if (isReturn) {
-                    channel.addReturnListener(returnListener);
+                    if (!channelReturnListener.containsKey(channel)) {
+                        channel.addReturnListener(returnListener);
+                        channelReturnListener.put(channel, returnListener);
+                    }
                 }
+                List<Object> payloads = CommonUtil.getPayloads(payload);
                 for (Object message : payloads) {
                     byte[] body = String.valueOf(message).getBytes(StandardCharsets.UTF_8);
                     if (isReturn) { // 监控交换机是否将消息分发到队列，未分发返还给生产者
@@ -52,9 +59,12 @@ public abstract class MessageMQProducerSupport<T> extends MessageActionSupport i
                     }
                 }
                 if (isConfirm) {
-                    channel.addConfirmListener(confirmListener);
+                    if (!channelConfirmListener.containsKey(channel)) {
+                        channel.addConfirmListener(confirmListener);
+                        channelConfirmListener.put(channel, confirmListener);
+                    }
                 }
-            } catch (IOException e) {
+            } catch (Exception e) {
                 LogUtil.error(getClass(), e);
             } finally {
                 if (!channelReuse) {

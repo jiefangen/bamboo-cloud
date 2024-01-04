@@ -1,4 +1,4 @@
-package org.panda.business.official.infrastructure.message;
+package org.panda.business.official.infrastructure.message.rocketmq;
 
 import org.panda.tech.mq.rocketmq.consumer.MessageMQConsumerSupport;
 
@@ -8,7 +8,7 @@ import org.panda.tech.mq.rocketmq.consumer.MessageMQConsumerSupport;
  * @author fangen
  **/
 //@Component
-public class MessageMQConsumer extends MessageMQConsumerSupport {
+public class RocketMQConsumer extends MessageMQConsumerSupport {
 
     @Override
     protected int getMaxReconsumeTimes() {

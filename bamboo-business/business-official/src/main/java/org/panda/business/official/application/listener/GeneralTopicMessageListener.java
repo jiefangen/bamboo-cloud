@@ -3,7 +3,7 @@ package org.panda.business.official.application.listener;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyStatus;
 import org.apache.rocketmq.common.message.MessageExt;
 import org.panda.bamboo.common.util.LogUtil;
-import org.panda.business.official.infrastructure.message.MessageMQConstants;
+import org.panda.business.official.infrastructure.message.rocketmq.RocketMQConstants;
 import org.panda.tech.mq.rocketmq.consumer.listener.MessageListenerSupport;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +15,7 @@ public class GeneralTopicMessageListener extends MessageListenerSupport {
 
     @Override
     public String getTopic() {
-        return MessageMQConstants.OFFICIAL_MQ_TOPIC;
+        return RocketMQConstants.OFFICIAL_MQ_TOPIC;
     }
 
     @Override
