@@ -41,6 +41,11 @@ public abstract class MessageMQConsumerSupport extends MessageActionSupport impl
     protected abstract boolean consumeMessage(String queueName, byte[] message);
 
     @Override
+    public void subscribe(String queueName, String consumerTag) {
+        subscribe(queueName, false, consumerTag);
+    }
+
+    @Override
     public void unsubscribe(String consumerTag) {
         if (this.channel != null) {
             try {

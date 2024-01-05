@@ -25,7 +25,7 @@ public class ApplicationReadyListener implements ApplicationListener<Application
         // 开启消费者主题订阅
 //        rocketMQConsumer.subscribe(RocketMQConstants.OFFICIAL_MQ_TOPIC, RocketMQConstants.CONSUMER_GROUP);
 
-        rabbitMQConsumer.subscribe(RabbitMQConstants.QUEUE_NAME, false, "official-consumer");
+        rabbitMQConsumer.subscribe(RabbitMQConstants.QUEUE_NAME, "official-consumer");
     }
 
 }

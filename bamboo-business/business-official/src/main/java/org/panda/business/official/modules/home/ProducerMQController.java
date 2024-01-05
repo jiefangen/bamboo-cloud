@@ -9,7 +9,6 @@ import org.panda.business.official.infrastructure.message.rabbitmq.RabbitMQProdu
 import org.panda.business.official.infrastructure.message.rocketmq.RocketMQConstants;
 import org.panda.business.official.infrastructure.message.rocketmq.RocketMQProducer;
 import org.panda.tech.core.web.restful.RestfulResult;
-import org.panda.tech.mq.rabbitmq.config.ChannelDefinition;
 import org.panda.tech.security.config.annotation.ConfigAnonymous;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -55,13 +54,8 @@ public class ProducerMQController {
             String message = "Official say: Hello RabbitMQ! Seq: ";
             messages.add(message + i);
         }
-        ChannelDefinition definition = new ChannelDefinition();
-        String routingKey = "direct-key";
-        definition.setRoutingKey(routingKey);
-        definition.setExchangeName(RabbitMQConstants.EXCHANGE_NAME);
-        definition.setQueueName(RabbitMQConstants.QUEUE_NAME);
-        definition.setChannelTag(RabbitMQConstants.PRODUCER_CHANNEL);
-        rabbitMQProducer.sendDirect(definition, routingKey, messages);
+        String message = "Official say: Hello RabbitMQ!";
+        rabbitMQProducer.sendDirect(RabbitMQConstants.ROUTING_KEY, message);
         return RestfulResult.success();
     }
 

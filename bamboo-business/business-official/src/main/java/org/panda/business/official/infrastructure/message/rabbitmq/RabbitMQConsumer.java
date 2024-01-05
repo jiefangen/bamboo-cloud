@@ -1,6 +1,5 @@
 package org.panda.business.official.infrastructure.message.rabbitmq;
 
-
 import org.panda.bamboo.common.util.LogUtil;
 import org.panda.tech.mq.rabbitmq.consumer.MessageMQConsumerSupport;
 import org.springframework.stereotype.Component;

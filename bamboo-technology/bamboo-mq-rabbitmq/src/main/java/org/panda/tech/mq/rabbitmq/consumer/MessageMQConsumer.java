@@ -16,6 +16,14 @@ public interface MessageMQConsumer {
     void subscribe(String queueName, boolean autoAck, String consumerTag);
 
     /**
+     * 消费者订阅
+     *
+     * @param queueName 队列名称
+     * @param consumerTag 消费者标签
+     */
+    void subscribe(String queueName, String consumerTag);
+
+    /**
      * 消费者解除订阅
      *
      * @param consumerTag 消费者标签

@@ -17,7 +17,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * MQ生产消息抽象支持
@@ -30,8 +29,8 @@ public abstract class MessageMQProducerSupport<T> extends MessageActionSupport i
     @Autowired(required = false)
     private ReturnListener returnListener;
 
-    private final Map<Channel, ConfirmListener> channelConfirmListener = new ConcurrentHashMap<>();
-    private final Map<Channel, ReturnListener> channelReturnListener = new ConcurrentHashMap<>();
+    private final Map<Channel, ConfirmListener> channelConfirmListener = new HashMap<>(3);
+    private final Map<Channel, ReturnListener> channelReturnListener = new HashMap<>(3);
 
     @Override
     public void send(Channel channel, String exchangeName, String routingKey, AMQP.BasicProperties properties, T payload,
