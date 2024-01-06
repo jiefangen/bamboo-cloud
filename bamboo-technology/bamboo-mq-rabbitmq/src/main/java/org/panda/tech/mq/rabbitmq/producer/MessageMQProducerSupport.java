@@ -39,10 +39,10 @@ public abstract class MessageMQProducerSupport<T> extends MessageActionSupport i
             boolean isConfirm = confirmListener != null; // 是否异步消息确认
             boolean isReturn = returnListener != null; // 是否处理分发失败消息返还
             try {
-                if (isConfirm) {
+                if (channelReuse && isConfirm) {
                     channel.confirmSelect();
                 }
-                if (isReturn) {
+                if (channelReuse && isReturn) {
                     if (!channelReturnListener.containsKey(channel)) {
                         channel.addReturnListener(returnListener);
                         channelReturnListener.put(channel, returnListener);
@@ -51,13 +51,13 @@ public abstract class MessageMQProducerSupport<T> extends MessageActionSupport i
                 List<Object> payloads = CommonUtil.getPayloads(payload);
                 for (Object message : payloads) {
                     byte[] body = String.valueOf(message).getBytes(StandardCharsets.UTF_8);
-                    if (isReturn) { // 监控交换机是否将消息分发到队列，未分发返还给生产者
+                    if (channelReuse && isReturn) { // 监控交换机是否将消息分发到队列，未分发返还给生产者
                         channel.basicPublish(exchangeName, routingKey, true, properties, body);
                     } else {
                         channel.basicPublish(exchangeName, routingKey, properties, body);
                     }
                 }
-                if (isConfirm) {
+                if (channelReuse && isConfirm) {
                     if (!channelConfirmListener.containsKey(channel)) {
                         channel.addConfirmListener(confirmListener);
                         channelConfirmListener.put(channel, confirmListener);
@@ -116,12 +116,12 @@ public abstract class MessageMQProducerSupport<T> extends MessageActionSupport i
 
         // 声明死信交换机和队列
         ChannelDefinition dlxDefinition = new ChannelDefinition();
+        dlxDefinition.setChannelTag("dlx-delayed");
+        dlxDefinition.setExchangeName(delayKey + DLX_EXCHANGE_SUFFIX);
+        dlxDefinition.setQueueName(delayKey + DLX_QUEUE_SUFFIX);
+        dlxDefinition.setRoutingKey(delayKey + DLX_QUEUE_SUFFIX);
         String channelKey = buildChannelKey(dlxDefinition);
         if (!rabbitMQContext.existChannel(channelKey)) {
-            dlxDefinition.setChannelTag("dlx-delayed");
-            dlxDefinition.setExchangeName(delayKey + DLX_EXCHANGE_SUFFIX);
-            dlxDefinition.setQueueName(delayKey + DLX_QUEUE_SUFFIX);
-            dlxDefinition.setRoutingKey(delayKey + DLX_QUEUE_SUFFIX);
             channelDeclare(dlxDefinition, true);
         }
         send(channel, definition.getExchangeName(), routingKey, properties, payload, true);
@@ -129,7 +129,7 @@ public abstract class MessageMQProducerSupport<T> extends MessageActionSupport i
 
     @Override
     public void sendTopic(ChannelDefinition definition, List<QueueDefinition> queues, String routingKey,
-                          AMQP.BasicProperties properties,  T payload) {
+                          AMQP.BasicProperties properties, T payload) {
         definition.setExchangeType(BuiltinExchangeType.TOPIC.getType());
         boolean channelReuse = true; // 默认使用通道复用，以提供良好的性能
         Channel channel = channelDeclare(definition, queues, channelReuse);

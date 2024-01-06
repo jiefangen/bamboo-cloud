@@ -5,36 +5,41 @@ import org.panda.bamboo.common.util.LogUtil;
 import org.panda.tech.mq.rabbitmq.action.MessageActionSupport;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * MQ消费者消息抽象支持
  **/
 public abstract class MessageMQConsumerSupport extends MessageActionSupport implements MessageMQConsumer {
 
-    private Channel channel = null;
+    // 消费者通道容器
+    private final Map<String, Channel> consumerChannels = new HashMap<>();
 
     @Override
     public void subscribe(String queueName, boolean autoAck, String consumerTag) {
-        this.channel = getChannel();
-        if (this.channel != null) {
-            Consumer consumer = new DefaultConsumer(channel) {
-                @Override
-                public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties,
-                                           byte[] body) throws IOException {
-                    boolean consumeResult = consumeMessage(queueName, body);
-                    if (!autoAck && consumeResult) {
-                        // 手动消息确认，发送确认消息给RabbitMQ服务器
-                        channel.basicAck(envelope.getDeliveryTag(), false);
-                    }
-                }
-            };
-            try {
-                this.channel.basicConsume(queueName, autoAck, consumerTag, consumer);
-            } catch (IOException e) {
-                LogUtil.error(getClass(), e);
-            }
+        Channel channel;
+        if (consumerChannels.containsKey(consumerTag)) {
+            channel = consumerChannels.get(consumerTag);
         } else {
-            LogUtil.warn(getClass(), "Failed to open consumption channel");
+            channel = getChannel();
+            consumerChannels.put(consumerTag, channel);
+        }
+        Consumer consumer = new DefaultConsumer(channel) {
+            @Override
+            public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties,
+                                       byte[] body) throws IOException {
+                boolean consumeResult = consumeMessage(queueName, body);
+                if (!autoAck && consumeResult) {
+                    // 手动消息确认，发送确认消息给RabbitMQ服务器
+                    channel.basicAck(envelope.getDeliveryTag(), false);
+                }
+            }
+        };
+        try {
+            channel.basicConsume(queueName, autoAck, consumerTag, consumer);
+        } catch (IOException e) {
+            LogUtil.error(getClass(), e);
         }
     }
 
@@ -47,9 +52,9 @@ public abstract class MessageMQConsumerSupport extends MessageActionSupport impl
 
     @Override
     public void unsubscribe(String consumerTag) {
-        if (this.channel != null) {
+        if (consumerChannels.containsKey(consumerTag)) {
             try {
-                this.channel.basicCancel(consumerTag);
+                consumerChannels.get(consumerTag).basicCancel(consumerTag);
             } catch (IOException e) {
                 // do nothing
             }

@@ -1,9 +1,6 @@
 package org.panda.tech.mq.rabbitmq.action;
 
-import com.rabbitmq.client.Channel;
-import com.rabbitmq.client.Connection;
-import com.rabbitmq.client.ConnectionFactory;
-import com.rabbitmq.client.ExceptionHandler;
+import com.rabbitmq.client.*;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.panda.bamboo.common.constant.basic.Strings;
@@ -56,7 +53,6 @@ public abstract class MessageActionSupport implements MessageAction, Initializin
             } catch (Exception e) {
                 LogUtil.error(getClass(), e);
             }
-            // 初始化连接通道
         }
     }
 
@@ -76,6 +72,36 @@ public abstract class MessageActionSupport implements MessageAction, Initializin
             // do nothing
         }
         return null;
+    }
+
+    /**
+     * 队列初始化声明
+     *
+     * @param queueNames 队列名称集
+     */
+    private void queueDeclare(List<String> queueNames) {
+        Channel channel = null;
+        try {
+            Optional<Channel> channelOptional = getConnection().openChannel();
+            if (channelOptional.isPresent()) {
+                channel = channelOptional.get();
+                if (CollectionUtils.isNotEmpty(queueNames)) {
+                    for (String queueName : queueNames) {
+                        channel.queueDeclare(queueName, true, false, false, null);
+                    }
+                }
+            }
+        } catch (IOException e) {
+            LogUtil.error(getClass(), e);
+        } finally {
+            if (channel != null) {
+                try {
+                    channel.close();
+                } catch (Exception e) {
+                    // do noting
+                }
+            }
+        }
     }
 
     /**
@@ -101,7 +127,7 @@ public abstract class MessageActionSupport implements MessageAction, Initializin
                 String exchangeType = definition.getExchangeType();
                 String routingKey = definition.getRoutingKey();
                 String queueName = definition.getQueueName();
-                if (StringUtils.isEmpty(queueName)) { // 单客户端消费，可以使用默认队列名称
+                if (StringUtils.isEmpty(queueName) && BuiltinExchangeType.DIRECT.getType().equals(exchangeType)) { // 单客户端消费，可以使用默认队列名称
                     channel.exchangeDeclare(exchangeName, exchangeType);
                     // 具有系统生成的名称的，非持久化、独占、自动删除的队列
                     queueName = channel.queueDeclare().getQueue();
@@ -109,14 +135,16 @@ public abstract class MessageActionSupport implements MessageAction, Initializin
                 } else { // 多客户端消费建议指定名称队列
                     // 持久化、非自动删除的交换机
                     channel.exchangeDeclare(exchangeName, exchangeType, true);
-                    if (CollectionUtils.isEmpty(queues)) {
+                    if (StringUtils.isNotEmpty(queueName)) {
                         // 拥有既定名称的，持久化、非独占、非自动删除的队列
                         channel.queueDeclare(queueName, true, false, false, definition.getHeaders());
                         channel.queueBind(queueName, exchangeName, routingKey, definition.getHeaders());
                     } else {
-                        for (QueueDefinition queue : queues) {
-                            channel.queueDeclare(queue.getQueueName(), true, false, false, queue.getHeaders());
-                            channel.queueBind(queue.getQueueName(), exchangeName, routingKey, queue.getHeaders());
+                        if (CollectionUtils.isNotEmpty(queues)) {
+                            for (QueueDefinition queue : queues) {
+                                channel.queueDeclare(queue.getQueueName(), true, false, false, queue.getHeaders());
+                                channel.queueBind(queue.getQueueName(), exchangeName, queue.getBindKey(), queue.getHeaders());
+                            }
                         }
                     }
                 }

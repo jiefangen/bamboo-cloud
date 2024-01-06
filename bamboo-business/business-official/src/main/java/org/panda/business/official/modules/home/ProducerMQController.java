@@ -13,6 +13,7 @@ import org.panda.tech.security.config.annotation.ConfigAnonymous;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -56,6 +57,23 @@ public class ProducerMQController {
         }
         String message = "Official say: Hello RabbitMQ!";
         rabbitMQProducer.sendDirect(RabbitMQConstants.ROUTING_KEY, message);
+        return RestfulResult.success();
+    }
+
+    @GetMapping("/sendDelayed")
+    @ConfigAnonymous
+    public RestfulResult<?> sendDelayed() {
+        String message = "Official delayed say: Hello RabbitMQ!";
+        rabbitMQProducer.sendDelayed(RabbitMQConstants.DELAY_KEY, 6000L,
+                RabbitMQConstants.DELAY_ROUTING_KEY, message);
+        return RestfulResult.success();
+    }
+
+    @GetMapping("/sendTopic")
+    @ConfigAnonymous
+    public RestfulResult<?> sendTopic(@RequestParam String routingKey) {
+        String message = "Official topic say: Hello RabbitMQ!";
+        rabbitMQProducer.sendTopic(routingKey, message);
         return RestfulResult.success();
     }
 
