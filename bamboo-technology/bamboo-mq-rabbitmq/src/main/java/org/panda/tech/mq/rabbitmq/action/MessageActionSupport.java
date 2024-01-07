@@ -104,6 +104,20 @@ public abstract class MessageActionSupport implements MessageAction, Initializin
         }
     }
 
+    private String buildChannelKey(ChannelDefinition definition) {
+        String channelKey = definition.getExchangeName() + Strings.VERTICAL_BAR + definition.getExchangeType();
+        if (StringUtils.isNotEmpty(definition.getBindKey())) {
+            channelKey += Strings.VERTICAL_BAR + definition.getBindKey();
+        }
+        if (StringUtils.isNotEmpty(definition.getQueueName())) {
+            channelKey += Strings.VERTICAL_BAR + definition.getQueueName();
+        }
+        if (StringUtils.isNotEmpty(definition.getChannelTag())) {
+            channelKey += Strings.VERTICAL_BAR + definition.getChannelTag();
+        }
+        return channelKey;
+    }
+
     /**
      * 生产者通道声明
      *
@@ -125,26 +139,25 @@ public abstract class MessageActionSupport implements MessageAction, Initializin
                 Channel channel = channelOptional.get();
                 String exchangeName = definition.getExchangeName();
                 String exchangeType = definition.getExchangeType();
-                String routingKey = definition.getRoutingKey();
+                String bindKey = definition.getBindKey();
                 String queueName = definition.getQueueName();
                 if (StringUtils.isEmpty(queueName) && BuiltinExchangeType.DIRECT.getType().equals(exchangeType)) { // 单客户端消费，可以使用默认队列名称
                     channel.exchangeDeclare(exchangeName, exchangeType);
                     // 具有系统生成的名称的，非持久化、独占、自动删除的队列
                     queueName = channel.queueDeclare().getQueue();
-                    channel.queueBind(queueName, exchangeName, routingKey);
+                    channel.queueBind(queueName, exchangeName, bindKey);
                 } else { // 多客户端消费建议指定名称队列
                     // 持久化、非自动删除的交换机
                     channel.exchangeDeclare(exchangeName, exchangeType, true);
                     if (StringUtils.isNotEmpty(queueName)) {
                         // 拥有既定名称的，持久化、非独占、非自动删除的队列
-                        channel.queueDeclare(queueName, true, false, false, definition.getHeaders());
-                        channel.queueBind(queueName, exchangeName, routingKey, definition.getHeaders());
-                    } else {
-                        if (CollectionUtils.isNotEmpty(queues)) {
-                            for (QueueDefinition queue : queues) {
-                                channel.queueDeclare(queue.getQueueName(), true, false, false, queue.getHeaders());
-                                channel.queueBind(queue.getQueueName(), exchangeName, queue.getBindKey(), queue.getHeaders());
-                            }
+                        channel.queueDeclare(queueName, true, false, false, null);
+                        channel.queueBind(queueName, exchangeName, bindKey, definition.getHeaders());
+                    }
+                    if (CollectionUtils.isNotEmpty(queues)) {
+                        for (QueueDefinition queue : queues) {
+                            channel.queueDeclare(queue.getQueueName(), true, false, false, null);
+                            channel.queueBind(queue.getQueueName(), exchangeName, queue.getBindKey(), queue.getHeaders());
                         }
                     }
                 }
@@ -169,20 +182,6 @@ public abstract class MessageActionSupport implements MessageAction, Initializin
      */
     protected Channel channelDeclare(ChannelDefinition definition, boolean channelReuse) {
         return channelDeclare(definition, null, channelReuse);
-    }
-
-    protected String buildChannelKey(ChannelDefinition definition) {
-        String channelKey = definition.getExchangeName() + Strings.VERTICAL_BAR + definition.getExchangeType();
-        if (StringUtils.isNotEmpty(definition.getRoutingKey())) {
-            channelKey += Strings.VERTICAL_BAR + definition.getRoutingKey();
-        }
-        if (StringUtils.isNotEmpty(definition.getQueueName())) {
-            channelKey += Strings.VERTICAL_BAR + definition.getRoutingKey();
-        }
-        if (StringUtils.isNotEmpty(definition.getChannelTag())) {
-            channelKey += Strings.VERTICAL_BAR + definition.getChannelTag();
-        }
-        return channelKey;
     }
 
     @Override

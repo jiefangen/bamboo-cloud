@@ -98,7 +98,7 @@ public abstract class MessageMQProducerSupport<T> extends MessageActionSupport i
         ChannelDefinition definition = new ChannelDefinition();
         definition.setExchangeName(delayKey + "-ttl-exchange");
         definition.setQueueName(delayKey + "-ttl-queue");
-        definition.setRoutingKey(routingKey);
+        definition.setBindKey(routingKey);
         definition.setChannelTag("ttl-delayed");
         Map<String, Object> headers = new HashMap<>(3);
         headers.put("x-dead-letter-exchange", delayKey + DLX_EXCHANGE_SUFFIX); // 绑定死信交换机
@@ -119,11 +119,8 @@ public abstract class MessageMQProducerSupport<T> extends MessageActionSupport i
         dlxDefinition.setChannelTag("dlx-delayed");
         dlxDefinition.setExchangeName(delayKey + DLX_EXCHANGE_SUFFIX);
         dlxDefinition.setQueueName(delayKey + DLX_QUEUE_SUFFIX);
-        dlxDefinition.setRoutingKey(delayKey + DLX_QUEUE_SUFFIX);
-        String channelKey = buildChannelKey(dlxDefinition);
-        if (!rabbitMQContext.existChannel(channelKey)) {
-            channelDeclare(dlxDefinition, true);
-        }
+        dlxDefinition.setBindKey(delayKey + DLX_QUEUE_SUFFIX);
+        channelDeclare(dlxDefinition, true);
         send(channel, definition.getExchangeName(), routingKey, properties, payload, true);
     }
 
@@ -137,15 +134,15 @@ public abstract class MessageMQProducerSupport<T> extends MessageActionSupport i
     }
 
     @Override
-    public void sendHeaders(ChannelDefinition definition, List<QueueDefinition> queues, AMQP.BasicProperties properties,
-                            T payload) {
+    public void sendHeaders(ChannelDefinition definition, Map<String, Object> headers, List<QueueDefinition> queues,
+                            AMQP.BasicProperties properties, T payload) {
         definition.setExchangeType(EnumValueHelper.getValue(ExchangeEnum.HEADERS));
         boolean channelReuse = true;
         Channel channel = channelDeclare(definition, queues, channelReuse);
         if (properties == null) {
-            properties = new AMQP.BasicProperties.Builder().headers(definition.getHeaders()).build();
+            properties = new AMQP.BasicProperties.Builder().headers(headers).build();
         } else {
-            properties.builder().headers(definition.getHeaders());
+            properties.builder().headers(headers);
         }
         send(channel, definition.getExchangeName(), Strings.EMPTY, properties, payload, channelReuse);
     }

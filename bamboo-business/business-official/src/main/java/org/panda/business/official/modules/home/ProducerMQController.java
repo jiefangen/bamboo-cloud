@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 消息队列消息生产器
@@ -74,6 +75,15 @@ public class ProducerMQController {
     public RestfulResult<?> sendTopic(@RequestParam String routingKey) {
         String message = "Official topic say: Hello RabbitMQ!";
         rabbitMQProducer.sendTopic(routingKey, message);
+        return RestfulResult.success();
+    }
+
+    @GetMapping("/sendHeaders")
+    @ConfigAnonymous
+    public RestfulResult<?> sendHeaders(@RequestParam Map<String, Object> format, @RequestParam Map<String, Object> type) {
+        String message = "Official headers say: Hello RabbitMQ!";
+        format.putAll(type);
+        rabbitMQProducer.sendHeaders(format, message);
         return RestfulResult.success();
     }
 

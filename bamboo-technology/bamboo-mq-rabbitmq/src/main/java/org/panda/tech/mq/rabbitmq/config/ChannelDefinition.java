@@ -2,6 +2,7 @@ package org.panda.tech.mq.rabbitmq.config;
 
 import com.rabbitmq.client.BuiltinExchangeType;
 import lombok.Data;
+import org.panda.bamboo.common.constant.basic.Strings;
 import org.panda.bamboo.common.model.DomainModel;
 
 import java.util.Map;
@@ -22,10 +23,11 @@ public class ChannelDefinition implements DomainModel {
      * {@link ExchangeEnum}
      */
     private String exchangeType = BuiltinExchangeType.DIRECT.getType();
+
     /**
-     * 路由键
+     * 路由绑定键
      */
-    private String routingKey;
+    private String bindKey = Strings.EMPTY;
     /**
      * 队列名称
      */
@@ -37,7 +39,7 @@ public class ChannelDefinition implements DomainModel {
 
     /**
      * 自定义通道标签
-     * 用于区分缓存不同通道
+     * 用于区分缓存不同通道连接
      */
     private String channelTag;
 }

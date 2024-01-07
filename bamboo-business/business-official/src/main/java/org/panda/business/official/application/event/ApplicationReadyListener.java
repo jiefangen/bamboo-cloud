@@ -28,9 +28,13 @@ public class ApplicationReadyListener implements ApplicationListener<Application
         rabbitMQConsumer.subscribe(RabbitMQConstants.QUEUE_NAME, "official.direct.consumer");
         rabbitMQConsumer.subscribe(RabbitMQConstants.DELAY_DLX_QUEUE, "official.delay.consumer");
 
-        rabbitMQConsumer.subscribe("topic-queue-one", "official.topic.consumer.one");
-        rabbitMQConsumer.subscribe("topic-queue-two", "official.topic.consumer.two");
-        rabbitMQConsumer.subscribe("topic-queue-three", "official.topic.consumer.three");
+//        rabbitMQConsumer.subscribe("topic-queue-one", "official.topic.consumer.one");
+//        rabbitMQConsumer.subscribe("topic-queue-two", "official.topic.consumer.two");
+//        rabbitMQConsumer.subscribe("topic-queue-three", "official.topic.consumer.three");
+
+        rabbitMQConsumer.subscribe("headers-queue-A", "official.headers.consumer.one");
+        rabbitMQConsumer.subscribe("headers-queue-B", "official.headers.consumer.two");
+        rabbitMQConsumer.subscribe("headers-queue-C", "official.headers.consumer.three");
     }
 
 }

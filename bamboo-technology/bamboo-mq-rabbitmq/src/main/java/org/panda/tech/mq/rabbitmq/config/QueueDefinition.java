@@ -1,6 +1,7 @@
 package org.panda.tech.mq.rabbitmq.config;
 
 import lombok.Data;
+import org.panda.bamboo.common.constant.basic.Strings;
 
 import java.util.Map;
 
@@ -17,9 +18,9 @@ public class QueueDefinition {
     private String queueName;
     /**
      * 队列路由绑定键（分隔符是'.'）
-     * '*'用来表示一个单词；'#'用来表示任意数量（零个或多个）单词
+     * 主题类型：'*'用来表示一个单词；'#'用来表示任意数量（零个或多个）单词
      */
-    private String bindKey;
+    private String bindKey = Strings.EMPTY;
     /**
      * 头信息
      */
@@ -32,6 +33,11 @@ public class QueueDefinition {
 
     public QueueDefinition addBindKey(String bindKey) {
         this.setBindKey(bindKey);
+        return this;
+    }
+
+    public QueueDefinition addHeaders(Map<String, Object> headers) {
+        this.setHeaders(headers);
         return this;
     }
 }

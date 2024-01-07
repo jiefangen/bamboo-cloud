@@ -6,6 +6,7 @@ import org.panda.tech.mq.rabbitmq.config.ChannelDefinition;
 import org.panda.tech.mq.rabbitmq.config.QueueDefinition;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * MQ消息生产者
@@ -72,11 +73,13 @@ public interface MessageMQProducer<T> {
      * 消息头模式发送
      *
      * @param definition 通道定义
+     * @param headers 消息头
      * @param queues 绑定队列集
      * @param properties 消息参数
      * @param payload 消息
      */
-    void sendHeaders(ChannelDefinition definition, List<QueueDefinition> queues, AMQP.BasicProperties properties, T payload);
+    void sendHeaders(ChannelDefinition definition, Map<String, Object> headers, List<QueueDefinition> queues,
+                     AMQP.BasicProperties properties, T payload);
 
     /**
      * 广播模式发送
@@ -86,6 +89,7 @@ public interface MessageMQProducer<T> {
      * @param properties 消息参数
      * @param payload 消息
      */
-    void sendFanout(ChannelDefinition definition, List<QueueDefinition> queues, AMQP.BasicProperties properties, T payload);
+    void sendFanout(ChannelDefinition definition, List<QueueDefinition> queues, AMQP.BasicProperties properties,
+                    T payload);
 
 }

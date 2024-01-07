@@ -5,7 +5,7 @@ import org.panda.bamboo.common.util.LogUtil;
 import org.panda.tech.mq.rabbitmq.action.MessageActionSupport;
 
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Map;
 
 /**
@@ -14,7 +14,7 @@ import java.util.Map;
 public abstract class MessageMQConsumerSupport extends MessageActionSupport implements MessageMQConsumer {
 
     // 消费者通道容器
-    private final Map<String, Channel> consumerChannels = new HashMap<>();
+    private final Map<String, Channel> consumerChannels = new Hashtable<>();
 
     @Override
     public void subscribe(String queueName, boolean autoAck, String consumerTag) {
