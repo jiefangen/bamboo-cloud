@@ -1,5 +1,6 @@
 package org.panda.business.official.infrastructure.message.rabbitmq;
 
+import org.panda.bamboo.common.util.LogUtil;
 import org.panda.tech.mq.rabbitmq.config.ChannelDefinition;
 import org.panda.tech.mq.rabbitmq.config.QueueDefinition;
 import org.panda.tech.mq.rabbitmq.producer.MessageMQProducerSupport;
@@ -19,7 +20,13 @@ import java.util.Map;
 public class RabbitMQProducer extends MessageMQProducerSupport<Object> {
 
     public void sendDirect(String routingKey, Object payload) {
-        super.sendDirect(getDirectChannelDefinition(), routingKey, payload);
+        for (int i = 0; i < 3; i++) {
+            int finalI = i;
+            new Thread(() -> {
+                LogUtil.info(getClass(), "Running serial number：{}", finalI);
+                super.sendDirect(getDirectChannelDefinition(), routingKey, null, payload, false);
+            }).start();
+        }
     }
 
     private ChannelDefinition getDirectChannelDefinition() {

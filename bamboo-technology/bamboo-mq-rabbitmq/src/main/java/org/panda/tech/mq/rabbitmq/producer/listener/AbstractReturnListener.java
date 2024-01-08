@@ -1,4 +1,4 @@
-package org.panda.tech.mq.rabbitmq.producer;
+package org.panda.tech.mq.rabbitmq.producer.listener;
 
 import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.ReturnListener;

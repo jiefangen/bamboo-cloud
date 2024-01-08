@@ -49,6 +49,9 @@ public abstract class MessageMQProducerSupport<T> extends MessageActionSupport i
                     }
                 }
                 List<Object> payloads = CommonUtil.getPayloads(payload);
+                if (routingKey == null) { // 不管以何种方式发送，该值都不能是null，故作此兼容
+                    routingKey = Strings.EMPTY;
+                }
                 for (Object message : payloads) {
                     byte[] body = String.valueOf(message).getBytes(StandardCharsets.UTF_8);
                     if (channelReuse && isReturn) { // 监控交换机是否将消息分发到队列，未分发返还给生产者

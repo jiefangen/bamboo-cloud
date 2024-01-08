@@ -74,48 +74,27 @@ public abstract class MessageActionSupport implements MessageAction, Initializin
         return null;
     }
 
-    /**
-     * 队列初始化声明
-     *
-     * @param queueNames 队列名称集
-     */
-    private void queueDeclare(List<String> queueNames) {
-        Channel channel = null;
-        try {
-            Optional<Channel> channelOptional = getConnection().openChannel();
-            if (channelOptional.isPresent()) {
-                channel = channelOptional.get();
-                if (CollectionUtils.isNotEmpty(queueNames)) {
-                    for (String queueName : queueNames) {
-                        channel.queueDeclare(queueName, true, false, false, null);
-                    }
-                }
-            }
-        } catch (IOException e) {
-            LogUtil.error(getClass(), e);
-        } finally {
-            if (channel != null) {
-                try {
-                    channel.close();
-                } catch (Exception e) {
-                    // do noting
-                }
-            }
+    protected String buildChannelKey(String exchangeName, String exchangeType, String bindKey, String queueName,
+                                     String channelTag) {
+        String channelKey = exchangeName;
+        if (StringUtils.isNotEmpty(exchangeType)) {
+            channelKey += Strings.VERTICAL_BAR + exchangeType;
         }
+        if (StringUtils.isNotEmpty(bindKey)) {
+            channelKey += Strings.VERTICAL_BAR + bindKey;
+        }
+        if (StringUtils.isNotEmpty(queueName)) {
+            channelKey += Strings.VERTICAL_BAR + queueName;
+        }
+        if (StringUtils.isNotEmpty(channelTag)) {
+            channelKey += Strings.VERTICAL_BAR + channelTag;
+        }
+        return channelKey;
     }
 
     private String buildChannelKey(ChannelDefinition definition) {
-        String channelKey = definition.getExchangeName() + Strings.VERTICAL_BAR + definition.getExchangeType();
-        if (StringUtils.isNotEmpty(definition.getBindKey())) {
-            channelKey += Strings.VERTICAL_BAR + definition.getBindKey();
-        }
-        if (StringUtils.isNotEmpty(definition.getQueueName())) {
-            channelKey += Strings.VERTICAL_BAR + definition.getQueueName();
-        }
-        if (StringUtils.isNotEmpty(definition.getChannelTag())) {
-            channelKey += Strings.VERTICAL_BAR + definition.getChannelTag();
-        }
-        return channelKey;
+        return buildChannelKey(definition.getExchangeName(), definition.getExchangeType(), definition.getBindKey(),
+                definition.getQueueName(), definition.getChannelTag());
     }
 
     /**
@@ -132,6 +111,8 @@ public abstract class MessageActionSupport implements MessageAction, Initializin
             if (rabbitMQContext.existChannel(channelKey)) {
                 return rabbitMQContext.getChannelContainer().get(channelKey);
             }
+        } else { // 非通道复用场景下，无需初始化队列和绑定
+            return this.getChannel();
         }
         try {
             Optional<Channel> channelOptional = getConnection().openChannel();
@@ -161,10 +142,8 @@ public abstract class MessageActionSupport implements MessageAction, Initializin
                         }
                     }
                 }
-                if (channelReuse) {
-                    // 存入消息上下文连接通道容器
-                    rabbitMQContext.put(channelKey, channel);
-                }
+                // 存入消息上下文连接通道容器
+                rabbitMQContext.put(channelKey, channel);
                 return channel;
             }
         } catch (IOException e) {

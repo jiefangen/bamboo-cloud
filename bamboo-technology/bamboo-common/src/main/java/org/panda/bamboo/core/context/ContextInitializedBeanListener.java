@@ -14,8 +14,6 @@ import java.util.Map;
 /**
  * 容器初始化完成后执行bean的监听器，找出所有容器初始化完成后执行bean并在容器初始化完成后执行。
  * 如果一个bean具有代理，则只执行代理
- *
- * @author fangen
  */
 @Component
 public class ContextInitializedBeanListener implements ApplicationListener<ContextRefreshedEvent> {

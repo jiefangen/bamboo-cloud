@@ -5,6 +5,7 @@ import io.swagger.annotations.Api;
 import org.apache.rocketmq.client.producer.SendResult;
 import org.panda.bamboo.common.util.lang.UUIDUtil;
 import org.panda.business.official.infrastructure.message.rabbitmq.RabbitMQConstants;
+import org.panda.business.official.infrastructure.message.rabbitmq.RabbitMQDeclaredProducer;
 import org.panda.business.official.infrastructure.message.rabbitmq.RabbitMQProducer;
 import org.panda.business.official.infrastructure.message.rocketmq.RocketMQConstants;
 import org.panda.business.official.infrastructure.message.rocketmq.RocketMQProducer;
@@ -34,6 +35,8 @@ public class ProducerMQController {
     private RocketMQProducer rocketMQProducer;
     @Autowired
     private RabbitMQProducer rabbitMQProducer;
+    @Autowired
+    private RabbitMQDeclaredProducer rabbitMQDeclaredProducer;
 
     @GetMapping("/sendGeneralSync")
     @ConfigAnonymous
@@ -84,6 +87,14 @@ public class ProducerMQController {
         String message = "Official headers say: Hello RabbitMQ!";
         format.putAll(type);
         rabbitMQProducer.sendHeaders(format, message);
+        return RestfulResult.success();
+    }
+
+    @GetMapping("/sendFanout")
+    @ConfigAnonymous
+    public RestfulResult<?> sendFanout() {
+        String message = "Official fanout say: Hello RabbitMQ!";
+        rabbitMQDeclaredProducer.sendFanout(message);
         return RestfulResult.success();
     }
 

@@ -2,7 +2,7 @@ package org.panda.business.official.application.listener;
 
 import com.rabbitmq.client.AMQP;
 import org.panda.bamboo.common.util.LogUtil;
-import org.panda.tech.mq.rabbitmq.producer.AbstractReturnListener;
+import org.panda.tech.mq.rabbitmq.producer.listener.AbstractReturnListener;
 import org.springframework.stereotype.Component;
 
 @Component

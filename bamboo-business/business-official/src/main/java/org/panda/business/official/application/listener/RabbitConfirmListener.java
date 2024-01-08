@@ -1,7 +1,7 @@
 package org.panda.business.official.application.listener;
 
 import org.panda.bamboo.common.util.LogUtil;
-import org.panda.tech.mq.rabbitmq.producer.AbstractConfirmListener;
+import org.panda.tech.mq.rabbitmq.producer.listener.AbstractConfirmListener;
 import org.springframework.stereotype.Component;
 
 @Component
