@@ -98,4 +98,12 @@ public class ProducerMQController {
         return RestfulResult.success();
     }
 
+    @GetMapping("/sendDirectTemp")
+    @ConfigAnonymous
+    public RestfulResult<?> sendDirectTemp() {
+        String message = "Official temporary say: Hello RabbitMQ!";
+        rabbitMQProducer.sendDirectTemp(message);
+        return RestfulResult.success();
+    }
+
 }

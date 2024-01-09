@@ -82,4 +82,12 @@ public class RabbitMQProducer extends MessageMQProducerSupport<Object> {
         return definition;
     }
 
+    public void sendDirectTemp(Object payload) {
+        String routingKey = "temp-direct-key";
+        ChannelDefinition definition = new ChannelDefinition();
+        definition.setExchangeName("temp-direct-exchange");
+        definition.setBindKey(routingKey);
+        super.sendDirect(definition, routingKey, payload);
+    }
+
 }
