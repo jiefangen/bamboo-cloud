@@ -1,4 +1,4 @@
-package org.panda.tech.data.annotation;
+package org.panda.tech.data.common.annotation;
 
 import org.panda.tech.data.common.DataCommons;
 
