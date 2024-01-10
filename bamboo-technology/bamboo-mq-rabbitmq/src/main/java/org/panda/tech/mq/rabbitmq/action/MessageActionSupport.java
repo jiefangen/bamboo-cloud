@@ -132,13 +132,13 @@ public abstract class MessageActionSupport implements MessageAction, Initializin
                     channel.exchangeDeclare(exchangeName, exchangeType, true);
                     if (StringUtils.isNotEmpty(queueName)) {
                         // 拥有既定名称的，持久化、非独占、非自动删除的队列
-                        channel.queueDeclare(queueName, true, false, false, null);
-                        channel.queueBind(queueName, exchangeName, bindKey, definition.getHeaders());
+                        channel.queueDeclare(queueName, true, false, false, definition.getQueueHeaders());
+                        channel.queueBind(queueName, exchangeName, bindKey, definition.getBindHeaders());
                     }
                     if (CollectionUtils.isNotEmpty(queues)) {
                         for (QueueDefinition queue : queues) {
-                            channel.queueDeclare(queue.getQueueName(), true, false, false, null);
-                            channel.queueBind(queue.getQueueName(), exchangeName, queue.getBindKey(), queue.getHeaders());
+                            channel.queueDeclare(queue.getQueueName(), true, false, false, queue.getQueueHeaders());
+                            channel.queueBind(queue.getQueueName(), exchangeName, queue.getBindKey(), queue.getBindHeaders());
                         }
                     }
                 }
@@ -161,6 +161,21 @@ public abstract class MessageActionSupport implements MessageAction, Initializin
      */
     protected Channel channelDeclare(ChannelDefinition definition, boolean channelReuse) {
         return channelDeclare(definition, null, channelReuse);
+    }
+
+    /**
+     * 关闭通道
+     *
+     * @param channel 通道
+     */
+    protected void closeChannel(Channel channel) {
+        if (channel != null) {
+            try {
+                channel.close();
+            } catch (Exception e) {
+                // do noting
+            }
+        }
     }
 
     @Override

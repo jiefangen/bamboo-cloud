@@ -59,13 +59,13 @@ public class RabbitMQProducer extends MessageMQProducerSupport<Object> {
         headers.put("format", "pdf");
         headers.put("type", "report");
         headers.put("x-match", "all"); // 头交换机必须匹配类型
-        queues.add(new QueueDefinition().addQueueName("headers-queue-B").addHeaders(headers));
+        queues.add(new QueueDefinition().addQueueName("headers-queue-B").addBindHeaders(headers));
 
         Map<String, Object> headersC = new HashMap<>();
         headersC.put("format", "zip");
         headersC.put("type", "report");
         headersC.put("x-match", "all");
-        queues.add(new QueueDefinition().addQueueName("headers-queue-C").addHeaders(headersC));
+        queues.add(new QueueDefinition().addQueueName("headers-queue-C").addBindHeaders(headersC));
         super.sendHeaders(getHeadersChannelDefinition(), sendHeaders, queues, null, payload);
     }
 
@@ -77,7 +77,7 @@ public class RabbitMQProducer extends MessageMQProducerSupport<Object> {
         headers.put("format", "pdf");
         headers.put("type", "log");
         headers.put("x-match", "any"); // 头交换机必须匹配类型
-        definition.setHeaders(headers);
+        definition.setBindHeaders(headers);
         definition.setChannelTag(RabbitMQConstants.PRODUCER_CHANNEL);
         return definition;
     }

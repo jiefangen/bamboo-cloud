@@ -1,6 +1,7 @@
 package org.panda.business.official.infrastructure.message.rabbitmq;
 
 import org.panda.bamboo.common.annotation.helper.EnumValueHelper;
+import org.panda.bamboo.common.model.tuple.Binary;
 import org.panda.tech.mq.rabbitmq.config.ChannelDefinition;
 import org.panda.tech.mq.rabbitmq.config.ExchangeEnum;
 import org.panda.tech.mq.rabbitmq.config.QueueDefinition;
@@ -45,5 +46,10 @@ public class RabbitMQDeclaredProducer extends DeclaredMessageMQProducer<Object> 
         queues.add(new QueueDefinition().addQueueName("fanout-queue-three"));
         queues.add(new QueueDefinition().addQueueName("fanout-queue-four"));
         return queues;
+    }
+
+    @Override
+    protected Binary<String, String> getDelayedDefinition() {
+        return new Binary<>(RabbitMQConstants.DELAY_KEY, RabbitMQConstants.DELAY_ROUTING_KEY);
     }
 }

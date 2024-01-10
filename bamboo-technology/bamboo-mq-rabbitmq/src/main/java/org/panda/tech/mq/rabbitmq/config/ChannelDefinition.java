@@ -33,9 +33,13 @@ public class ChannelDefinition implements DomainModel {
      */
     private String queueName;
     /**
-     * 头信息
+     * 队列头信息
      */
-    private Map<String, Object> headers;
+    private Map<String, Object> queueHeaders;
+    /**
+     * 绑定头信息
+     */
+    private Map<String, Object> bindHeaders;
 
     /**
      * 自定义通道标签

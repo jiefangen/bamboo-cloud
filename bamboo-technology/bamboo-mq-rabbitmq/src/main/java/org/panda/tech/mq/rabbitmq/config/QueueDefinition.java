@@ -22,9 +22,13 @@ public class QueueDefinition {
      */
     private String bindKey = Strings.EMPTY;
     /**
-     * 头信息
+     * 队列头信息
      */
-    private Map<String, Object> headers;
+    private Map<String, Object> queueHeaders;
+    /**
+     * 绑定头信息
+     */
+    private Map<String, Object> bindHeaders;
 
     public QueueDefinition addQueueName(String queueName) {
         this.setQueueName(queueName);
@@ -36,8 +40,8 @@ public class QueueDefinition {
         return this;
     }
 
-    public QueueDefinition addHeaders(Map<String, Object> headers) {
-        this.setHeaders(headers);
+    public QueueDefinition addBindHeaders(Map<String, Object> headers) {
+        this.setBindHeaders(headers);
         return this;
     }
 }

@@ -68,7 +68,8 @@ public class ProducerMQController {
     @ConfigAnonymous
     public RestfulResult<?> sendDelayed() {
         String message = "Official delayed say: Hello RabbitMQ!";
-        rabbitMQProducer.sendDelayed(RabbitMQConstants.DELAY_KEY, 6000L,
+        String exchangeName = RabbitMQConstants.DELAY_KEY + "-ttl-exchange";
+        rabbitMQDeclaredProducer.sendDelayed(exchangeName, 3000L,
                 RabbitMQConstants.DELAY_ROUTING_KEY, message);
         return RestfulResult.success();
     }

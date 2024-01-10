@@ -70,11 +70,7 @@ public abstract class MessageMQProducerSupport<T> extends MessageActionSupport i
                 LogUtil.error(getClass(), e);
             } finally {
                 if (!channelReuse) {
-                    try {
-                        channel.close();
-                    } catch (Exception e) {
-                        // do noting
-                    }
+                    closeChannel(channel);
                 }
             }
         }
@@ -94,37 +90,6 @@ public abstract class MessageMQProducerSupport<T> extends MessageActionSupport i
     @Override
     public void sendDirect(ChannelDefinition definition, String routingKey, T payload) {
         sendDirect(definition, routingKey,null, payload, true);
-    }
-
-    @Override
-    public void sendDelayed(String delayKey, long expiration, String routingKey, T payload) {
-        ChannelDefinition definition = new ChannelDefinition();
-        definition.setExchangeName(delayKey + "-ttl-exchange");
-        definition.setQueueName(delayKey + "-ttl-queue");
-        definition.setBindKey(routingKey);
-        definition.setChannelTag("ttl-delayed");
-        Map<String, Object> headers = new HashMap<>(3);
-        headers.put("x-dead-letter-exchange", delayKey + DLX_EXCHANGE_SUFFIX); // 绑定死信交换机
-        headers.put("x-dead-letter-routing-key", delayKey + DLX_QUEUE_SUFFIX); // 绑定当前队列的死信路由key
-        headers.put("x-message-ttl", expiration); // 声明队列的TTL
-        definition.setHeaders(headers);
-        // 延时通道
-        Channel channel = channelDeclare(definition, true);
-        Map<String, Object> propertiesHeaders = new HashMap<>();
-        propertiesHeaders.put("x-delay", expiration);
-        AMQP.BasicProperties properties = new AMQP.BasicProperties().builder()
-                .headers(propertiesHeaders)
-                .expiration(String.valueOf(expiration))
-                .build();
-
-        // 声明死信交换机和队列
-        ChannelDefinition dlxDefinition = new ChannelDefinition();
-        dlxDefinition.setChannelTag("dlx-delayed");
-        dlxDefinition.setExchangeName(delayKey + DLX_EXCHANGE_SUFFIX);
-        dlxDefinition.setQueueName(delayKey + DLX_QUEUE_SUFFIX);
-        dlxDefinition.setBindKey(delayKey + DLX_QUEUE_SUFFIX);
-        channelDeclare(dlxDefinition, true);
-        send(channel, definition.getExchangeName(), routingKey, properties, payload, true);
     }
 
     @Override
