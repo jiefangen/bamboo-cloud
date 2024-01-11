@@ -58,14 +58,5 @@
             <artifactId>sitemesh</artifactId>
             <version>3.0.1</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>io.github.openfeign</groupId>-->
-<!--            <artifactId>feign-httpclient</artifactId>-->
-<!--        </dependency>-->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
-            <version>3.1.5</version>
-        </dependency>
     </dependencies>
 </project>

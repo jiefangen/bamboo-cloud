@@ -29,6 +29,7 @@
         <module>bamboo-mq-rabbitmq</module>
         <!-- 消息队列模块-为上层服务提供RocketMQ使用准则 -->
         <module>bamboo-mq-rocketmq</module>
+        <module>bamboo-data-lucene</module>
     </modules>
 
     <properties>
