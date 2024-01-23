@@ -23,13 +23,14 @@
         <module>bamboo-data-redis</module>
         <!-- mongodb支持模块-为上层服务提供MongoDB访问使用支持 -->
         <module>bamboo-data-mongo</module>
+        <!-- lucene支持模块-为上层服务提供大文本全文搜索支持 -->
+        <module>bamboo-data-lucene</module>
         <!-- 服务安全支持模块-为上层服务提供鉴权标准 -->
         <module>bamboo-security</module>
         <!-- 消息队列模块-为上层服务提供RabbitMQ使用准则 -->
         <module>bamboo-mq-rabbitmq</module>
         <!-- 消息队列模块-为上层服务提供RocketMQ使用准则 -->
         <module>bamboo-mq-rocketmq</module>
-        <module>bamboo-data-lucene</module>
     </modules>
 
     <properties>

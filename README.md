@@ -22,12 +22,13 @@
     2.bamboo-core（核心模块-为上层框架或服务提供核心支持）
     3.bamboo-data（数据模块-为本技术框架提供数据相关支持【不可对外依赖】）
     4.bamboo-data-jpa（jpa支持模块-为上层服务提供jpa访问框架支持）
-    5.bamboo-data-mybatis（mybatis支持模块-为上层服务提供mybatis访问框架支持）
-    6.bamboo-data-redis（redis支持模块-为上层服务提供Redis访问使用支持）
-    7.bamboo-data-mongo（mongodb支持模块-为上层服务提供Mongodb访问使用支持）
-    8.bamboo-security（服务安全支持模块-为上层服务提供鉴权标准）
-    9.bamboo-mq-rocketmq（消息队列模块-为上层服务提供RocketMQ使用准则）
-    10.bamboo-mq-rabbitmq（消息队列模块-为上层服务提供RabbitMQ使用准则）
+    5.bamboo-data-lucene（lucene支持模块-为上层服务提供大文本全文搜索支持）
+    6.bamboo-data-mybatis（mybatis支持模块-为上层服务提供mybatis访问框架支持）
+    7.bamboo-data-redis（redis支持模块-为上层服务提供Redis访问使用支持）
+    8.bamboo-data-mongo（mongodb支持模块-为上层服务提供Mongodb访问使用支持）
+    9.bamboo-security（服务安全支持模块-为上层服务提供鉴权标准）
+    10.bamboo-mq-rocketmq（消息队列模块-为上层服务提供RocketMQ使用准则）
+    11.bamboo-mq-rabbitmq（消息队列模块-为上层服务提供RabbitMQ使用准则）
 
 ## 三、框架能力展示
 #### 请移步本技术框架最佳实践，BAMBOO后台管理系统。
