@@ -18,7 +18,7 @@
     2、数据库实体以及扩展类代码自动生成
     TODO 数据访问模版扩展能力有待完善
 #### 5、bamboo-data-mybatis（对上层服务提供简易mybatis使用能力）
-    1、mybatis框架基础功能以及扩展能力（TODO）
+    1、mybatis框架基础功能以及扩展能力
     2、数据库实体以及扩展类代码自动生成
 #### 6、bamboo-security（对上层服务提供统一化鉴权支持）服务启动组件扫描`@Import(SecurityModule.class)`
     1、获取访问资源需要具备的权限（鉴权认证）
