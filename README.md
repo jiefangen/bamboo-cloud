@@ -11,7 +11,7 @@
     1.microservices-auth（服务认证鉴权中心服务）
     2.microservices-notice（通知路由服务）
     3.microservices-payment（支付网关服务）
-    4.microservices-doc（文档解析转换服务）
+    4.microservices-document（文档解析转换服务）
 ### bamboo-support（微服务治理框架支撑层）
     1.support-cloud-core（微服务架构核心模块-服务注册发现统一配置管理）
     2.support-cloud-gateway（微服务架构统一网关路由服务）

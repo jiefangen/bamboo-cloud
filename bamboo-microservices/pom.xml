@@ -9,7 +9,7 @@
     <packaging>pom</packaging>
     <description>微服务架构服务提供层</description>
     <modules>
-        <module>microservice-doc</module>
+        <module>microservice-document</module>
         <module>microservice-notice</module>
         <module>microservice-payment</module>
         <module>microservice-cas-server</module>
