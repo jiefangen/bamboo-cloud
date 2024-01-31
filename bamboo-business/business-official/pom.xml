@@ -79,5 +79,4 @@
             <version>${technology.version}</version>
         </dependency>
     </dependencies>
-
 </project>
