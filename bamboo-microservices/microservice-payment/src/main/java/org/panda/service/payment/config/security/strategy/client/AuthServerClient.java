@@ -30,7 +30,6 @@ public interface AuthServerClient {
     RestfulResult validate(@RequestHeader(WebConstants.HEADER_AUTH_JWT) String authToken,
                            @RequestParam("service") String service);
 
-
     @PostMapping("/auth/service/authorize")
     RestfulResult authorize(@RequestBody AppServiceModel appServiceModel);
 
