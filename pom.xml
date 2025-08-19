@@ -25,22 +25,23 @@
     </modules>
 
     <properties>
-        <bamboo.version>1.0.RELEASE</bamboo.version>
+        <!-- 当前项目系统版本 -->
+        <bamboo-cloud.version>1.0.RELEASE</bamboo-cloud.version>
 
-        <!-- SpringCloudAlibaba稳定基础套件，优选JDK8版本 -->
-        <spring-cloud.version.jdk8>Hoxton.SR12</spring-cloud.version.jdk8>
-        <spring-boot.version.jdk8>2.3.12.RELEASE</spring-boot.version.jdk8>
-        <spring.version.jdk8>5.2.15.RELEASE</spring.version.jdk8>
+        <!-- SpringCloudAlibaba稳定基础套件，优选JDK17版本 -->
+        <spring-cloud.version.jdk17>2023.0.1.0</spring-cloud.version.jdk17>
+        <spring-boot.version.jdk17>3.2.4</spring-boot.version.jdk17>
+        <spring.version.jdk17>6.1.5</spring.version.jdk17>
 
         <!-- SpringCloudAlibaba稳定基础套件，优选JDK11版本 -->
         <spring-cloud.version.jdk11>2021.0.5</spring-cloud.version.jdk11>
         <spring-boot.version.jdk11>2.6.13</spring-boot.version.jdk11>
         <spring.version.jdk11>5.3.23</spring.version.jdk11>
 
-        <!-- SpringCloudAlibaba稳定基础套件，优选JDK17版本 -->
-        <spring-cloud.version.jdk17>2023.0.1.0</spring-cloud.version.jdk17>
-        <spring-boot.version.jdk17>3.2.4</spring-boot.version.jdk17>
-        <spring.version.jdk17>6.1.5</spring.version.jdk17>
+        <!-- SpringCloudAlibaba稳定基础套件，优选JDK8版本 -->
+        <spring-cloud.version.jdk8>Hoxton.SR12</spring-cloud.version.jdk8>
+        <spring-boot.version.jdk8>2.3.12.RELEASE</spring-boot.version.jdk8>
+        <spring.version.jdk8>5.2.15.RELEASE</spring.version.jdk8>
 
         <!-- 当前项目使用的JDK版本 -->
         <oracle-jdk.version>11</oracle-jdk.version>
